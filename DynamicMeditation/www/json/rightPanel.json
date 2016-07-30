@@ -1,0 +1,34 @@
+{
+
+"items" : [
+{
+ "mIcon" : "ion-ios-home",
+ "mRef"  : "#/benefits"
+},
+
+{
+ "mIcon" : "ion-person-add",
+ "mRef"  : "#/home/main"
+},
+
+{
+ "mIcon" : "ion-key",
+ "mRef"  : "#/home/main"
+},
+
+{
+ "mIcon" : "ion-alert-circled",
+ "mRef"  : "#/home/main"
+},
+
+{
+ "mIcon" : "ion-locked",
+ "mRef"  : "#/home/main"
+},
+
+{
+ "mIcon" : "ion-help",
+ "mRef"  : "#/home/main"
+}
+]
+}

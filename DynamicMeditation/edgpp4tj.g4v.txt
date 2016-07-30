@@ -1,0 +1,26 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#	new file:   README.md
+#
+# Untracked files:
+#	.bowerrc
+#	.editorconfig
+#	.gitattributes
+#	.gitignore
+#	bower.json
+#	config.xml
+#	gulpfile.js
+#	hooks/
+#	ionic.project
+#	package.json
+#	resources/
+#	scss/
+#	www/
+#
+

@@ -1,0 +1,43 @@
+<ion-view view-title="eMitra" ng-controller='slideCtrl'>
+  
+  <ion-content>
+   <!--   <button class="button-circle rotate-15">
+        <i class="ion-arrow-up-c"></i>
+      </button> -->
+    <!--  <h3>Dynamic Meditation</h3> -->
+  <div class = "slider">
+      <ion-slide-box  
+            does-continue="true"  disable-scroll="false"
+            show-pager='true'
+            slide-interval="3000"
+            auto-play="true"on-slide-changed="slideChanged(index)">
+          <ion-slide ng-repeat="slide in slides">
+            <img src="{{'img/'+slide.name+'.jpg'}}" </img>
+            <p> {{slide.msg}} </p>
+            
+          </ion-slide>
+          </div>
+
+       <div ng-controller='rightViewCtrl' id="profile-bg"></div>
+      <div id="content" >
+        <div id="profile-info" ng-controller = "ProfileLoad" class = "profile-bg">
+          <h2>Sample Public School</h2>
+          <img id="profile-image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/94311/me.png">
+          <h3 id="profile-name">{{basicprofile.mName}}</h3>
+          <h4>DOB: {{basicprofile.mDob}}</h4>
+          <h4>Gender: {{basicprofile.mGender}}</h4>
+
+          <h4>Blood Group: {{basicprofile.mBloodGroup}}</h4>
+
+          <h4>Class: {{basicprofile.mClass}}</h4>
+          <h4>Division: {{basicprofile.mDivision}}</h4>
+          <h4>Class Teacher: {{basicprofile.mClassTeacher}}</h4>
+          
+          <!--
+          <span id="profile-description">  {{isExists(profile.Studcnm) ? 'available' : 'Student of Class' }} {{isExists(profile.Studcnm) ? 'available' : profile.Class }}, Chung Ling High School, Penang </span>
+        -->
+        </div>
+        </div>
+         
+  </ion-content>
+</ion-view>

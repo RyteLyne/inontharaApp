@@ -1,0 +1,140 @@
+<ion-side-menus >
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable" ng-controller="initCtrl">
+     <ion-nav-buttons side="left" >
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">   
+             </button>
+            </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
+        </button>
+
+      </ion-nav-buttons>
+   
+   
+    </ion-nav-bar>
+    <ion-nav-view name="content"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="right" ng-controller="SideMenuCtrl">
+    <ion-pane class="background-grey">
+
+      <!--<div class="row menu-top">
+        <div class="col col-center">
+          <img class="profile-image" ng-src="img/cooper.jpg" animate-ratio="fadeIn"/>
+        </div>
+      </div> -->
+
+      <div class="menu-middle" ng-controller="RightMenuCtrl">
+        <div class="row">
+          <div class="col col-center">
+            <a ng-href="{{rightItems[0].ref}}">
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+              <i class="{{rightItems[0].icon}}"></i>
+            </button>
+            </a>
+
+          </div>
+          <div class="col col-center">
+           <a href="#home/main">
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+              <i class="{{rightItems[1].icon}}"></i>
+            </button>
+            </a>
+          </div>
+          <div class="col col-center" ng-controller="PlayCtrl" >
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close >
+              <i class="{{rightItems[2].icon}}"> </i>
+             
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          
+          <div class="col col-center" ng-controller="InstructionsCtrl">
+         
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+              <i class="{{rightItems[3].icon}}"> </i>  
+           
+  <!--      <span class="buttonLabel">Instructions</span> 
+
+  -->
+    
+            </button>
+    
+          </div>
+           
+          <div class="col col-center" ng-controller="extranoteCtrl">
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+              <i class="{{rightItems[4].icon}}"></i>
+            </button>
+          </div>
+          <div class="col col-center">
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+              <i class="{{rightItems[5].icon}}"</i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-bottom" animate-ratio="slideUp">
+          <button class="button-circle">
+            <i class="ion-person"></i>
+        </div>
+      </div>
+
+    </ion-pane>
+  </ion-side-menu>
+
+
+
+<ion-side-menu side="left" ng-controller="SideMenuCtrl" width = "{{menuWidth}}" >
+    <ion-pane class="background-grey">
+
+      
+     <!-- <div class="menu-bottom" animate-ratio="slideUp">
+          <button class="button-circle">
+            <i class="ion-erlenmeyer-flask"></i>
+        </div> -->
+     
+     <ion-content scrollbar-x="false" scrollbar-y="false" >
+    
+         <ion-list style= "background-color:transparent;">
+        <div ng-repeat="group in groups">
+
+
+          <ion-item ng-if = "group.ref==''" class="item-stable" style= "background-color:transparent;"
+                    ng-click="toggleGroup(group)"
+                    ng-class="{active: isGroupShown(group)}">
+                <a> <i style="font-size:24px;" class="icon {{group.icon}}"  ></i> &nbsp <a style= "font-size:.870rem; color:white;">{{group.name}}</a> <span class="badge badge-assertive">3</span></a>  
+            
+              <i class="icon" right:"5px" ng-class="isGroupShown(group) ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i>
+          </ion-item>
+
+
+          <ion-item ng-if = "group.ref!=''" class="item-stable" style= "background-color:transparent;">
+            <!--    <a ng-href={{group.ref}} style="font-size:24px;" class="icon {{group.icon}}"  > &nbsp <a style= "font-size:.870rem; color:white;">{{group.name}}</a> <span class="badge badge-assertive">3</span></a>  -->
+         <a ng-href={{group.ref}} style="text-decoration: none;" menu-close> <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-assertive">2</span></a>
+          </ion-item>
+
+          <ion-item class="item-accordion" style= "background-color:transparent;"
+                    ng-repeat="item in group.items"
+                    ng-show="isGroupShown(group)">
+               <a ng-href={{item.m_Ref}} style="text-decoration: none;" menu-close>  &nbsp <i style="font-size:24px;" class="icon {{item.mIcon}}"></i> &nbsp {{item.mName}}<span class="badge badge-assertive">2</span></a>  
+                         
+          </ion-item>
+
+        </div>
+      </ion-list>
+          </ion-content>
+
+
+
+     
+
+    </ion-pane>
+  </ion-side-menu>
+
+  
+</ion-side-menus>

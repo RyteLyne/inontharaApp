@@ -1,0 +1,81 @@
+{
+	"groups": [{
+		"mName": "Albumns",
+		"mIcon": "ion-university",
+		"mRef" :"#/home/main"
+		
+	}, 
+
+	{
+		"mName": "Co-Ordinator",
+		"mIcon": "ion-ios-people",
+		"mRef" :"#/home/main"
+	}, {
+		"mName": "Physical Education",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main"
+	}, 
+      
+      {
+		"mName": "Accounts Department",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main"
+	}, 
+
+	 {
+		"mName": "Transport Department",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main"
+
+	}, 
+
+	{
+		"mName": "Diary",
+		"mIcon": "ion-card",
+		"mRef" :"",
+		"mItems": [{
+			"mName": "Events",
+			"mIcon": "ion-home",
+			"mRef" :"#/home/main"
+		}, {
+			"mName": "Announcements",
+			"mIcon": "ion-home",
+			"mRef" :"#/home/main"
+		}, {
+			"mName": "Assignments",
+			"mIcon": "ion-home",
+			"mRef" :"#/home/main"
+		}, {
+			"mName": "Leaves",
+			"mIcon": "ion-home",
+			"mRef" : "#/home/main"
+		}]
+	}, {
+		"mName": "Library",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main"
+	}, {
+		"mName": "Class Teacher",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main"
+	}, {
+		"mName": "Principal",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main"
+	}, 
+      {
+		"mName": "Admin",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main"
+	} ,
+
+	{
+		"mName": "Class Notes",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main"
+	} 
+
+
+
+	]
+}
