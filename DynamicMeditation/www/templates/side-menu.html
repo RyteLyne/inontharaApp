@@ -25,7 +25,54 @@
         </div>
       </div> -->
 
+
+
+       <div ng-controller="RightMenuCtrl">
+        <div ng-repeat="items in rightItems">
+          <div class ="row" ng-if="$index%3==0">
+
+            <div class="col col-30 col-center" >
+            <a style= "text-align:center; text-decoration: none;" ng-href="{{rightItems[$index].ref}}" ng-if = "rightItems[$index]!=undefined">
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+              <i class="{{rightItems[$index].icon}}"></i>
+            </button>
+            {{rightItems[$index].text}}
+            </a>
+            
+           </div>
+
+           <div class="col col-30 col-center">
+            <a style= "text-align:center; text-decoration: none;" ng-href="{{rightItems[$index+1].ref}}" ng-if = "rightItems[$index+1]!=undefined">
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+              <i class="{{rightItems[$index+1].icon}}"></i>
+            </button>
+              {{rightItems[$index+1].text}}
+            </a>
+          
+           </div>
+
+           <div class="col col-30 col-center">
+            <a  style= "text-align:center; text-decoration: none;" ng-href="{{rightItems[$index+2].ref}}" ng-if = "rightItems[$index+2]!=undefined">
+            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+              <i class="{{rightItems[$index+2].icon}}"></i>
+            </button>
+             {{rightItems[$index+2].text}}
+            </a>
+            
+           </div>
+
+
+           <!--<div class="col col-center"> -->
+          </div>
+          </div>   
+          </div>
+
+
+
+
+<!--
       <div class="menu-middle" ng-controller="RightMenuCtrl">
+
         <div class="row">
           <div class="col col-center">
             <a ng-href="{{rightItems[0].ref}}">
@@ -36,7 +83,7 @@
 
           </div>
           <div class="col col-center">
-           <a href="#home/main">
+           <a ng-href="{{rightItems[1].ref}}">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[1].icon}}"></i>
             </button>
@@ -53,13 +100,10 @@
         <div class="row">
           
           <div class="col col-center" ng-controller="InstructionsCtrl">
-         
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[3].icon}}"> </i>  
            
-  <!--      <span class="buttonLabel">Instructions</span> 
-
-  -->
+ 
     
             </button>
     
@@ -78,11 +122,13 @@
         </div>
       </div>
 
+
+
       <div class="menu-bottom" animate-ratio="slideUp">
           <button class="button-circle">
             <i class="ion-person"></i>
         </div>
-      </div>
+      </div> -->
 
     </ion-pane>
   </ion-side-menu>
@@ -115,13 +161,13 @@
 
           <ion-item ng-if = "group.ref!=''" class="item-stable" style= "background-color:transparent;">
             <!--    <a ng-href={{group.ref}} style="font-size:24px;" class="icon {{group.icon}}"  > &nbsp <a style= "font-size:.870rem; color:white;">{{group.name}}</a> <span class="badge badge-assertive">3</span></a>  -->
-         <a ng-href={{group.ref}} style="text-decoration: none;" menu-close> <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-assertive">2</span></a>
+         <a ng-href="{{group.ref}}" style="text-decoration: none;" menu-close> <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-assertive">2</span></a>
           </ion-item>
 
           <ion-item class="item-accordion" style= "background-color:transparent;"
                     ng-repeat="item in group.items"
                     ng-show="isGroupShown(group)">
-               <a ng-href={{item.m_Ref}} style="text-decoration: none;" menu-close>  &nbsp <i style="font-size:24px;" class="icon {{item.mIcon}}"></i> &nbsp {{item.mName}}<span class="badge badge-assertive">2</span></a>  
+               <a ng-href={{item.ref}} style="text-decoration: none;" menu-close>  &nbsp <i style="font-size:24px;" class="icon {{item.icon}}"></i> &nbsp {{item.name}}<span class="badge badge-assertive">2</span></a>  
                          
           </ion-item>
 

@@ -3,32 +3,45 @@
 "items" : [
 {
  "mIcon" : "ion-ios-home",
- "mRef"  : "#/benefits"
+ "mRef"  : "#/app/home",
+ "mText" : "Home"
 },
 
 {
  "mIcon" : "ion-person-add",
- "mRef"  : "#/home/main"
+ "mRef"  : "#/app/benefits",
+ "mText" : "Refer"
 },
 
 {
  "mIcon" : "ion-key",
- "mRef"  : "#/home/main"
+ "mRef"  : "#/home/main",
+ "mText" : "Change Pwd"
 },
 
 {
  "mIcon" : "ion-alert-circled",
- "mRef"  : "#/home/main"
+ "mRef"  : "#/home/main",
+ "mText" : "Report"
 },
 
 {
  "mIcon" : "ion-locked",
- "mRef"  : "#/home/main"
+ "mRef"  : "#/home/main",
+ "mText" : "Logout"
 },
 
 {
  "mIcon" : "ion-help",
- "mRef"  : "#/home/main"
+ "mRef"  : "#/home/main",
+ "mText" : "Help"
+},
+
+{
+ "mIcon" : "ion-help",
+ "mRef"  : "#/home/main",
+ "mText" : "Sample"
 }
+
 ]
 }

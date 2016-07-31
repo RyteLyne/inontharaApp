@@ -147,7 +147,7 @@ font-size:9px;
 
 
 .slider {
-  max-height: 200px;
+  max-height: 30vh;
   height: 100%;
   width: 100%;
   padding-top: 0px;
@@ -208,4 +208,7 @@ font-size:9px;
     margin: auto;
 }
 
-
+.columnsMenu {
+  columns: 3;
+  height: 100vh;
+}

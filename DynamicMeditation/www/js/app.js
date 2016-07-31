@@ -299,30 +299,5 @@ function pad2(number) {
 
 }); //end file;;
 
-//load json profile;;
-myApp.controller('ProfileLoad',function($scope) {
-  console.log("in Profile Load 1");
 
-  jQuery.getJSON('json/profile.json', function(data) {
-  console.log("in Profile Load");
-
-   //var basicprofile = data;
-   console.log(data.mName);
-   $scope.basicprofile =
-   {
-   mName: data.mName,
-   mGender: data.mGender,
-   mDob : data.mDOB,
-   mBloodGroup: data.mBloodGroup,
-   mClass: data.mClass,
-   mDivision: data.mDivision,
-   mClassTeacher: data.mClassTeacher
-   }
-   console.log($scope.basicprofile.mDob);
-       
-    }); //end of function($data);;
-
-
-
-}); //end of function($scope);;
 
