@@ -135,6 +135,10 @@
 
 
 
+
+
+
+
 <ion-side-menu side="left" ng-controller="SideMenuCtrl" width = "{{menuWidth}}" >
     <ion-pane class="background-grey">
 
@@ -142,7 +146,7 @@
      <!-- <div class="menu-bottom" animate-ratio="slideUp">
           <button class="button-circle">
             <i class="ion-erlenmeyer-flask"></i>
-        </div> -->
+        </div>-->
      
      <ion-content scrollbar-x="false" scrollbar-y="false" >
     
@@ -160,7 +164,7 @@
 
 
           <ion-item ng-if = "group.ref!=''" class="item-stable" style= "background-color:transparent;">
-            <!--    <a ng-href={{group.ref}} style="font-size:24px;" class="icon {{group.icon}}"  > &nbsp <a style= "font-size:.870rem; color:white;">{{group.name}}</a> <span class="badge badge-assertive">3</span></a>  -->
+
          <a ng-href="{{group.ref}}" style="text-decoration: none;" menu-close> <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-assertive">2</span></a>
           </ion-item>
 
@@ -173,7 +177,17 @@
 
         </div>
       </ion-list>
-          </ion-content>
+          </ion-content> 
+
+
+      <!--    <ion-content  ng-controller="SideMenuCtrl" ng-class="theme" >
+        <div class="sidemenu-header">
+          <img src="img/menuimage.jpg"/>
+        </div>
+        <ion-list ng-if="load!=undefined">
+          <ionic-sidemenu tree="tree"></ionic-sidemenu>
+        </ion-list>
+    </ion-content> -->
 
 
 

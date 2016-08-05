@@ -1,0 +1,40 @@
+{
+
+"settings": [
+{
+"controlType" : "Header",
+"text": "Language" 
+},
+{
+"controlType" : "Radio",
+"value" : 0
+"text" : "English"
+"function" : "languageChange"
+},
+{
+"controlType" : "Radio",
+"value" : 1
+"text" : "Kannada"
+"function" : "languageChange"
+},
+{
+"controlType" : "Radio",
+"value" : 2
+"text" : "Hindi"
+"function" : "languageChange"
+},
+{
+"controlType" : "Header",
+"text": "Change Password" 
+},
+{
+"controlType" : "static",
+"text" : "Old Password",
+},
+
+
+
+
+}
+
+}

@@ -4,43 +4,39 @@
 {
  "mIcon" : "ion-ios-home",
  "mRef"  : "#/app/home",
- "mText" : "Home"
+ "mText" : ["Home", "ಮನೆ", "घर"]
 },
 
 {
  "mIcon" : "ion-person-add",
  "mRef"  : "#/app/benefits",
- "mText" : "Refer"
+ "mText" : ["Refer", "ಉಲ್ಲೇಖ", "उल्लेख"]
 },
 
 {
  "mIcon" : "ion-key",
  "mRef"  : "#/home/main",
- "mText" : "Change Pwd"
+ "mText" : ["Change Pwd","ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","पासवर्ड बदलें"]
+
 },
 
 {
  "mIcon" : "ion-alert-circled",
  "mRef"  : "#/home/main",
- "mText" : "Report"
+ "mText" : ["Report", "ವರದಿ",  "रिपोर्ट"]
+
 },
 
 {
  "mIcon" : "ion-locked",
  "mRef"  : "#/home/main",
- "mText" : "Logout"
+ "mText" : ["Logout", "ಲಾಗ್ ಔಟ್", "लोग आउट"]
 },
 
 {
  "mIcon" : "ion-help",
  "mRef"  : "#/home/main",
- "mText" : "Help"
-},
-
-{
- "mIcon" : "ion-help",
- "mRef"  : "#/home/main",
- "mText" : "Sample"
+ "mText" : ["Help", "ಸಹಾಯ", "मदद"]
 }
 
 ]

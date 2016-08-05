@@ -1,4 +1,4 @@
-var myApp = angular.module('DynamicMeditation', ['ionic', 'ionic.animate.ratio','DynamicMeditation.controllers'])
+var myApp = angular.module('DynamicMeditation', ['ionic','ionic.animate.ratio','DynamicMeditation.controllers'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -70,9 +70,45 @@ var myApp = angular.module('DynamicMeditation', ['ionic', 'ionic.animate.ratio',
       }
     }
   })
+
+
+  .state('app.settings', {
+    url: "/settings",
+    views: {
+      'content': {
+        templateUrl: "templates/settings.html",
+         
+      }
+    }
+  })
+
+
+   .state('app.profile', {
+    url: "/profile",
+    views: {
+      'content': {
+        templateUrl: "templates/profile.html",
+         
+      }
+    }
+  })
+
+    .state('app.login', {
+    url: "/login",
+    views: {
+      'content': {
+        templateUrl: "templates/login.html",
+         
+      }
+    }
+  })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 });
+
+
+
 
 
 
@@ -143,6 +179,21 @@ var currentPlatform = ionic.Platform.platform();
  console.log($rootScope.devWidth);
  $rootScope.menuWidth = 0.85 * $rootScope.devWidth;
  console.log($rootScope.menuWidth);
+  
+  
+if(window.localStorage.getItem("setting") != undefined) //default settings;;
+{
+
+$rootScope.Language = window.localStorage.getItem("language");
+
+}
+else
+{
+$rootScope.Language = 0;
+
+}
+
+
 });
 
 
