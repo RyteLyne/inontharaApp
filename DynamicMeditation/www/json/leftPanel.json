@@ -27,7 +27,7 @@
 		"mItems": [{
 			"mName": ["Events","Events","Events"],
 			"mIcon": "ion-home",
-			"mRef" :"#/home/main",
+			"mRef" :"#/app/newsfeed",
 			"mProgramId" : "1234"
 		},
 		 {

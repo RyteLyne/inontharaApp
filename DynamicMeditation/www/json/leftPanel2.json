@@ -40,7 +40,7 @@
 		"mItems": [{
 			"mName": ["Events","Events","Events"],
 			"mIcon": "ion-home",
-			"mRef" :"#/home/main",
+			"mRef" :"#/home/newsfeed",
 			"mProgramId" : "1234"
 		},/* {
 			"mName": "Announcements",

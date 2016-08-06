@@ -35,7 +35,7 @@
 
 {
  "mIcon" : "ion-help",
- "mRef"  : "#/home/main",
+ "mRef"  : "#/app/newsfeed",
  "mText" : ["Help", "ಸಹಾಯ", "मदद"]
 }
 
