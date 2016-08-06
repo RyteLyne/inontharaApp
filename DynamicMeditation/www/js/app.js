@@ -1,4 +1,4 @@
-var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.animate.ratio', 'ion-fab-button','DynamicMeditation.controllers'])
+var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.animate.ratio', 'ion-fab-button','DynamicMeditation.controllers','azure-mobile-service.module', 'azureBlobUpload'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
