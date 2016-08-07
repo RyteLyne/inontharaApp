@@ -41,15 +41,7 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.anim
       }
     }
   })
- .state('app.benefits', {
-    url: "/benefits",
-    views: {
-      'content': {
-        templateUrl: "templates/benefits.html",
-      
-      }
-    }
-  })
+
 
    .state('app.instructions', {
     url: "/instructions",
@@ -61,15 +53,7 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.anim
     }
   })
 
-     .state('app.extranote', {
-    url: "/extranote",
-    views: {
-      'content': {
-        templateUrl: "templates/extranote.html",
-         
-      }
-    }
-  })
+  
 
 
   .state('app.settings', {
@@ -93,15 +77,7 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.anim
     }
   })
 
-    .state('app.login', {
-    url: "/login",
-    views: {
-      'content': {
-        templateUrl: "templates/login.html",
-         
-      }
-    }
-  })
+    
 
   .state('app.readView', {
     url: "/readView",
@@ -132,8 +108,33 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.anim
       }
     }
   })
+
+
+.state('app.logout', {
+    url: "/logout",
+    views: {
+      'content': {
+        templateUrl: "templates/logout.html",
+         
+      }
+    }
+  })
+
+   .state('login', {
+    url: "/login",
+    templateUrl: "templates/login.html"
+  })
+
+   .state('splash', {
+    url: "/splash",
+    templateUrl: "templates/splash.html"
+  })
+
+
+
+
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
+  $urlRouterProvider.otherwise('/splash');
 });
 
 myApp.controller('PlatformCtrl2', function($scope, $rootScope, $state, $http) {

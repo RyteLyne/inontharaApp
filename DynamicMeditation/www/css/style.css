@@ -50,6 +50,21 @@
   
 }
 
+
+/*for login screen*/
+.vcenter-container{
+   height: 70vh;
+   width: 100vh;
+   background: none;
+   margin:10px;
+   padding:30px;
+   text-align: center;
+   display:table-cell;
+  vertical-align:middle;
+ 
+}
+
+
 #profile-image {
         display: block;
         border-radius: 100px;

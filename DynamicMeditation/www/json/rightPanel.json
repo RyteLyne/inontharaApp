@@ -29,7 +29,7 @@
 
 {
  "mIcon" : "ion-locked",
- "mRef"  : "#/home/main",
+ "mRef"  : "#/app/logout",
  "mText" : ["Logout", "ಲಾಗ್ ಔಟ್", "लोग आउट"]
 },
 

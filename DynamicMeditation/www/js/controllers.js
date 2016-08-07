@@ -94,7 +94,7 @@ angular.module('DynamicMeditation.controllers', [])
     }) //end of function($data);;
 
 
-jQuery.getJSON('json/UiLanguage.json', function(data) {
+jQuery.getJSON('json/uiLanguage.json', function(data) {
 
  $scope.UiLanguageProfile = data.ProfilePage[$rootScope.Language];
  $scope.UiProfileReady=1;
@@ -242,26 +242,80 @@ jQuery.getJSON('json/UiLanguage.json', function(data) {
 })
 
 
+.controller('SplashCtrl', function($scope,$rootScope,$state) {
 
 
-
-
-.controller('LogInCtrl', function($scope,$rootScope) {
-
-  $scope.Credentials =
+$scope.Credentials =
   {
     username : "",
     password : ""
   }
 
-  $scope.login = function LogIn()
+if(window.localStorage.getItem("setting") != undefined && window.localStorage.getItem("username") != undefined && window.localStorage.getItem("password") != undefined) //default settings;;
+{
+$scope.Credentials.username = window.localStorage.getItem("username");
+$scope.Credentials.password = window.localStorage.getItem("password");
+//login to server here, if success redirect to home page;;
+if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
+{
+
+ $state.go('app.home',{},{reload:true});
+}
+else
+ $state.go('login',{},{reload:true});
+
+}
+else
+$state.go('login',{},{reload:true});
+
+})
+
+
+.controller('LogInCtrl', function($scope,$rootScope,$state) {
+
+$scope.Credentials =
   {
-    
+    username : "",
+    password : ""
+  }
+  
+
+  $scope.login = function Login()
+  {
+
     console.log("UserName: ", $scope.Credentials.username, "Password: " , $scope.Credentials.password);
+  //login to server here, if success redirect to home page;;
+  if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
+   {
+      console.log("new log in");
+      window.localStorage.setItem("username",$scope.Credentials.username);
+      window.localStorage.setItem("password",$scope.Credentials.password);
+      $state.go('app.home',{},{reload:true});
+   
+   };
+
+
+
   }
 
 
 })
+
+.controller('LogOutCtrl', function($scope,$window,$state) {
+
+if(window.localStorage.getItem("setting") != undefined) //default settings;;
+{
+window.localStorage.removeItem("username");
+window.localStorage.removeItem("password");
+}
+
+console.log("Log out");
+
+$state.go('login',{},{reload:true});
+
+})
+
+
 
 
 .controller('SettingsCtrl', function($scope,$window,$rootScope) {
