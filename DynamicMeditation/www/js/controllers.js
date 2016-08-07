@@ -68,8 +68,10 @@ angular.module('DynamicMeditation.controllers', [])
 
    //var basicprofile = data;
    
-   
+   if(data.profile[$rootScope.Language] != undefined)
    $scope.profile=data.profile[$rootScope.Language];
+   else
+   $scope.profile=data.profile[0];
 
    /*
    $scope.profile=
@@ -96,7 +98,12 @@ angular.module('DynamicMeditation.controllers', [])
 
 jQuery.getJSON('json/uiLanguage.json', function(data) {
 
+if(data.ProfilePage[$rootScope.Language] != undefined)
  $scope.UiLanguageProfile = data.ProfilePage[$rootScope.Language];
+ else
+ $scope.UiLanguageProfile = data.ProfilePage[0];
+
+
  $scope.UiProfileReady=1;
  console.log("In uiLanguage zzz");
  //console.log("title", UiLanguageProfile.Title);
@@ -317,7 +324,6 @@ $state.go('login',{},{reload:true});
 
 
 
-
 .controller('SettingsCtrl', function($scope,$window,$rootScope) {
 
 $scope.choice = 
@@ -355,9 +361,18 @@ $scope.notificationstatus = "";
 
 jQuery.getJSON('json/uiLanguage.json', function(data) {
 
+ 
+if(data.SettingsPage[$rootScope.Language] != undefined)
  $scope.UiLanguageSettings = data.SettingsPage[$rootScope.Language];
+ else
+  $scope.UiLanguageSettings = data.SettingsPage[0];
 
- console.log("In uiLanguage sss");
+
+
+
+ $scope.LanguageOptions = data.LanguageOptions;
+
+ console.log($scope.LanguageOptions);
  //console.log("title", UiLanguageProfile.Title);
 
 if($scope.choice.notichoice == true)

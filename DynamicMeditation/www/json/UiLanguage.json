@@ -50,6 +50,10 @@
 }
 ],
 
+"LanguageOptions" :
+[{"name": "English", "id": "0"}, {"name": "ಕನ್ನಡ", "id": "1"}, {"name": "हिंदी", "id": "2"},{"name": "中文", "id": "4"}],
+
+
 "SettingsPage" : [
 {
 "Title": "Settings",
@@ -62,9 +66,7 @@
 "NotificationOff" : "Notification Off",
 "Change" : "Change",
 "Language" : "Language",
-"Lan1" :"English",
-"Lan2" :"ಕನ್ನಡ",
-"Lan3" :"हिंदी"
+"Id": "0"
 },
 
 {
@@ -78,10 +80,7 @@
 "NotificationOff" : "ಅಧಿಸೂಚನೆ ಆಫ್",
 "Change" : "ಬದಲಾಯಿಸಿ",
 "Language" : "ಭಾಷೆ",
-"Lan1" :"English",
-"Lan2" :"ಕನ್ನಡ",
-"Lan3" :"हिंदी"
-
+"Id": "1"
 },
 
 {
@@ -95,9 +94,27 @@
 "NotificationOff" : "अधिसूचना बंद",
 "Change" : "ठीक",
 "Language" : "भाषा",
-"Lan1" :"English",
-"Lan2" :"ಕನ್ನಡ",
-"Lan3" :"हिंदी"
+"Id": "2"
+},
+
+{
+"Title": "Dummy",
+"Id": "3"
+
+},
+
+{
+"Title": "设置",
+"ChangePassword" : "पासवर्ड बदलें",
+"OldPassword" : "पुराना पासवर्ड",
+"NewPassword" : "नया पासवर्ड",
+"RepeatPassword" : "पासवर्ड दोहराएं",
+"EnableNotification" :"सूचनाएं सक्षम करें",
+"NotificationOn" : "अधिसूचना पर",
+"NotificationOff" : "अधिसूचना बंद",
+"Change" : "ठीक",
+"Language" : "语言",
+"Id": "4"
 }
 
 ]

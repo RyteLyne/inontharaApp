@@ -12,10 +12,14 @@
 <div class="bar bar-header bar-positive">
 <h1 class="title">{{UiLanguageSettings.Language}}</h1>
 </div> </br></br>
-<div>
-<ion-radio ng-model="choice.langchoice" ng-value="0" ng-change="languageChange(0)">{{UiLanguageSettings.Lan1}}</ion-radio>
+<div ng-repeat="item in LanguageOptions">
+<ion-radio ng-model="choice.langchoice" ng-value="{{item.id}}" ng-change="languageChange({{item.id}})">{{item.name}}</ion-radio>
+
+<!--
 <ion-radio ng-model="choice.langchoice" ng-value="1" ng-change="languageChange(1)">{{UiLanguageSettings.Lan2}}</ion-radio>
 <ion-radio ng-model="choice.langchoice" ng-value="2" ng-change="languageChange(2)">{{UiLanguageSettings.Lan3}}</ion-radio>
+-->
+
 </div>
 
 
