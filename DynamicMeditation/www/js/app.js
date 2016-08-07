@@ -136,6 +136,204 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.anim
   $urlRouterProvider.otherwise('/app/home');
 });
 
+myApp.controller('PlatformCtrl2', function($scope, $rootScope, $state, $http) {
+
+
+  ionic.Platform.ready(function(){
+    // will execute when device is ready, or immediately if the device is already ready.
+   
+   //gcmapp will deprecated from here 
+ // gcmapp.Initialize();
+
+
+
+  pushNotification = PushNotification.init({
+    "android": { "senderID": "805533023268" },
+    "ios": { "alert": "true", "badge": "false", "sound": "true" }
+});
+
+pushNotification.on('notification', function (data) {
+    // Display the alert message in an alert.
+   console.log(data);
+    alert(data.message);
+    console.log(data.info);
+var doc2req = {};
+doc2req.channels = data.message.replace("newsfeed from edumobi channel: ", "");
+doc2req.docID = data.title;
+
+  Object.toparams = function ObjecttoParams(obj) 
+{
+  var p = [];
+  for (var key in obj) 
+  {
+    p.push(key + '=' + encodeURIComponent(obj[key]));
+  }
+  return p.join('&');
+};
+  var req = 
+{
+    method: 'POST',
+    url: "http://chungling.azurewebsites.net/getPostM/",
+    data: Object.toparams(doc2req),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}
+console.log(req.data);
+      //  var defer = $q.defer();
+      //  $ionicLoading.show({
+   //   template: 'Loading...'
+    //});
+        $http(req).
+        success(function(data, status, headers, config) {
+            // alter data if needed
+          console.log(data.fetchedNews.messages);
+
+     
+var  messages  = JSON.parse(data.fetchedNews.messages);
+console.log(messages);
+//ading the data to storage
+$scope.test = localStorage.getItem('test') ?
+              JSON.parse(localStorage.getItem('test')) : 
+              $scope.test=[],$scope.testInfo=[];   
+      $scope.test.push(angular.extend({}, messages));  
+ 
+ //creating list preview  
+for(var i=0;i<messages.length;i++)
+{
+ if( messages[i].indexOf('<h1>')>-1)
+ {
+ $scope.testInfo[testinfo.length].heading= messages[i].replace('<h>','').replace('</h1>','');
+ break;
+ }
+}
+
+for(var i=0;i<messages.length;i++)
+{
+if(messages[i].indexOf('<img>')>-1)
+{
+ $scope.testinfo[testinfo.length].image=messages[i];
+break;
+}
+}
+for(var i=0;i<messages.length;i++)
+{
+ if(messages[i].indexof('<p>')>-1)
+ {
+ $scope.testinfo[testinfo.length].image=message[i];
+ break
+ }
+}
+console.log($scope.test);
+console.log($scope.testinfo);
+   //  defer.resolve(data);
+ //$ionicLoading.hide();
+        }).
+        error(function(data, status, headers, config) {
+          console.log(data);
+          //  defer.reject();
+        });
+    //
+    // pull the data from here
+
+    // Reload the items list.
+   // app.Storage.getData();
+});
+
+//  pushNotification.on('registration', function (data) {
+  //    mobileServiceClient = new WindowsAzure.MobileServiceClient(
+    //                'https://edumobi1.azure-mobile.net',
+      //              'ZDdASZhSitsYsklwZYlRqIDdxjdWAp17');
+console.log("registering push notification");
+
+ pushNotification.on('registration', function (data) {
+  $scope.mobileServiceClient = new WindowsAzure.MobileServiceClient(
+                   'https://edum.azure-mobile.net',
+                     'yVQPRKXxocEazjPjDXGSnmIpyCBTYc97');
+         
+
+               //https://edum.azure-mobile.net/
+    // Get the native platform of the device.
+    var platform = device.platform;
+    // Get the handle returned during registration.
+    var handle = data.registrationId;
+    // Set the device-specific message template.
+    if (platform == 'android' || platform == 'Android') {
+        // Template registration.
+var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\", \"additionalData\":\"$(additionalData)\"}}"
+      //  var template = '{ "data" : {"message":"$(message)"}}';
+        // Register for notifications.
+
+        $rootScope.mobileServiceClient.push.gcm.registerTemplate(handle,
+            'myTemplate', template,  ["Chungling-Global", "Chungling-Class1"])
+            .done(registrationSuccess, registrationFailure);
+             console.log($scope.mobileServiceClient);
+    } else if (device.platform === 'iOS') {
+        // Template registration.
+        //var template = '{"aps": {"alert": "$(message)"}}';
+        var alertTemplate = "{\"aps\":{\"alert\":\"$(message)\",\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\", \"additionalData\":\"$(additionalData)\"}}";
+        // Register for notifications.      
+        console.log(handle);      
+     //  mobileServiceClient.push.apns.registerTemplate(handle,
+       //     'myTemplate', template, null)
+         //  .done(registrationSuccess, registrationFailure);
+            $rootScope.mobileServiceClient.push.apns.registerNative(data.registrationId, ["Chungling-Global", "Chungling-Class1"]).done(registrationSuccess, registrationFailure);
+    }
+});
+
+  
+var registrationSuccess = function () {
+    alert('Registered with Azure!');
+}
+
+var registrationFailure = function (error) {
+    alert('Failed registering with Azure: ' + error);
+}
+
+  });
+
+  var deviceInformation = ionic.Platform.device();
+
+  var isWebView = ionic.Platform.isWebView();
+  if(isWebView)
+  {
+
+    console.log("in web veiw");
+  }
+  var isIPad = ionic.Platform.isIPad();
+if(isIPad)
+{
+  console.log("in iPad");
+}
+  var isIOS = ionic.Platform.isIOS();
+  if(isIPad)
+  {
+    console.log("in ios");
+  }
+  var isAndroid = ionic.Platform.isAndroid();
+  if(isAndroid)
+  {
+    console.log("in Android");
+  }
+  var isWindowsPhone = ionic.Platform.isWindowsPhone();
+if(isAndroid)
+{
+console.log("in windows phone");
+
+}
+  var currentPlatform = ionic.Platform.platform();
+  var currentPlatformVersion = ionic.Platform.version();
+ $rootScope.devWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
+ console.log($rootScope.devWidth);
+ $rootScope.menuWidth = 0.85 * $rootScope.devWidth;
+ console.log($rootScope.menuWidth);
+ // ionic.Platform.exitApp(); // stops the app
+$scope.logoutFunc = function(){
+  console.log("removing localStorage");
+  localStorage.removeItem('profile');
+    $state.go('menu.main/first',{}, {reload: true});
+}
+});
+
+
 myApp.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
 $scope.readFunc= function(){
 
@@ -350,14 +548,14 @@ function uploadCompleted(){
 
     var readCompleted = function (evt) {
     if (evt.target.readyState == FileReader.DONE) {
-    console.log("read completed so im here")
+    console.log("read completed so im here");
         // The binary data is the result.
         var requestData = evt.target.result;
 
         // Build the request URI with the SAS, which gives us permissions to upload.
     //    var uriWithAccess = insertedItem.imageUri + "?" + insertedItem.sasQueryString;
-       
-  mobileServiceClient.invokeApi("getuploadblobsas", {
+        console.log($rootScope.mobileServiceClient);
+  $rootScopecope.mobileServiceClient.invokeApi("getuploadblobsas", {
     body: { fileName: $scope.newFileName, Type: 'jpeg', UserPhone: '555-555-1234' },
     method: "put"
 }).done(function (response) {
@@ -560,7 +758,7 @@ nextMessage.content= $sce.trustAsHtml('<img src="' + $scope.ImageData+'"></img><
     $scope.addPic = function() {
    var nextMessage = messageOptions[messageIter++ % messageOptions.length];
    
- mobileServiceClient.invokeApi("getuploadblobsas", {
+ $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
     body: { fileName: $scope.newFileName, Fileype: 'jpeg', UserPhone: '555-555-1234' },
     method: "get"
 }).done(function (response) {
