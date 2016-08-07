@@ -1,40 +1,26 @@
 {
 
-"settings": [
+"slideImages": [
 {
-"controlType" : "Header",
-"text": "Language" 
+"name" : "1.jpg",
+"msg": "Language" 
 },
 {
-"controlType" : "Radio",
-"value" : 0
-"text" : "English"
-"function" : "languageChange"
+"name" : "2.jpg",
+"msg": "Language" 
 },
 {
-"controlType" : "Radio",
-"value" : 1
-"text" : "Kannada"
-"function" : "languageChange"
+"name" : "3.jpg",
+"msg": "Language" 
 },
 {
-"controlType" : "Radio",
-"value" : 2
-"text" : "Hindi"
-"function" : "languageChange"
+"name" : "4.jpg",
+"msg": "Language" 
 },
 {
-"controlType" : "Header",
-"text": "Change Password" 
-},
-{
-"controlType" : "static",
-"text" : "Old Password",
-},
-
-
-
-
+"name" : "5.jpg",
+"msg": "Language"  
 }
+]
 
 }

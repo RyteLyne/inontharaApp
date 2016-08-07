@@ -820,13 +820,7 @@ myApp.controller('initCtrl', function($scope, $state, $ionicHistory) {
 
 });
 
-myApp.controller('slideCtrl', function($scope, $state, $ionicHistory) {
-  console.log("in SlideCtrl");
-   $scope.slides = [{name:"1",msg: "hello"},{name:"2", msg: "new"},{name:"3", msg:"what next"},{name:"4",msg: "hello"},{name:"5", msg: "new"},];
 
-
-
-});
 
 myApp.controller('BenefitsCtrl', function($scope, $state, $ionicHistory) {
   console.log("in BenefitsCtrl control");

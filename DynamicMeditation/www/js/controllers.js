@@ -94,7 +94,7 @@ angular.module('DynamicMeditation.controllers', [])
     }) //end of function($data);;
 
 
-jQuery.getJSON('json/uiLanguage.json', function(data) {
+jQuery.getJSON('json/UiLanguage.json', function(data) {
 
  $scope.UiLanguageProfile = data.ProfilePage[$rootScope.Language];
  $scope.UiProfileReady=1;
@@ -227,6 +227,19 @@ jQuery.getJSON('json/uiLanguage.json', function(data) {
 })
 
 
+.controller('slideCtrl', function($scope, $state, $ionicHistory) {
+  
+   console.log("in SlideCtrl");
+
+  jQuery.getJSON('json/settings.json', function(data) {
+
+   $scope.slides = data.slideImages;
+
+
+  });
+  
+
+})
 
 
 

@@ -198,8 +198,8 @@ font-size:9px;
 
  vertical-align:top-text;
   
-    height: 85vh;
-    
+    height: auto;
+    width : 100%;
    
     top: 0;  
     bottom: 0;  

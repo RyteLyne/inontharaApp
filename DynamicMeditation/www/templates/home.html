@@ -12,32 +12,22 @@
             slide-interval="3000"
             auto-play="true"on-slide-changed="slideChanged(index)">
           <ion-slide ng-repeat="slide in slides">
-            <img src="{{'img/'+slide.name+'.jpg'}}" </img>
+           <img src="{{'img/'+slide.name}}" </img>
             <p> {{slide.msg}} </p>
             
           </ion-slide>
           </div>
 
-       <div ng-controller='rightViewCtrl' id="profile-bg"></div>
-      <div id="content" >
-        <div id="profile-info" ng-controller = "ProfileLoad" class = "profile-bg">
-          <h2>Sample Public School</h2>
-          <img id="profile-image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/94311/me.png">
-          <h3 id="profile-name">{{basicprofile.mName}}</h3>
-          <h4>DOB: {{basicprofile.mDob}}</h4>
-          <h4>Gender: {{basicprofile.mGender}}</h4>
-
-          <h4>Blood Group: {{basicprofile.mBloodGroup}}</h4>
-
-          <h4>Class: {{basicprofile.mClass}}</h4>
-          <h4>Division: {{basicprofile.mDivision}}</h4>
-          <h4>Class Teacher: {{basicprofile.mClassTeacher}}</h4>
-          
-          <!--
-          <span id="profile-description">  {{isExists(profile.Studcnm) ? 'available' : 'Student of Class' }} {{isExists(profile.Studcnm) ? 'available' : profile.Class }}, Chung Ling High School, Penang </span>
-        -->
-        </div>
-        </div>
+       <div class="card" >
+          <div class="item item-avatar" style="background-color:#8258FA;">
+          <img src= "img/sid.jpg" style= "width:300px;height:300px;max-width:100px;max-height:100px;border: 3px solid white;"> 
+          <br/>
+          <div style="text-align:center;">
+          <h2 style="color:white">Siddhant Gautham</h2>
+          <h2 style="color:white">M1 E div</h1>
+          <h2 style="color:white">**Naughty**</h2><br/><br/><br/>
+          </div>
+          </div>
          
   </ion-content>
   
