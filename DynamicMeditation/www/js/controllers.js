@@ -277,6 +277,11 @@ $state.go('login',{},{reload:true});
 
 })
 
+.controller('AppCtrl', function($scope, $ionicPopover) {
+
+  
+ 
+})
 
 .controller('LogInCtrl', function($scope,$rootScope,$state) {
 
