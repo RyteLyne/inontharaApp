@@ -140,7 +140,7 @@
 
 
 <ion-side-menu side="left" ng-controller="SideMenuCtrl" width = "{{menuWidth}}" >
-    <ion-pane class="background-grey">
+    <ion-pane >
 
       
      <!-- <div class="menu-bottom" animate-ratio="slideUp">
@@ -148,32 +148,32 @@
             <i class="ion-erlenmeyer-flask"></i>
         </div>-->
      
-     <ion-content scrollbar-x="false" scrollbar-y="false" >
+     <ion-content scrollbar-x="false" scrollbar-y="false" class="background-leftmenu">
     
-         <ion-list style= "background-color:transparent;">
+         <ion-list>
         <div ng-repeat="group in groups">
 
 
-          <ion-item ng-if = "group.ref==''" class="item-stable" style= "background-color:transparent;"
-                    ng-click="toggleGroup(group)"
-                    ng-class="{active: isGroupShown(group)}">
-                <a> <i style="font-size:24px;" class="icon {{group.icon}}"  ></i> &nbsp <a style= "font-size:.870rem; color:white;">{{group.name}}</a> <span class="badge badge-assertive">3</span></a>  
+          <ion-item id = "menulink" ng-if = "group.ref==''" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
+                 <i style="font-size:24px;" class="icon {{group.icon}}"  ></i> &nbsp {{group.name}} <span class="badge badge-assertive">3</span>  
             
               <i class="icon" right:"5px" ng-class="isGroupShown(group) ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i>
           </ion-item>
 
 
-          <ion-item ng-if = "group.ref!=''" class="item-stable" style= "background-color:transparent;">
-
-         <a ng-href="{{group.ref}}" style="text-decoration: none;" menu-close> <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-assertive">2</span></a>
+          <ion-item  id = "mainmenu" ng-if = "group.ref!=''" ng-href="{{group.ref}}" menu-close>
+         
+          <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-assertive">2</span>
+          
           </ion-item>
 
-          <ion-item class="item-accordion" style= "background-color:transparent;"
+          <ion-item id = "submenu"
                     ng-repeat="item in group.items"
-                    ng-show="isGroupShown(group)">
-               <a ng-href={{item.ref}} style="text-decoration: none;" menu-close>  &nbsp <i style="font-size:24px;" class="icon {{item.icon}}"></i> &nbsp {{item.name}}<span class="badge badge-assertive">2</span></a>  
+                    ng-show="isGroupShown(group)" ng-href={{item.ref}}  menu-close>
+                <i style="font-size:24px;" class="icon {{item.icon}}"></i> &nbsp {{item.name}}<span class="badge badge-assertive">2</span> 
                          
           </ion-item>
+          
 
         </div>
       </ion-list>

@@ -7,6 +7,41 @@
   background-color: #B0BEC5;
 }
 
+.background-leftmenu {
+  /*background-color: greenyellow;*/
+}
+
+
+.background-leftmenu .item {
+  
+  border:none;   /*Removes all borders*/
+  border-top: 1px solid;   /*Top Border for each menu item*/
+  border-bottom:2px solid;   /*Bottom border for each menu item*/
+  border-color: #666;   /*Sets colors for top and bottom border*/
+  color: brown;    /*Text color for each item*/
+}
+
+#submenu {
+  background-color: green;
+ 
+}
+
+#mainmenu, #menulink {
+  background-color: yellow;
+  
+}
+
+
+.background-leftmenu .item-complex .item-content, .dark .item-radio .item-content {
+  background-color: transparent;
+}
+
+#submenu:hover , #mainmenu:hover, #menulink:hover {
+  background-color: whitesmoke;
+  box-shadow: inset 0px 0px 0px 1px red;
+}
+
+
 .testBackGnd {
 	background-color: black;
 }
