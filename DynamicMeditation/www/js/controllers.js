@@ -58,6 +58,39 @@ angular.module('DynamicMeditation.controllers', [])
 })
 
 
+.controller('popOverCtrl',function($scope,$rootScope) {
+
+
+   console.log("inJquery start");
+
+ jQuery.getJSON('json/popOverMenu.json', function(data) {
+  console.log("inJquery PopOver");
+   var items = data;
+   console.log(items);
+       $scope.popItems = [];
+       var lang ="";
+
+   for (var i=0; i<items.items.length; i++) 
+   {
+    
+     
+    $scope.popItems[i] = {
+      icon: items.items[i].mIcon,
+      ref: items.items[i].mRef,
+      text: items.items[i].mText[$rootScope.Language]
+    };
+   
+   
+    
+  }
+  console.log( items.items[0].mIcon);
+
+
+ })
+
+})
+
+
 //load json profile;;
 .controller('ProfileLoad',function($scope,$rootScope) {
   

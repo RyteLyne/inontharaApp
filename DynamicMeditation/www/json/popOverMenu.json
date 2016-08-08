@@ -1,0 +1,42 @@
+{
+
+"items" : [
+{
+ "mIcon" : "ion-ios-home",
+ "mRef"  : "#/app/home",
+ "mText" : ["Home", "ಮನೆ", "घर"]
+},
+
+{
+ "mIcon" : "ion-person-add",
+ "mRef"  : "#/app/benefits",
+ "mText" : ["Refer", "ಉಲ್ಲೇಖ", "उल्लेख"]
+},
+{
+ "mIcon" : "ion-key",
+ "mRef"  : "#/home/main",
+ "mText" : ["Change Pwd","ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","पासवर्ड बदलें"]
+
+},
+
+{
+ "mIcon" : "ion-alert-circled",
+ "mRef"  : "#/home/main",
+ "mText" : ["Report", "ವರದಿ",  "रिपोर्ट"]
+
+},
+
+{
+ "mIcon" : "ion-locked",
+ "mRef"  : "#/app/logout",
+ "mText" : ["Logout", "ಲಾಗ್ ಔಟ್", "लोग आउट"]
+},
+
+{
+ "mIcon" : "ion-help",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Help", "ಸಹಾಯ", "मदद"]
+}
+
+]
+}
