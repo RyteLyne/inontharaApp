@@ -28,7 +28,23 @@
           <h2 style="color:white">**Naughty**</h2><br/><br/><br/>
           </div>
           </div>
-         
+<div>
+      <section id="cd-timeline" class="cd-container" ng-controller='PicturesCtrl'>
+          <div ng-repeat="activity in timeline">
+            <div class="cd-timeline-block">
+              <div class="cd-timeline-picture dark">
+                <img ng-src={{activity.profilePicture}}></img>
+              </div>
+              <!-- cd-timeline-img -->
+              <div class="cd-timeline-content dark">
+                <h5 class="marginBottom0 marginTop0">{{activity.title}}</h5>
+                <p class="marginTop5 cd-author">by {{activity.author}} on {{activity.date | date: "d MMM"}}</p>
+                <p class="timelineText">{{activity.text}}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+     </div>    
   </ion-content>
   
 </ion-view>

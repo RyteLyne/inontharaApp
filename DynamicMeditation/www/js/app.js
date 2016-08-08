@@ -810,7 +810,23 @@ myApp.controller('extranoteCtrl', function($scope, $state, $ionicHistory) {
      };
 });
 
-myApp.controller('initCtrl', function($scope, $state, $ionicHistory) {
+myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
+  $ionicPopover.fromTemplateUrl('templates/popover.html', {
+    scope: $scope,
+  }).then(function(popover) {
+    $scope.popover = popover;
+  });
+
+  $scope.demo = 'ios';
+  $scope.setPlatform = function(p) {
+    document.body.classList.remove('platform-ios');
+    document.body.classList.remove('platform-android');
+    document.body.classList.add('platform-' + p);
+    $scope.demo = p;
+  }
+
+
+
   console.log("in init control");
       $scope.goBack = function(){
       console.log("pressed goback");

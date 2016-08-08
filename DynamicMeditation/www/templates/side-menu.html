@@ -6,12 +6,16 @@
              </button>
             </ion-nav-buttons>
       <ion-nav-buttons side="right">
+         <div class="buttons">
+        <button class="button button-icon ion-more" ng-click="popover.show($event)">
+        </button>
+        </div>
         <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
         </button>
 
       </ion-nav-buttons>
    
-   
+ 
     </ion-nav-bar>
     <ion-nav-view name="content"></ion-nav-view>
   </ion-side-menu-content>
