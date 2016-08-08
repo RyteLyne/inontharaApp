@@ -1,13 +1,20 @@
 <ion-view cache-view="false" view-title="Login" name="login-view" ng-controller="LogInCtrl">
-  <ion-content class="padding">
-      <div class="list list-inset vcenter-container">
-          <label class="item item-input">
-              <input type="text" placeholder="Username" ng-model="Credentials.username">
+  <ion-content  delegate-handle="simpleScrollAnime" scroll=true class="padding" style="background-image: url(img/g20.png); no-repeat center center fixed; -webkit-background-size: cover;">
+      <div   class="list list-inset vcenter-container" style="background-color:none;">
+           <img src="img/g74.png" style="height:15vh; width:auto; position:relative; top:-40px;">
+
+
+          <label class="item item-input" style="background-color:black;opacity:0.3;border:none; border-bottom: solid; border-bottom-color:white;border-bottom-opacity:0.3;">
+              <i class="icon ion-person" style="font-size:26px; color:white"> </i>
+              <input type="text" placeholder="        Username" ng-model="Credentials.username" style="text-indent: 30px;color:white">
+   
           </label>
-          <label class="item item-input">
-              <input type="password" placeholder="Password" ng-model="Credentials.password">
+          <label class="item item-input"  style="background-color:black;opacity:0.3; border:none">
+              <i class="icon ion-locked" style="font-size:24px; color:white"> </i>
+              <input type="password" placeholder="        Password" ng-model="Credentials.password" style="text-indent: 30px; color:white;">
           </label>
-          <button class="button button-block button-calm" ng-click="login()">Login</button>
+           <break>
+           <i class="icon ion-log-in" style="font-size:56px; color:black; opacity:0.3; position:relative; top:20px;" ng-click="login()"> </i>
       </div>   
   </ion-content>
 </ion-view>

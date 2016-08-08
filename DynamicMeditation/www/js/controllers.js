@@ -315,7 +315,7 @@ $state.go('login',{},{reload:true});
  
 })
 
-.controller('LogInCtrl', function($scope,$rootScope,$state) {
+.controller('LogInCtrl', function($scope,$rootScope,$state, $ionicScrollDelegate) {
 
 $scope.Credentials =
   {
@@ -326,7 +326,7 @@ $scope.Credentials =
 
   $scope.login = function Login()
   {
-
+   $scope.scrollSmallToTop();
     console.log("UserName: ", $scope.Credentials.username, "Password: " , $scope.Credentials.password);
   //login to server here, if success redirect to home page;;
   if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
@@ -342,6 +342,10 @@ $scope.Credentials =
 
   }
 
+$scope.scrollSmallToTop = function() {
+ console.log("did i scroll");
+    $ionicScrollDelegate.$getByHandle('simpleScrollAnime').scrollTop(true);
+  };
 
 })
 
