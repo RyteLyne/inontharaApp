@@ -1,47 +1,111 @@
 {
 	"groups": [{
-		"mName": ["Gallery","ಗ್ಯಾಲರಿ","गेलरी"],
-		"mIcon": "ion-university",
+		"mName": ["Home TimeLine","Home TimeLine","Home TimeLine"],
+		"mIcon": "ion-ios-home-outline",
 		"mRef" :"#/app/settings",
-		"mProgramId" : "1234"
+		"mId" : "1234"
 	}, 
 
 	{
-		"mName": ["Co-Ordinator","Co-Ordinator","Co-Ordinator"],
-		"mIcon": "ion-ios-people",
+		"mName": ["Today @ my Class room","Today @ my Class room","Today @ my Class room"],
+		"mIcon": "ion-ios-compose-outline",
 		"mRef" :"#/app/profile",
-		"mProgramId" : "1234"
+		"mId" : "1234"
 	}, 
       
       {
-		"mName": ["Accounts Department","Accounts Department","Accounts Department"],
-		"mIcon": "ion-android-bicycle",
+		"mName": ["Principal's Desk","Principal's Desk","Principal's Desk"],
+		"mIcon": "ion-ios-glasses-outline",
 		"mRef" :"#/app/login",
-		"mProgramId" : "1234"
+		"mId" : "1234"
 	}, 
 
 	{
-		"mName": ["Diary","ಡೈರಿ","डेयरी"],
-		"mIcon": "ion-card",
+		"mName": ["School Transport","School Transport","School Transport"],
+		"mIcon": "ion-ios-location-outline",
+		"mRef" :"#/home/main",
+		"mId" : "1234"
+	},
+
+	{
+		"mName": ["School Co-ordinator","School Co-ordinator","School Co-ordinator"],
+		"mIcon": "ion-ios-person-outline",
+		"mRef" :"#/home/main",
+		"mId" : "1234"
+	},
+
+{
+       "mName": ["Departments","Departments","Departments"],
+		"mIcon": "ion-ios-briefcase-outline",
+		"mRef" :"",
+		"mItems": [
+
+   {
+		"mName": ["Sports Department","Sports Department","Sports Department"],
+		"mIcon": "ion-ios-americanfootball-outline",
+		"mRef" :"#/home/main",
+		"mId" : "1234"
+	},
+
+
+	{
+		"mName": ["Library","Library","Library"],
+		"mIcon": "ion-ios-bookmarks-outline",
+		"mRef" :"#/home/main",
+		"mId" : "1234"
+	},
+
+	{
+		"mName": ["Accounts Departments","Accounts Departments","Accounts Departments"],
+		"mIcon": "ion-ios-calculator-outline",
+		"mRef" :"#/home/main",
+		"mId" : "1234"
+	}
+	]
+
+},
+
+
+	{
+		"mName": ["Extra Cirricular","Extra Cirricular","Extra Cirricular"],
+		"mIcon": "ion-ios-mic-outline",
 		"mRef" :"",
 		"mItems": [{
-			"mName": ["Events","Events","Events"],
-			"mIcon": "ion-home",
+			"mName": ["NCC & Scouts","NCC & Scouts","NCC & Scouts"],
+			"mIcon": "ion-ios-body-outline",
 			"mRef" :"#/app/newsfeed",
-			"mProgramId" : "1234"
+			"mId" : "1234"
 		},
 		 {
-			"mName": ["Leaves","ರಜಾ","छुट्टी"],
-			"mIcon": "ion-home",
+			"mName": ["Cultural Club","Cultural Club","Cultural Club"],
+			"mIcon": "ion-ios-musical-note",
 			"mRef" : "#/home/main",
-			"mProgramId" : "1234"
-		}]
+			"mId" : "1234"
+		}
+
+
+		]
 	}, {
-		"mName": ["Library","Library","Library"],
-		"mIcon": "ion-android-bicycle",
+		"mName": ["App admin","App admin","App admin"],
+		"mIcon": "ion-ios-keypad-outline",
 		"mRef" :"#/home/main",
-		"mProgramId" : "1234"
-	} 
+		"mId" : "1234"
+	},
+
+	{
+		"mName": ["School Policy","School Policy","School Policy"],
+		"mIcon": "ion-ios-list-outline",
+		"mRef" :"#/home/main",
+		"mId" : "1234"
+	},
+
+
+	{
+		"mName": ["Parent Guide","Parent Guide","Parent Guide"],
+		"mIcon": "ion-ios-eye-outline",
+		"mRef" :"#/home/main",
+		"mId" : "1234"
+	}
 
 	]
 }

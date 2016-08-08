@@ -1,6 +1,9 @@
 /* Background */
 .background-grey {
-  background-color: #455A64;
+ /* background-color: #455A64;*/
+ background-image : url("/img/menu_background.jpg");
+
+
 }
 
 .background-lighgrey {
@@ -13,21 +16,23 @@
 
 
 .background-leftmenu .item {
-  
+  background-image : url("/img/menu_background.jpg");
   border:none;   /*Removes all borders*/
   border-top: 1px solid;   /*Top Border for each menu item*/
   border-bottom:2px solid;   /*Bottom border for each menu item*/
   border-color: #666;   /*Sets colors for top and bottom border*/
-  color: brown;    /*Text color for each item*/
+  color: white;    /*Text color for each item*/
 }
 
 #submenu {
-  background-color: green;
+  /*background-color: green;*/
+   background: rgba(0,0,255,0.2);
  
 }
 
 #mainmenu, #menulink {
-  background-color: yellow;
+ /* background-color: yellow;*/
+  /*background: rgba(128,0,0,0.1);*/
   
 }
 
@@ -37,8 +42,9 @@
 }
 
 #submenu:hover , #mainmenu:hover, #menulink:hover {
-  background-color: whitesmoke;
-  box-shadow: inset 0px 0px 0px 1px red;
+  
+  box-shadow: inset 0px 0px 0px 8px rgba(102,0,0,0.1);
+  background: rgba(102,0,0,0.8);
 }
 
 
@@ -73,6 +79,7 @@
 
 /* Components */
 .col.col-center{
+
    display: -webkit-flex;
    display: flex;
    -webkit-flex-direction: row
@@ -81,8 +88,13 @@
    align-items: center;
    -webkit-justify-content: center;
    justify-content: center;
-
   
+}
+
+.element{
+text-align:center; 
+text-decoration: none;
+color:white;
 }
 
 

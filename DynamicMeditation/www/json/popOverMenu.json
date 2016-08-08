@@ -2,40 +2,34 @@
 
 "items" : [
 {
- "mIcon" : "ion-ios-home",
+ "mIcon" : "ion-link",
  "mRef"  : "#/app/home",
- "mText" : ["Home", "ಮನೆ", "घर"]
+ "mText" : ["Refer", "Refer", "घर"]
 },
 
 {
- "mIcon" : "ion-person-add",
+ "mIcon" : "ion-bug",
  "mRef"  : "#/app/benefits",
- "mText" : ["Refer", "ಉಲ್ಲೇಖ", "उल्लेख"]
+ "mText" : ["Report", "ಉಲ್ಲೇಖ", "उल्लेख"]
 },
-{
- "mIcon" : "ion-key",
- "mRef"  : "#/home/main",
- "mText" : ["Change Pwd","ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","पासवर्ड बदलें"]
-
-},
-
-{
- "mIcon" : "ion-alert-circled",
- "mRef"  : "#/home/main",
- "mText" : ["Report", "ವರದಿ",  "रिपोर्ट"]
-
-},
-
-{
- "mIcon" : "ion-locked",
- "mRef"  : "#/app/logout",
- "mText" : ["Logout", "ಲಾಗ್ ಔಟ್", "लोग आउट"]
-},
-
 {
  "mIcon" : "ion-help",
- "mRef"  : "#/app/newsfeed",
- "mText" : ["Help", "ಸಹಾಯ", "मदद"]
+ "mRef"  : "#/home/main",
+ "mText" : ["Help","ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","पासवर्ड बदलें"]
+
+},
+
+{
+ "mIcon" : "ion-gear-b",
+ "mRef"  : "#/home/main",
+ "mText" : ["Settings", "ವರದಿ",  "रिपोर्ट"]
+
+},
+
+{
+ "mIcon" : "ion-log-out",
+ "mRef"  : "#/app/logout",
+ "mText" : ["Logout", "Logout", "लोग आउट"]
 }
 
 ]

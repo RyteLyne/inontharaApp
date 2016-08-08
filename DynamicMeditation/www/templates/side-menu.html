@@ -22,6 +22,7 @@
 
   <ion-side-menu side="right" ng-controller="SideMenuCtrl">
     <ion-pane class="background-grey">
+    <ion-content scroll=true>
 
       <!--<div class="row menu-top">
         <div class="col col-center">
@@ -36,7 +37,7 @@
           <div class ="row" ng-if="$index%3==0">
 
             <div class="col col-30 col-center" >
-            <a style= "text-align:center; text-decoration: none;" ng-href="{{rightItems[$index].ref}}" ng-if = "rightItems[$index]!=undefined">
+            <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if = "rightItems[$index]!=undefined">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index].icon}}"></i>
             </button>
@@ -46,7 +47,7 @@
            </div>
 
            <div class="col col-30 col-center">
-            <a style= "text-align:center; text-decoration: none;" ng-href="{{rightItems[$index+1].ref}}" ng-if = "rightItems[$index+1]!=undefined">
+            <a class="element"  ng-href="{{rightItems[$index+1].ref}}" ng-if = "rightItems[$index+1]!=undefined">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index+1].icon}}"></i>
             </button>
@@ -56,7 +57,7 @@
            </div>
 
            <div class="col col-30 col-center">
-            <a  style= "text-align:center; text-decoration: none;" ng-href="{{rightItems[$index+2].ref}}" ng-if = "rightItems[$index+2]!=undefined">
+            <a  class="element" ng-href="{{rightItems[$index+2].ref}}" ng-if = "rightItems[$index+2]!=undefined">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index+2].icon}}"></i>
             </button>
@@ -133,13 +134,9 @@
             <i class="ion-person"></i>
         </div>
       </div> -->
-
+    </ion-content>
     </ion-pane>
   </ion-side-menu>
-
-
-
-
 
 
 

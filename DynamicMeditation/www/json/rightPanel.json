@@ -2,41 +2,144 @@
 
 "items" : [
 {
- "mIcon" : "ion-ios-home",
+ "mIcon" : "ion-ios-person-outline",
  "mRef"  : "#/app/home",
- "mText" : ["Home", "ಮನೆ", "घर"]
+ "mText" : ["Profile", "ಮನೆ", "घर"],
+ "mId" : "1234"
 },
 
 {
- "mIcon" : "ion-person-add",
+ "mIcon" : "ion-ios-book-outline",
  "mRef"  : "#/app/benefits",
- "mText" : ["Refer", "ಉಲ್ಲೇಖ", "उल्लेख"]
+ "mText" : ["Dairy", "ಉಲ್ಲೇಖ", "उल्लेख"],
+ "mId" : "1234"
 },
 
 {
- "mIcon" : "ion-key",
+ "mIcon" : "ion-ios-stopwatch-outline",
  "mRef"  : "#/home/main",
- "mText" : ["Change Pwd","ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","पासवर्ड बदलें"]
-
+ "mText" : ["Time Table","ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","पासवर्ड बदलें"],
+ "mId" : "1234"
 },
 
 {
- "mIcon" : "ion-alert-circled",
+ "mIcon" : "ion-android-checkmark-circle",
  "mRef"  : "#/home/main",
- "mText" : ["Report", "ವರದಿ",  "रिपोर्ट"]
+ "mText" : ["Attendance", "ವರದಿ",  "रिपोर्ट"],
+ "mId" : "1234"
 
 },
 
 {
- "mIcon" : "ion-locked",
+ "mIcon" : "ion-ios-film-outline",
  "mRef"  : "#/app/logout",
- "mText" : ["Logout", "ಲಾಗ್ ಔಟ್", "लोग आउट"]
+ "mText" : ["Gallery", "ಲಾಗ್ ಔಟ್", "लोग आउट"],
+ "mId" : "1234"
 },
 
 {
- "mIcon" : "ion-help",
+ "mIcon" : "ion-ios-chatboxes-outline",
  "mRef"  : "#/app/newsfeed",
- "mText" : ["Help", "ಸಹಾಯ", "मदद"]
+ "mText" : ["Messages", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" :  "ion-ios-calendar-outline",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Calander", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-pin",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Notice Board", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-android-create",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Online Test", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-podium",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Survey", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-social-buffer-outline",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Assignments", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-ios-paper-outline",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Sylabus", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-cash",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Payments", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-paperclip",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Magazine", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-ios-compose-outline",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Notes", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-ios-location-outline",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Locate Me", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-ios-refresh-empty",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Lost and Found", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-thermometer",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Leaves", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-arrow-return-left",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Feed back", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
+},
+
+{
+ "mIcon" : "ion-university",
+ "mRef"  : "#/app/newsfeed",
+ "mText" : ["Results", "ಸಹಾಯ", "मदद"],
+ "mId" : "1234"
 }
 
 ]
