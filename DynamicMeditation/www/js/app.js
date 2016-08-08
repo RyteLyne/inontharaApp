@@ -816,16 +816,20 @@ myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHisto
   }).then(function(popover) {
     $scope.popover = popover;
   });
-
+ 
   $scope.demo = 'ios';
+	
   $scope.setPlatform = function(p) {
     document.body.classList.remove('platform-ios');
     document.body.classList.remove('platform-android');
     document.body.classList.add('platform-' + p);
+   // $scope.demo = p;
+ 	console.log("setting platform as ios for popup alwasy");
+    //document.body.classList.add('platform-ios');
     $scope.demo = p;
   }
 
-
+ $scope.setPlatform('ios');
 
   console.log("in init control");
       $scope.goBack = function(){
