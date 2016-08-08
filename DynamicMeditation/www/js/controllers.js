@@ -251,7 +251,6 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
 
 .controller('SplashCtrl', function($scope,$rootScope,$state) {
 
-
 $scope.Credentials =
   {
     username : "",
