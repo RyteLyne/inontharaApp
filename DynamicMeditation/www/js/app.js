@@ -146,6 +146,7 @@ myApp.controller('PlatformCtrl2', function($scope, $rootScope, $state, $http) {
    //gcmapp will deprecated from here 
  // gcmapp.Initialize();
 
+  $rootScope.SelChannel = 0;
 
 
   pushNotification = PushNotification.init({

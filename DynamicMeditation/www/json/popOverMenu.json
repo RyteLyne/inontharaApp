@@ -21,7 +21,7 @@
 
 {
  "mIcon" : "ion-gear-b",
- "mRef"  : "#/home/main",
+ "mRef"  : "#/app/settings",
  "mText" : ["Settings", "ವರದಿ",  "रिपोर्ट"]
 
 },

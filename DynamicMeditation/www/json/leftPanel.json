@@ -2,36 +2,36 @@
 	"groups": [{
 		"mName": ["Home TimeLine","Home TimeLine","Home TimeLine"],
 		"mIcon": "ion-ios-home-outline",
-		"mRef" :"#/app/settings",
-		"mId" : "1234"
+		"mRef" :"#/app/home",
+		"mId" : 1
 	}, 
 
 	{
 		"mName": ["Today @ my Class room","Today @ my Class room","Today @ my Class room"],
 		"mIcon": "ion-ios-compose-outline",
-		"mRef" :"#/app/profile",
-		"mId" : "1234"
+		"mRef" :"#/app/newsfeed?1234",
+		"mId" : 2
 	}, 
       
       {
 		"mName": ["Principal's Desk","Principal's Desk","Principal's Desk"],
 		"mIcon": "ion-ios-glasses-outline",
-		"mRef" :"#/app/login",
-		"mId" : "1234"
+		"mRef" :"#/app/newsfeed",
+		"mId" : 3
 	}, 
 
 	{
 		"mName": ["School Transport","School Transport","School Transport"],
 		"mIcon": "ion-ios-location-outline",
-		"mRef" :"#/home/main",
-		"mId" : "1234"
+		"mRef" :"#/app/newsfeed",
+		"mId" : 4
 	},
 
 	{
 		"mName": ["School Co-ordinator","School Co-ordinator","School Co-ordinator"],
 		"mIcon": "ion-ios-person-outline",
-		"mRef" :"#/home/main",
-		"mId" : "1234"
+		"mRef" : "#/app/newsfeed",
+		"mId" : 5
 	},
 
 {
@@ -43,23 +43,23 @@
    {
 		"mName": ["Sports Department","Sports Department","Sports Department"],
 		"mIcon": "ion-ios-americanfootball-outline",
-		"mRef" :"#/home/main",
-		"mId" : "1234"
+		"mRef" :"#/app/newsfeed",
+		"mId" : 6
 	},
 
 
 	{
 		"mName": ["Library","Library","Library"],
 		"mIcon": "ion-ios-bookmarks-outline",
-		"mRef" :"#/home/main",
-		"mId" : "1234"
+		"mRef" :"#/app/newsfeed",
+		"mId" : 7
 	},
 
 	{
 		"mName": ["Accounts Departments","Accounts Departments","Accounts Departments"],
 		"mIcon": "ion-ios-calculator-outline",
-		"mRef" :"#/home/main",
-		"mId" : "1234"
+		"mRef" :"#/app/newsfeed",
+		"mId" : 8
 	}
 	]
 
@@ -74,13 +74,13 @@
 			"mName": ["NCC & Scouts","NCC & Scouts","NCC & Scouts"],
 			"mIcon": "ion-ios-body-outline",
 			"mRef" :"#/app/newsfeed",
-			"mId" : "1234"
+			"mId" : 9
 		},
 		 {
 			"mName": ["Cultural Club","Cultural Club","Cultural Club"],
 			"mIcon": "ion-ios-musical-note",
-			"mRef" : "#/home/main",
-			"mId" : "1234"
+			"mRef" : "#/app/newsfeed",
+			"mId" : 10
 		}
 
 
@@ -88,15 +88,15 @@
 	}, {
 		"mName": ["App admin","App admin","App admin"],
 		"mIcon": "ion-ios-keypad-outline",
-		"mRef" :"#/home/main",
-		"mId" : "1234"
+		"mRef" :"#/app/newsfeed",
+		"mId" : 11
 	},
 
 	{
 		"mName": ["School Policy","School Policy","School Policy"],
 		"mIcon": "ion-ios-list-outline",
 		"mRef" :"#/home/main",
-		"mId" : "1234"
+		"mId" : 12
 	},
 
 
@@ -104,7 +104,7 @@
 		"mName": ["Parent Guide","Parent Guide","Parent Guide"],
 		"mIcon": "ion-ios-eye-outline",
 		"mRef" :"#/home/main",
-		"mId" : "1234"
+		"mId" : 13
 	}
 
 	]

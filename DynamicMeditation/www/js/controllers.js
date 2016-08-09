@@ -46,7 +46,8 @@ angular.module('DynamicMeditation.controllers', [])
     $scope.rightItems[i] = {
       icon: items.items[i].mIcon,
       ref: items.items[i].mRef,
-      text: items.items[i].mText[$rootScope.Language]
+      text: items.items[i].mText[$rootScope.Language],
+      id: items.items[i].mId
     };
    
     
@@ -54,6 +55,11 @@ angular.module('DynamicMeditation.controllers', [])
   console.log( items.items[0].mIcon);
    
     })
+
+   $scope.itemclick = function(id) {
+   console.log("clicked Id" , id);
+   $rootScope.SelChannel = id;
+  }
 
 })
 
@@ -189,6 +195,7 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
       name: groups.groups[i].mName[$rootScope.Language],
       icon: groups.groups[i].mIcon,
       ref: groups.groups[i].mRef,
+      id : groups.groups[i].mId,
       items: []
     };
      if(groups.groups[i].mItems !== undefined)
@@ -202,6 +209,7 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
       name: groups.groups[i].mItems[j].mName[$rootScope.Language],
       icon: groups.groups[i].mItems[j].mIcon,
       ref: groups.groups[i].mItems[j].mRef,
+      id : groups.groups[i].mItems[j].mId,
       };
 
     }
@@ -264,6 +272,13 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
   }
 
 
+   $scope.itemclick = function(id) {
+   console.log("clicked Id" , id);
+   $rootScope.SelChannel = id;
+
+  }
+
+
 })
 
 
@@ -274,7 +289,7 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
   jQuery.getJSON('json/settings.json', function(data) {
 
    $scope.slides = data.slideImages;
-
+  
 
   });
   
