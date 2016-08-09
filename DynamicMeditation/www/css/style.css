@@ -2,6 +2,8 @@
 .background-grey {
  /* background-color: #455A64;*/
  background-image : url("/img/menu_background.jpg");
+   -webkit-background-size: cover ;
+  background-size: 80vh 100vh;
 
 
 }
@@ -12,11 +14,16 @@
 
 .background-leftmenu {
   /*background-color: greenyellow;*/
+  background-image : url("/img/menu_background.jpg");  
+  -webkit-background-size: cover ;
+  background-size: 80vh 100vh;
+
 }
 
 
+
 .background-leftmenu .item {
-  background-image : url("/img/menu_background.jpg");
+  background-color:transparent;
   border:none;   /*Removes all borders*/
   border-top: 1px solid;   /*Top Border for each menu item*/
   border-bottom:2px solid;   /*Bottom border for each menu item*/
@@ -97,6 +104,13 @@ text-decoration: none;
 color:white;
 }
 
+.icon_text
+{
+position:relative;
+text-align:center; 
+color:white;
+top: 8px;
+}
 
 /*for login screen*/
 .vcenter-container{
@@ -138,12 +152,12 @@ color:white;
 
 /* Buttons */
 .button-circle {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   color: white;
   border-radius: 50%;
-  background-color: #546E7A;
-  border: 3px solid #546E7A;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, .5);
   -webkit-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
    
@@ -164,10 +178,10 @@ font-size:9px;
 }
 
 .button-circle:hover {
-  border: 3px solid white;
-  background-color: #455A64;
+  border: 2px solid white;
+  background-color: rgba(255, 255, 255, .2);
   -webkit-transform: scale(1.2) !important;
-  transform: scale(1.2) !important;
+  transform: scale(1.1) !important;
 }
 
 .button-circle.rotate-15 {

@@ -869,7 +869,7 @@ var currentPlatform = ionic.Platform.platform();
   var currentPlatformVersion = ionic.Platform.version();
  $rootScope.devWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
  console.log($rootScope.devWidth);
- $rootScope.menuWidth = 0.85 * $rootScope.devWidth;
+ $rootScope.menuWidth = 0.90 * $rootScope.devWidth;
  console.log($rootScope.menuWidth);
   
   

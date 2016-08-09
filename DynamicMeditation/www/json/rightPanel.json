@@ -117,7 +117,7 @@
 {
  "mIcon" : "ion-ios-refresh-empty",
  "mRef"  : "#/app/newsfeed",
- "mText" : ["Lost and Found", "ಸಹಾಯ", "मदद"],
+ "mText" : ["Lost & Found", "ಸಹಾಯ", "मदद"],
  "mId" : "1234"
 },
 

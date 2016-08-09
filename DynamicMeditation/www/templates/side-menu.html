@@ -20,7 +20,7 @@
     <ion-nav-view name="content"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="right" ng-controller="SideMenuCtrl">
+  <ion-side-menu side="right" ng-controller="SideMenuCtrl" width = "{{menuWidth}}">
     <ion-pane class="background-grey">
     <ion-content scroll=true>
 
@@ -36,12 +36,12 @@
         <div ng-repeat="items in rightItems">
           <div class ="row" ng-if="$index%3==0">
 
-            <div class="col col-30 col-center" >
+            <div class="col col-33 col-center" >
             <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if = "rightItems[$index]!=undefined">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index].icon}}"></i>
             </button>
-            {{rightItems[$index].text}}
+            <div class="icon_text">   {{rightItems[$index].text}} </div>
             </a>
             
            </div>
@@ -51,7 +51,7 @@
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index+1].icon}}"></i>
             </button>
-              {{rightItems[$index+1].text}}
+            <div class="icon_text">  {{rightItems[$index+1].text}} </div>
             </a>
           
            </div>
@@ -61,7 +61,7 @@
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index+2].icon}}"></i>
             </button>
-             {{rightItems[$index+2].text}}
+          <div class="icon_text"> {{rightItems[$index+2].text}} </div>
             </a>
             
            </div>
