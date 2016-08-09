@@ -322,6 +322,14 @@ $scope.Credentials =
     username : "",
     password : ""
   }
+
+jQuery.getJSON('json/settings.json', function(data) {
+
+   $scope.loginImages = data.loginScreen;
+
+
+  });
+  
   
 
   $scope.login = function Login()
