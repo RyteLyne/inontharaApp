@@ -21,6 +21,12 @@
 "name" : "5.jpg",
 "msg": "Language"  
 }
-]
+],
+
+"loginScreen" :
+{
+"background" : "img/g20.png",
+"logo": "img/g74.png"
+}
 
 }
