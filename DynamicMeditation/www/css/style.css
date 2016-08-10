@@ -1,11 +1,47 @@
 /* Background */
 .background-grey {
  /* background-color: #455A64;*/
- background-image : url("/img/menu_background.jpg");
+/* background-image : url("/img/menu_background.jpg");*/
    -webkit-background-size: cover ;
   background-size: 80vh 100vh;
 
 
+}
+
+
+
+.background-popmenu {
+  /*background-color: greenyellow;*/
+/*  background-image : url("/img/menu_background.jpg");  */
+ /* -webkit-background-size: cover ;*/
+  background-size: 100vw 100vh;
+
+}
+
+.background-popmenu .item {
+  
+  border:none;   /*Removes all borders*/
+   /*Top Border for each menu item*/
+  /*Bottom border for each menu item*/
+  /*border-color: #666;   *//*Sets colors for top and bottom border*/
+  color: rgba(255, 255, 255, 0.85);    /*Text color for each item*/
+ /*	font-family: "Roboto";*/
+ 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+ 	/*text-indent: 10px;*/
+ 	text-align:center;
+ 	  text-decoration: none;
+ 	    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 30%,rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0) 100%);
+  width: 100%
+ box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
+/*
+  padding: 20px;
+ 
+  color: rgba(0, 0, 0, 0.5);
+  
+  font-size: 25px;
+
+  display: block;
+*/
 }
 
 .background-lighgrey {
@@ -14,7 +50,7 @@
 
 .background-leftmenu {
   /*background-color: greenyellow;*/
-  background-image : url("/img/menu_background.jpg");  
+/*  background-image : url("/img/menu_background.jpg");  */
   -webkit-background-size: cover ;
   background-size: 80vh 100vh;
 
@@ -23,15 +59,18 @@
 
 
 .background-leftmenu .item {
-  background-color:transparent;
+  
   border:none;   /*Removes all borders*/
    /*Top Border for each menu item*/
   /*Bottom border for each menu item*/
-  border-color: #666;   /*Sets colors for top and bottom border*/
-  color: rgba(255, 255, 255, 0.7);    /*Text color for each item*/
- 	font-family: "Roboto";
+  /*border-color: #666;   *//*Sets colors for top and bottom border*/
+  color: rgba(255, 255, 255, 0.85);    /*Text color for each item*/
+ 	/*font-family: "Roboto";*/
  	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
  	  text-decoration: none;
+ 	    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 30%,rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0) 100%);
+  width: 100%
+ box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
 /*
   padding: 20px;
  
@@ -45,6 +84,7 @@
 
 #submenu {
   /*background-color: green;*/
+  padding-left:26px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.7);
@@ -59,6 +99,7 @@
 
 .background-leftmenu .item-complex .item-content, .dark .item-radio .item-content {
   background-color: transparent;
+  
 }
 
 #submenu:hover , #mainmenu:hover, #menulink:hover {
@@ -174,6 +215,8 @@ top: 8px;
   border: 2px solid rgba(255, 255, 255, .5);
   -webkit-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
+  
+
    
 }
 
@@ -379,4 +422,12 @@ font-size:9px;
 progress[value] {
   width: 80%;
   height: 10px;
+}
+
+
+.badge-shadow {
+-webkit-box-shadow: -3px 3px 6px -4px rgba(56,44,56,1);
+-moz-box-shadow: -3px 3px 6px -4px rgba(56,44,56,1);
+box-shadow: -3px 3px 6px -4px rgba(56,44,56,1);
+position:relative;
 }
