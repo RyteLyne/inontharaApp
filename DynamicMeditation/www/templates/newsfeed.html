@@ -5,30 +5,33 @@
   The Friends service returns an array of friend data
 -->
 
-<ion-view  cache-view="false">
+<ion-view  cache-view="false" ng-controller= 'newsfeedctrl'>
   <ion-content class="padding">
 
-  
+
+  <div ng-repeat = "data in proData" href="#/app/readView" style="text-decoration:none;">
    <div class="card">
    <div class="item item-avatar">
-      <img src="img/sid.jpg">
-      <h2> This month in the school {{SelChannel}}<h2>
-      <h3>Siddanth</h3>
-        <h4>32 mins ago</h4>
+      <img src="{{data.Photo}}">
+      <h2> {{data.Heading}} {{SelChannel}}<h2>
+      <h3>{{data.FromName}}</h3>
+        <h4>{{data.Time}}</h4>
    </div>
 
    <div class="item item-body">
-      <img class="full-image" src="img/my-image.jpg">
-      Siddhant visited school library and he read lot of books
+      <img class="full-image" src="{{data.Image}}">
+      {{SliceData(data.Text)}} ...
     <break>
     <div>
-     <a  href="#/app/readView" style="text-align:right; text-decoration:none;"> read more .. 
+     <a style="text-align:right;"> read more .. 
   </a>
 </div>
 </div>
 </div>
+</div>
 
 
+<!--
    <div class="card">
    <div class="item item-avatar">
       <img src="img/sid.jpg">
@@ -47,6 +50,9 @@
 </div>
 </div>
 </div>
+-->
+
+
   </ion-content>
   
        <fab-button target-id="scrollFabButtonTarget">

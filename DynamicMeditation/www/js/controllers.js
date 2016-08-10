@@ -372,6 +372,43 @@ $scope.scrollSmallToTop = function() {
 
 })
 
+
+.controller('newsfeedctrl', function($scope,$window,$state,$rootScope) {
+
+
+
+ // $scope.$on('$ionicView.beforeEnter', function(){
+
+     console.log("entered");
+
+  jQuery.getJSON('json/channel-program.json', function(data) {
+
+    var programName = 'ProgramId_' + $rootScope.SelChannel;
+
+    console.log(programName);
+
+    $scope.proData = data[programName].ProgramData;
+  
+
+  });
+    
+
+
+    $scope.SliceData = function(datatoslice)
+    {
+       if(datatoslice.length > 100)
+        return(datatoslice.slice(0,100));
+       else
+       return(datatoslice);
+
+    }
+
+  
+
+
+
+})
+
 .controller('LogOutCtrl', function($scope,$window,$state) {
 
 if(window.localStorage.getItem("setting") != undefined) //default settings;;
