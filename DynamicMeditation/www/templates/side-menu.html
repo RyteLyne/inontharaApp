@@ -1,16 +1,29 @@
+<ion-nav-view>
+  <ion-view >
+    <ion-nav-title>
+      <img src="logo.svg">Vidhyaan
+
+    </ion-nav-title>
+    <ion-content>
+      Some super content here!
+    </ion-content>
+  </ion-view>
+</ion-nav-view>
+
+
 <ion-side-menus >
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-stable"  ng-controller="initCtrl">
+    <ion-nav-bar class="bar-dark" ng-controller="initCtrl">
      <ion-nav-buttons side="left" >
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">   
+        <button style="color:rgba(188,74,99,1);"class="button button-icon button-clear ion-navicon" menu-toggle="left">   
              </button>
             </ion-nav-buttons>
       <ion-nav-buttons side="right">
          <div class="buttons">
-        <button class="button button-icon ion-more" ng-click="popover.show($event)">
+        <button  style="color:rgba(188,74,99,1);font-size:14;" class="button button-icon ion-ios-toggle-outline" ng-click="popover.show($event)">
         </button>
         </div>
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
+        <button  style="color:rgba(188,74,99,1);font-size:14;" class="button button-icon button-clear ion-ios-keypad-outline" menu-toggle="right">
         </button>
 
       </ion-nav-buttons>
@@ -22,7 +35,7 @@
 
   <ion-side-menu side="right" ng-controller="SideMenuCtrl" width = "{{menuWidth}}">
     <ion-pane class="background-grey" >
-    <ion-content scroll=true  >
+    <ion-content scroll=true style=" background-image : url('img/menu_background.jpg');" >
 
       <!--<div class="row menu-top">
         <div class="col col-center">
@@ -40,34 +53,36 @@
         <div ng-repeat="items in rightItems">
           <div class ="row" ng-if="$index%3==0">
 
-            <div class="col col-33 col-center" >
-            <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if = "rightItems[$index]!=undefined" ng-click= "itemclick({{rightItems[$index].id}})">
+            <div style="position:relative;" class="col col-33 col-center" >
+    
+           <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if = "rightItems[$index]!=undefined" ng-click= "itemclick({{rightItems[$index].id}})">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index].icon}}"></i>
             </button>
             <div class="icon_text">   {{rightItems[$index].text}} </div>
             </a>
-            
+            <span class="badge badge-dark badge-shadow" style="position:absolute;right:12px;top:-2px">3</span>
            </div>
 
-           <div class="col col-30 col-center">
+           <div style="position:relative;" class="col col-30 col-center">
             <a class="element"  ng-href="{{rightItems[$index+1].ref}}" ng-if = "rightItems[$index+1]!=undefined" ng-click= "itemclick({{rightItems[$index+1].id}})">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index+1].icon}}"></i>
             </button>
             <div class="icon_text">  {{rightItems[$index+1].text}} </div>
             </a>
-          
+              <span class="badge badge-dark badge-shadow" style="position:absolute;right:12px;top:-2px">3</span>
+        
            </div>
 
-           <div class="col col-30 col-center">
+           <div style="position:relative;" class="col col-30 col-center">     
             <a  class="element" ng-href="{{rightItems[$index+2].ref}}" ng-if = "rightItems[$index+2]!=undefined" ng-click= "itemclick({{rightItems[$index+2].id}})">
-            <button class="button-circle" animate-ratio="fadeIn"  menu-close>
+                   <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index+2].icon}}"></i>
             </button>
           <div class="icon_text"> {{rightItems[$index+2].text}} </div>
             </a>
-            
+            <span class="badge badge-dark badge-shadow" style="position:absolute;right:12px;top:-2px">3</span>
            </div>
 
 
@@ -153,33 +168,33 @@
             <i class="ion-erlenmeyer-flask"></i>
         </div>-->
      
-     <ion-content scrollbar-x="false" scrollbar-y="false" class="background-leftmenu">
- <div class="item-avatar" style="display:block;height:24vh">
-  <img src="img/g74.png" style="height:12vh; width:auto; max-width:150px;max-height:150px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;left:32vw;top:10vh;">
+     <ion-content scrollbar-x="false" scrollbar-y="false" class="background-leftmenu" style="background-image : url(img/menu_background.jpg);"  >
+ <div class="item-avatar" >
+  <img src="img/g74.png" style="height:15vh; width:15vh; max-width:150px;max-height:150px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;left:30vw;top:6vh;">
    </img> </div>
       
-<div style:"display:block;position:absolute;top:70vh;">
+<div style="display:block;position:relative;padding-top:16vh;">
          <ion-list >
         <div ng-repeat="group in groups">
 
 
           <ion-item id = "menulink" ng-if = "group.ref==''" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
-                 <i style="font-size:24px;" class="icon {{group.icon}}"  ></i> &nbsp {{group.name}} <span class="badge badge-assertive">3</span>  
+                 <i style="font-size:24px;" class="icon {{group.icon}}"  ></i> &nbsp {{group.name}} <span class="badge badge-dark badge-shadow">3</span>  
             
-              <i class="icon" right:"5px" ng-class="isGroupShown(group) ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i>
+              <i style="position:absolute;right:90px;" class="icon" right:"5px" ng-class="isGroupShown(group) ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i>
           </ion-item>
 
 
           <ion-item  id = "mainmenu" ng-if = "group.ref!=''" ng-href="{{group.ref}}" ng-click = "itemclick({{group.id}})" menu-close>
          
-          <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-assertive">2</span>
+          <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-dark  badge-shadow">2</span>
           
           </ion-item>
 
           <ion-item id = "submenu"
                     ng-repeat="item in group.items"
                     ng-show="isGroupShown(group)" ng-href={{item.ref}} ng-click = "itemclick({{item.id}})" menu-close>
-                <i style="font-size:24px;" class="icon {{item.icon}}"></i> &nbsp {{item.name}}<span class="badge badge-assertive">2</span> 
+                <i style="font-size:24px;" class="icon {{item.icon}}"></i> &nbsp {{item.name}}<span class="badge badge-shadow badge-dark">2</span> 
                          
           </ion-item>
           
