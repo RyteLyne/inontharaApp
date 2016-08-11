@@ -43,6 +43,7 @@
               </div>
               <!-- cd-timeline-img -->
               <div class="cd-timeline-content dark">
+              <img ng-src={{activity.profilePicture}} style="max-width:100%"></img>
                 <h5 class="marginBottom0 marginTop0">{{activity.title}}</h5>
                 <p class="marginTop5 cd-author">by {{activity.author}} on {{activity.date | date: "d MMM"}}</p>
                 <p class="timelineText">{{activity.text}}</p>
