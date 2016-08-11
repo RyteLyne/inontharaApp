@@ -864,30 +864,7 @@ myApp.controller('homeCtrl', function($scope, $state, $ionicHistory) {
     };
 });
 
-myApp.controller('PlatformCtrl', function($scope, $rootScope, $state, $http) {
-	console.log("plaform controller");
-var currentPlatform = ionic.Platform.platform();
-  var currentPlatformVersion = ionic.Platform.version();
- $rootScope.devWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
- console.log($rootScope.devWidth);
- $rootScope.menuWidth = 0.90 * $rootScope.devWidth;
- console.log($rootScope.menuWidth);
-  
-  
-if(window.localStorage.getItem("setting") != undefined) //default settings;;
-{
 
-$rootScope.Language = window.localStorage.getItem("language");
-
-}
-else
-{
-$rootScope.Language = 0;
-
-}
-
-
-});
 
 
 myApp.controller('rightViewCtrl',function($scope, $ionicSideMenuDelegate, $stateParams) {

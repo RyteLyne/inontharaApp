@@ -32,27 +32,28 @@ angular.module('DynamicMeditation.controllers', [])
 .controller('RightMenuCtrl', function($scope, $stateParams, $rootScope) {
  console.log("inJquery start");
 
- jQuery.getJSON('json/rightPanel.json', function(data) {
+ jQuery.getJSON('json/Programs.json', function(data) {
   console.log("inJquery Right");
-   var items = data;
+   var items = data.RightPrograms;
    console.log(items);
        $scope.rightItems = [];
        var lang ="";
 
-   for (var i=0; i<items.items.length; i++) 
+   for (var i=0; i<items.length; i++) 
    {
     
      
     $scope.rightItems[i] = {
-      icon: items.items[i].mIcon,
-      ref: items.items[i].mRef,
-      text: items.items[i].mText[$rootScope.Language],
-      id: items.items[i].mId
+      icon: items[i].mIcon,
+      ref:  items[i].mRef,
+      text: items[i].mText[$rootScope.Language],
+      id:   items[i].mId,
+      cnt:  $rootScope.NotificationCount["NcProgramId_" + items[i].mId]
     };
    
     
   }
-  console.log( items.items[0].mIcon);
+ 
    
     })
 
@@ -164,55 +165,57 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
    */
     //var groups={};
 
+    var groupcnt=0;
+
    console.log("inside 456");
-   //$scope.tree =[10];
-
-  /* jQuery.getJSON('json/leftPanel.json', function(data) {
-   console.log("inside 123");
-  
-   $scope.tree = data.group;
-
-   
-    $scope.theme = 'ionic-sidemenu-blue';
-    $scope.load = 1;
-
-   console.log(data);
  
-    });*/
-
-
-
-  jQuery.getJSON('json/leftPanel.json', function(data) {
+  jQuery.getJSON('json/Programs.json', function(data) {
   console.log("inJquery");
  // console.log(data);
-   var groups = data;
+   var groups = data.LeftPrograms;
    console.log(groups);
        $scope.groups = [];
  
-   console.log(groups.groups);
-   for (var i=0; i<groups.groups.length; i++) {
+   console.log(groups);
+   for (var i=0; i<groups.length; i++) {
     $scope.groups[i] = {
-      name: groups.groups[i].mName[$rootScope.Language],
-      icon: groups.groups[i].mIcon,
-      ref: groups.groups[i].mRef,
-      id : groups.groups[i].mId,
+      name: groups[i].mName[$rootScope.Language],
+      icon: groups[i].mIcon,
+      ref:  groups[i].mRef,
+      id :  groups[i].mId,
+      cnt : $rootScope.NotificationCount["NcProgramId_" + groups[i].mId],
       items: []
     };
-     if(groups.groups[i].mItems !== undefined)
-    for (var j=0; j<groups.groups[i].mItems.length; j++) 
+     if(groups[i].mItems !== undefined) //sub items present;;
+     {
+       groupcnt = 0;
+    for (var j=0; j<groups[i].mItems.length; j++) 
     {
     //  console.log(groups.groups.[i].name)
    
      // $scope.groups[i].items.push(groups.groups[i].mItems[j]);
 
       $scope.groups[i].items[j] = {
-      name: groups.groups[i].mItems[j].mName[$rootScope.Language],
-      icon: groups.groups[i].mItems[j].mIcon,
-      ref: groups.groups[i].mItems[j].mRef,
-      id : groups.groups[i].mItems[j].mId,
+      name: groups[i].mItems[j].mName[$rootScope.Language],
+      icon: groups[i].mItems[j].mIcon,
+      ref: groups[i].mItems[j].mRef,
+      id : groups[i].mItems[j].mId,
+      cnt : $rootScope.NotificationCount["NcProgramId_" + groups[i].mItems[j].mId],
       };
 
+      groupcnt = groupcnt + $scope.groups[i].items[j].cnt;
+
     }
+
+       $scope.groups[i].cnt = groupcnt;
+
+     }
+     
+
+
+
+
+
   }
    
     });
@@ -375,8 +378,6 @@ $scope.scrollSmallToTop = function() {
 
 .controller('newsfeedctrl', function($scope,$window,$state,$rootScope) {
 
-
-
  // $scope.$on('$ionicView.beforeEnter', function(){
 
      console.log("entered");
@@ -422,6 +423,91 @@ console.log("Log out");
 $state.go('login',{},{reload:true});
 
 })
+
+
+
+.controller('PlatformCtrl', function($scope, $rootScope, $state, $http) {
+	console.log("plaform controller");
+var currentPlatform = ionic.Platform.platform();
+  var currentPlatformVersion = ionic.Platform.version();
+ $rootScope.devWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
+ console.log($rootScope.devWidth);
+ $rootScope.menuWidth = 0.90 * $rootScope.devWidth;
+ console.log($rootScope.menuWidth);
+  
+  
+if(window.localStorage.getItem("setting") != undefined) //default settings;;
+{
+
+$rootScope.Language = window.localStorage.getItem("language");
+
+}
+else
+{
+$rootScope.Language = 0;
+
+}
+
+
+$rootScope.LoadNotificationCount = function()
+{
+
+console.log("hello from LoadNotificationCount");
+//read program id from file
+//var NotificationCount = {};
+
+$rootScope.NotificationCount = {};
+
+
+  jQuery.getJSON('json/Channel.json', function(data) {
+
+    
+   var Items = data.ProgramIds;
+  
+
+   for(var i =0; i<Items.length;i++)
+   {
+   var programName = 'NcProgramId_' +  Items[i];
+   if(window.localStorage.getItem(programName)==undefined)
+   $rootScope.NotificationCount[programName] = 10;
+   else
+   {
+   $rootScope.NotificationCount[programName] = window.localStorage.getItem(programName)
+   }
+     
+   }
+  
+
+  });
+
+
+
+
+
+/*
+NotificationCount["ProgramId_2"] = 5;
+NotificationCount["ProgramId_3"] = 8;
+
+window.localStorage.setItem("NotificationCount",JSON.stringify(NotificationCount));
+var test = JSON.parse(window.localStorage.getItem("NotificationCount"));
+
+console.log(test["ProgramId_2"]);
+console.log(test["ProgramId_3"]);*/
+}
+
+
+$rootScope.LoadNotificationCount();
+
+//$rootScope.LoadNotificationCount();
+
+
+})
+
+
+
+
+
+
 
 .controller('PicturesCtrl', function($scope) {
   $scope.timeline = [{
