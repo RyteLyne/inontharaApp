@@ -505,17 +505,13 @@ $rootScope.LoadNotificationCount();
 
 
 
-
-
-
-
 .controller('PicturesCtrl', function($scope) {
   $scope.timeline = [{
     date: new Date(),
-    title: "I am here",
-    author: "Ludo Anderson",
+    title: "Your kids education",
+    author: "Class Teacher",
     profilePicture: "https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg",
-    text: "Lorem ipsum dolor sit amet",
+    text: "Your kids education is very important",
     type: "location"
 
   }, {
