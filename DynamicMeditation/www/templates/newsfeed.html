@@ -9,18 +9,19 @@
   <ion-content class="padding">
 
 
-  <div ng-repeat = "data in proData" href="#/app/readView" style="text-decoration:none;">
+
+  <div ng-repeat = "data in newslist" href="#/app/readView" style="text-decoration:none;">
    <div class="card">
    <div class="item item-avatar">
-      <img src="{{data.Photo}}">
+      <img src="{{data.Avatar}}">
       <h2> {{data.Heading}} {{SelChannel}}<h2>
-      <h3>{{data.FromName}}</h3>
-        <h4>{{data.Time}}</h4>
+      <h3>{{data.Author}}</h3>
+        <h4>{{data.DateTime}}</h4>
    </div>
 
    <div class="item item-body">
       <img class="full-image" src="{{data.Image}}">
-      {{SliceData(data.Text)}} ...
+      {{data.TextPreview}} ...
     <break>
     <div>
      <a style="text-align:right;"> read more .. 

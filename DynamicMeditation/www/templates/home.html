@@ -35,18 +35,20 @@
 <div style="position:relative;top:-70px">
 <p style="color:grey;position:relative;top:3px;text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);text-align:center;">Siddhant's Time Line @ National Public School</p>
           
-      <section id="cd-timeline" class="cd-container" ng-controller='PicturesCtrl'>
+
+      <section id="cd-timeline" class="cd-container" ng-controller='TimeLineCtrl'>
           <div ng-repeat="activity in timeline">
             <div class="cd-timeline-block">
               <div class="cd-timeline-picture dark">
-                <img ng-src={{activity.profilePicture}}></img>
+                <img ng-src={{activity.Avatar}}></img>
               </div>
               <!-- cd-timeline-img -->
               <div class="cd-timeline-content dark">
-              <img ng-src={{activity.profilePicture}} style="max-width:100%"></img>
-                <h5 class="marginBottom0 marginTop0">{{activity.title}}</h5>
-                <p class="marginTop5 cd-author">by {{activity.author}} on {{activity.date | date: "d MMM"}}</p>
-                <p class="timelineText">{{activity.text}}</p>
+              <div ng-if="activity.Image!=''">
+              <img  ng-src={{activity.Image}} style="max-width:100%"></img> </div>
+                <h5 class="marginBottom0 marginTop0">{{activity.Heading}}</h5>
+                <p class="marginTop5 cd-author">by {{activity.Author}} on {{activity.DateTime | date: "d MMM"}}</p>
+                <p class="timelineText">{{activity.TextPreview}}</p>
               </div>
             </div>
           </div>
