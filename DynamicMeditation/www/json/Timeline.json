@@ -1,0 +1,44 @@
+{
+
+"TimeLine" : [
+{
+"MsgId" : "38456",
+"Heading": "Today at school",
+"Author" : "Alpana",
+"DateTime" : "2016-08-23T18:25:43.511Z",
+"Avatar" : "img/sid.jpg",
+"TextPreview" : "Today siddhant played at school with all of his friends",
+"Image" : "img/avatar.jpg"
+},
+
+{
+"MsgId" : "38456",
+"Heading": "Today at school",
+"Author" : "Alpana",
+"DateTime" : "2016-08-23T18:25:43.511Z",
+"Avatar" : "img/sid.jpg",
+"TextPreview" : "Today siddhant played at school with all of his friends",
+"Image" : ""
+},
+
+{
+"MsgId" : "38459",
+"Heading": "Yesterday at school",
+"Author" : "Principal",
+"DateTime" : "2016-08-23T18:25:43.511Z",
+"Avatar" : "img/sid.jpg",
+"TextPreview" : "Request to Parents and students not to park vehicles on 60 feet road",
+"Image" : "img/2.jpg"
+},
+
+{
+"MsgId" : "38456",
+"Heading": "Today at school",
+"Author" : "Alpana",
+"DateTime" : "2016-08-23T18:25:43.511Z",
+"Avatar" : "img/sid.jpg",
+"TextPreview" : "Today siddhant played at school with all of his friends",
+"Image" : ""
+} ]
+
+}

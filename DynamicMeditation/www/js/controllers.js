@@ -380,7 +380,7 @@ $scope.scrollSmallToTop = function() {
 
  // $scope.$on('$ionicView.beforeEnter', function(){
 
-     console.log("entered");
+  /*   console.log("entered");
 
   jQuery.getJSON('json/channel-program.json', function(data) {
 
@@ -388,10 +388,44 @@ $scope.scrollSmallToTop = function() {
 
     console.log(programName);
 
-    $scope.proData = data[programName].ProgramData;
+    $scope.proData = data[programName].ProgramData; */
+
+
+
+  $scope.LoadNewsList = function()
+  {
+
+    var itemname = "NewsList_" + $rootScope.SelChannel;
+
+   $scope.newslist = JSON.parse(window.localStorage.getItem(itemname));
+   
+   if($scope.newslist == null)
+   {
+
+   console.log("News Loaded from json");
+
+   jQuery.getJSON('json/Timeline.json', function(data) {
+
+   $scope.newslist = data.TimeLine; 
+   window.localStorage.setItem(itemname,JSON.stringify($scope.newslist));
+
+   });
+
+  
+   }
+  else
+  {
+
+    console.log("News Loaded from localstorage");
+  }
+
+
+  }
+
+  $scope.LoadNewsList();
   
 
-  });
+  
     
 
 
@@ -507,9 +541,140 @@ $rootScope.LoadNotificationCount();
 
 })
 
+.controller('GlobalCtrl', function($scope,$rootScope){
+
+$rootScope.UpdateTimeLine = function(msg)
+{
+
+if( msg.DocumentHeader.DocumentType!= "NEWSFEED")
+return;
 
 
-.controller('PicturesCtrl', function($scope) {
+var DocBody = JSON.parse(msg.DocumentBody);
+if(DocBody.ApplicationSpecificData.TimeLine == true)
+{
+  var tline = { 
+  "MsgId" : msg.DocumentHeader.DocumentId,
+  "Heading" : DocBody.ApplicationSpecificData.Heading,
+  "Image" : DocBody.ApplicationSpecificData.Thumbnail,
+  "TextPreview" :DocBody.ApplicationSpecificData.ContentPreview,
+  "Avatar" :   DocBody.ApplicationSpecificData.AuthorAvatar,
+  "Author" : DocBody.ApplicationSpecificData.AuthorName,
+  "DateTime" : DocBody.ApplicationSpecificData.Datetime
+  };   
+
+
+var timeline = JSON.parse(window.localStorage.getItem("TimeLine"));
+
+if(timeline == null)
+{
+ timeline = [];
+ timeline[0] = tline;
+}
+else
+{
+timeline.unshift(tline);  
+}
+
+window.localStorage.setItem("TimeLine",timeline);
+
+}
+
+} // end of $rootScope.UpdateTimeLine = function(msg)
+
+
+
+$rootScope.UpdateMsgList = function(msg)
+{
+
+
+  if( msg.DocumentHeader.DocumentType!= "NEWSFEED")
+   return;
+
+
+var DocBody = JSON.parse(msg.DocumentBody);
+
+  var tline = { 
+  "MsgId" : msg.DocumentHeader.DocumentId,
+  "Heading" : DocBody.ApplicationSpecificData.Heading,
+  "Image" : DocBody.ApplicationSpecificData.Thumbnail,
+  "TextPreview" :DocBody.ApplicationSpecificData.ContentPreview,
+  "Avatar" :   DocBody.ApplicationSpecificData.AuthorAvatar,
+  "Author" : DocBody.ApplicationSpecificData.AuthorName,
+  "DateTime" : DocBody.ApplicationSpecificData.Datetime,
+  "ChannelId" : msg.DocumentSubHeader.ChannelId,
+  };   
+
+var localtag = "Msg_" + msg.DocumentSubHeader.ProgramId;
+
+var msgs = JSON.parse(window.localStorage.getItem(localtag));
+
+if(msgs == null)
+{
+msgs = [];
+msgs[0] = tline;
+}
+else
+{
+msgs.unshift(tline);  
+}
+
+window.localStorage.setItem(localtag,msgs);
+}
+
+
+$rootScope.AddMsgToFile = function(msg)
+{
+
+var filename = "msg_" + msg.DocumentHeader.DocumentId;
+var DocBody = JSON.parse(msg.DocumentBody);
+
+$cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details),true);
+}
+
+
+})
+
+
+
+.controller('TimeLineCtrl', function($scope) {
+
+//window.localStorage.removeItem("TimeLine");
+
+  $scope.LoadTimeLine = function()
+  {
+
+   $scope.timeline = JSON.parse(window.localStorage.getItem("TimeLine"));
+   
+   if($scope.timeline == null)
+   {
+
+   console.log("Loaded from json");
+
+   jQuery.getJSON('json/Timeline.json', function(data) {
+
+   $scope.timeline = data.TimeLine; 
+   window.localStorage.setItem("TimeLine",JSON.stringify($scope.timeline));
+
+   });
+
+  
+   }
+  else
+  {
+
+    console.log("Loaded from localstorage");
+  }
+
+
+  }
+
+  $scope.LoadTimeLine();
+
+
+
+
+/*
   $scope.timeline = [{
     date: new Date(),
     title: "Your kids education",
@@ -541,7 +706,7 @@ $rootScope.LoadNotificationCount();
     profilePicture: "http://www.lawyersweekly.com.au/images/LW_Media_Library/LW-602-p24-partner-profile.jpg",
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
     type: "picture"
-  }]
+  }] */
 })
 
 .controller('IconsCtrl', function($scope) {
@@ -573,6 +738,8 @@ $rootScope.LoadNotificationCount();
     type: "text"
 
   }]
+
+  
 })
 
 
