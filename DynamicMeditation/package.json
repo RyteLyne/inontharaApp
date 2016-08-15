@@ -32,7 +32,5 @@
       "id": "phonegap-plugin-push"
     }
   ],
-  "cordovaPlatforms": [
-    "android"
-  ]
+  "cordovaPlatforms": []
 }

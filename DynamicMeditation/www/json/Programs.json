@@ -120,6 +120,13 @@
 },
 
 {
+ "mIcon" : "ion-radio-waves",
+ "mRef"  : "#/app/home",
+ "mText" : ["School Radio", "ಉಲ್ಲೇಖ", "उल्लेख"],
+ "mId" : 15
+},
+
+{
  "mIcon" : "ion-ios-book-outline",
  "mRef"  : "#/app/home",
  "mText" : ["Dairy", "ಉಲ್ಲೇಖ", "उल्लेख"],
@@ -144,7 +151,7 @@
 {
  "mIcon" : "ion-ios-film-outline",
  "mRef"  : "#/app/home",
- "mText" : ["Ga llery of world my son", "ಲಾಗ್ ಔಟ್", "लोग आउट"],
+ "mText" : ["Gallery", "ಲಾಗ್ ಔಟ್", "लोग आउट"],
  "mId" : 18
 },
 

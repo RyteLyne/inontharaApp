@@ -170,7 +170,6 @@
          <ion-list >
         <div ng-repeat="group in groups">
 
-
           <ion-item id = "menulink" ng-if = "group.ref==''" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
                  <i style="font-size:24px;" class="icon {{group.icon}}"  ></i> &nbsp {{group.name}} <span class="badge badge-dark badge-shadow">{{group.cnt==0?"":group.cnt}}</span>  
             

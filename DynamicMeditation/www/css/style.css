@@ -161,6 +161,7 @@ color:white;
 
 .icon_text
 {
+
 position:relative;
 text-align:center; 
 color:white;
@@ -216,8 +217,6 @@ top: 8px;
   -webkit-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
   
-
-   
 }
 
 .button-circle i {
