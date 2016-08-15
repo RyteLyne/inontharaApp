@@ -462,6 +462,10 @@ $state.go('login',{},{reload:true});
 
 .controller('PlatformCtrl', function($scope, $rootScope, $state, $http) {
 	console.log("plaform controller");
+	 $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient(
+                   'https://edum.azure-mobile.net',
+                     'yVQPRKXxocEazjPjDXGSnmIpyCBTYc97');
+               console.log($scope.mobileServiceClient);
 var currentPlatform = ionic.Platform.platform();
   var currentPlatformVersion = ionic.Platform.version();
  $rootScope.devWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);

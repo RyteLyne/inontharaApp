@@ -23,7 +23,14 @@
     "ionic-plugin-keyboard",
     "cordova-plugin-file",
     "cordova-plugin-file-transfer",
-    "cordova-plugin-media"
+    "cordova-plugin-media",
+    {
+      "variables": {
+        "SENDER_ID": "805533023268"
+      },
+      "locator": "phonegap-plugin-push",
+      "id": "phonegap-plugin-push"
+    }
   ],
   "cordovaPlatforms": [
     "android"

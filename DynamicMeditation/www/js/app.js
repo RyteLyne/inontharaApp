@@ -12,7 +12,7 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.anim
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
   $stateProvider
   
 
@@ -135,14 +135,14 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova','ionic.anim
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/splash');
+   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|content):|data:image\//);
 });
 
 myApp.controller('PlatformCtrl2', function($scope, $rootScope, $state, $http) {
 
-
   ionic.Platform.ready(function(){
     // will execute when device is ready, or immediately if the device is already ready.
-   
+   console.log("platfromctrl2 ionic.platform.ready function");
    //gcmapp will deprecated from here 
  // gcmapp.Initialize();
 
@@ -240,18 +240,17 @@ console.log($scope.testinfo);
    // app.Storage.getData();
 });
 
-//  pushNotification.on('registration', function (data) {
-  //    mobileServiceClient = new WindowsAzure.MobileServiceClient(
-    //                'https://edumobi1.azure-mobile.net',
-      //              'ZDdASZhSitsYsklwZYlRqIDdxjdWAp17');
-console.log("registering push notification");
+ /* pushNotification.on('registration', function (data) {
+      mobileServiceClient = new WindowsAzure.MobileServiceClient(
+                   'https://edumobi1.azure-mobile.net',
+                   'ZDdASZhSitsYsklwZYlRqIDdxjdWAp17');
+console.log("registering push notification");*/
 
- pushNotification.on('registration', function (data) {
-  $scope.mobileServiceClient = new WindowsAzure.MobileServiceClient(
-                   'https://edum.azure-mobile.net',
-                     'yVQPRKXxocEazjPjDXGSnmIpyCBTYc97');
+pushNotification.on('registration', function (data) {
+ 
          
-
+console.log("registering push notification");
+console.log($rootScope.mobileServiceClient);
                //https://edum.azure-mobile.net/
     // Get the native platform of the device.
     var platform = device.platform;
@@ -267,7 +266,7 @@ var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",
         $rootScope.mobileServiceClient.push.gcm.registerTemplate(handle,
             'myTemplate', template,  ["Chungling-Global", "Chungling-Class1"])
             .done(registrationSuccess, registrationFailure);
-             console.log($scope.mobileServiceClient);
+             console.log($rootScope.mobileServiceClient);
     } else if (device.platform === 'iOS') {
         // Template registration.
         //var template = '{"aps": {"alert": "$(message)"}}';
@@ -354,8 +353,8 @@ console.log($scope.messages);
 
 
 myApp.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
- 
-
+ console.log("$rootScope.mobileServiceClient");
+  console.log($rootScope.mobileServiceClient);
 
   $scope.addText= function(){
   $scope.tag='p'
@@ -423,20 +422,51 @@ myApp.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ioni
 $scope.postMessage =function(){
 console.log("im inside the postMessage");
 console.log($scope.messages);
-
-var doc2send = {};
- doc2send.subGroup = "chungling";//req.body.subGroup;
-      doc2send.docType = "NewsFeed";//req.body.docType;
-      doc2send.channels = "test";//req.body.channels;
-   var d = new Date();
+var d = new Date();
 var curr_time = d.getTime();
  console.log(curr_time);
  var newID = $rootScope.userName + curr_time.toString()+'.news';
- newID=newID.replace(/ /g,"");
-      doc2send.docID = newID;
-      doc2send.messages= JSON.stringify($scope.messages);
-      console.log(doc2send.messages);
-  localStorage.setItem('recievedMessage', doc2send.messages);
+
+var doc2send = {};
+tempDoc={};
+tempDoc.DocumentHeader ={};
+tempDoc.DocumentHeader.DocumentType='NewsFeed';
+tempDoc.DocumentHeader.Author= $rootScope.userName;
+tempDoc.DocumentHeader.OrganizationId = 'chungling';
+tempDoc.DocumentHeader.Datetime=curr_time.toString(); 
+tempDoc.DocumentHeader.DocumentId=newID;
+
+tempDoc.DocumentSubHeader={};
+tempDoc.DocumentSubHeader.ChannelId='somechannel';
+tempDoc.DocumentSubHeader.ProgramId='someProgram';
+tempDoc.DocumentSubHeader.ModeratorId='someModerator';
+
+tempDoc.DocumentBody={};
+tempDoc.DocumentBody.ApplicationSpecificeData={};
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='hello';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail='test.png';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='simpel text preview';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar='useridavatar.png';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName='Subscribers Name';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.toString();
+ 
+tempDoc.DocumentBody.DocumentDetails={};
+tempDoc.DocumentBody.DocumentDetails.messages=$scope.messages;
+console.log(tempDoc);
+doc2send= JSON.stringify(tempDoc);
+ //doc2send.subGroup = "chungling";//req.body.subGroup;
+  //    doc2send.docType = "NewsFeed";//req.body.docType;
+   //   doc2send.channels = "test";//req.body.channels;
+   //var d = new Date();
+//var curr_time = d.getTime();
+ //console.log(curr_time);
+ //var newID = $rootScope.userName + curr_time.toString()+'.news';
+ //newID=newID.replace(/ /g,"");
+   //   doc2send.docID = newID;
+     // doc2send.messages= JSON.stringify($scope.messages);
+     // console.log(doc2send.messages);
+  //localStorage.setItem('recievedMessage', doc2send.messages);
   
   Object.toparams = function ObjecttoParams(obj) 
 {
@@ -557,7 +587,7 @@ function uploadCompleted(){
         // Build the request URI with the SAS, which gives us permissions to upload.
     //    var uriWithAccess = insertedItem.imageUri + "?" + insertedItem.sasQueryString;
         console.log($rootScope.mobileServiceClient);
-  $rootScopecope.mobileServiceClient.invokeApi("getuploadblobsas", {
+  $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
     body: { fileName: $scope.newFileName, Type: 'jpeg', UserPhone: '555-555-1234' },
     method: "put"
 }).done(function (response) {
