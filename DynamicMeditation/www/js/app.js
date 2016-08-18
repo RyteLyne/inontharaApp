@@ -24,6 +24,7 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-b
 
  .state('app.home', {
     url: "/home",
+    controller: 'slideCtrl',
     views: {
       'content': {
         templateUrl: "templates/home.html"
@@ -440,6 +441,7 @@ tempDoc.DocumentSubHeader={};
 tempDoc.DocumentSubHeader.ChannelId='somechannel';
 tempDoc.DocumentSubHeader.ProgramId='someProgram';
 tempDoc.DocumentSubHeader.ModeratorId='someModerator';
+tempDoc.DocumentSubHeader.tags=  tempDoc.DocumentSubHeader.ChannelId + '/'+ tempDoc.DocumentSubHeader.ProgramId+ '@' + tempDoc.DocumentHeader.OrganizationId
 
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
@@ -848,19 +850,14 @@ myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHisto
     $scope.popover = popover;
   });
  
-  $scope.demo = 'ios';
-	
+ $scope.demo = 'ios';
   $scope.setPlatform = function(p) {
     document.body.classList.remove('platform-ios');
     document.body.classList.remove('platform-android');
     document.body.classList.add('platform-' + p);
-   // $scope.demo = p;
- 	console.log("setting platform as ios for popup alwasy");
-    //document.body.classList.add('platform-ios');
     $scope.demo = p;
   }
 
- $scope.setPlatform('ios');
 
   console.log("in init control");
       $scope.goBack = function(){
