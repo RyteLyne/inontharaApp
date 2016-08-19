@@ -114,7 +114,7 @@
 "RightPrograms" : [
 {
  "mIcon" : "ion-ios-person-outline",
- "mRef"  : "#/app/home",
+ "mRef"  : "#/app/dashboardApps",
  "mText" : ["Profile", "ಮನೆ", "घर"],
  "mId" : 14
 },
