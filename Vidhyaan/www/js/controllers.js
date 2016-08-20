@@ -1,5 +1,7 @@
 angular.module('DynamicMeditation.controllers', [])
+
 .controller('DashCtrl', function($scope) {})
+
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -371,23 +373,9 @@ if(groups[i].mId != undefined )
 })
 
 
-.controller('slideCtrl', function($scope, $ionicLoading, $state, $ionicHistory) {
-      $ionicLoading.show({
-      template: '...'
-     
-    });
- console.log("showing spinner");
-   $scope.$on('$ionicView.beforeEnter', function () {
-     ionic.DomUtil.ready(function () {
-    
-         // do not forget the errorcase!
-         $ionicLoading.hide();
-     console.log("hiding spinner");
-     });
-   });
+.controller('slideCtrl', function($scope, $state, $ionicHistory) {
   
    console.log("in SlideCtrl");
-
 
   jQuery.getJSON('json/settings.json', function(data) {
 

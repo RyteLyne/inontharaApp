@@ -114,11 +114,7 @@
 "RightPrograms" : [
 {
  "mIcon" : "ion-ios-person-outline",
-<<<<<<< HEAD:DynamicMeditation/www/json/Programs.json
  "mRef"  : "#/app/profile",
-=======
- "mRef"  : "#/app/dashboardApps",
->>>>>>> 271f0b37e200ad8d76b8926df7bba4d4734792e9:Vidhyaan/www/json/Programs.json
  "mText" : ["Profile", "ಮನೆ", "घर"],
  "mId" : 14,
  "runs" : ["1C","1D"],
