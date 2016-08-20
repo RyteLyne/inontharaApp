@@ -1,0 +1,415 @@
+{
+    "DocumentHeader": {
+      "DocumentType": "ProgramInformation",
+      "Author": "Shrey/Gautham",
+      "OrganizationId": "npsbsk",
+      "Datetime": "23523556",
+      "DocumentId": "20000",
+      "version": "1",
+      "tags": " "
+    },
+    "DocumentSubHeader": {
+      "ChannelId": "default",
+      "ProgramId": "default",
+      "ModeratorId": "default"
+    },
+
+"DocumentBody": {
+    "ApplicationsSpecificData": {
+      "feedPrograms": [
+        {
+          "mName": {
+           "1": "Today @ my Class room",
+           "2" : "Today at my Class room",
+           "3": "Today kat my Class room"
+          },
+          "mIcon": "ion-ios-compose-outline",
+          "mRef": "#/app/newsfeed",
+          "mId": "2-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mName": {
+            "1" : "Principal's Desk",
+            "2" : "Principal's Desk",
+            "3" : "Principal's Desk"
+          },
+          "mIcon": "ion-ios-glasses-outline",
+          "mRef": "#/app/newsfeed",
+          "mId": "3-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mName": {
+            "1" : "School Transport",
+            "2": "School Transport",
+            "3" :"School Transport"
+          },
+          "mIcon": "ion-ios-location-outline",
+          "mRef": "#/app/newsfeed",
+          "mId": "4-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+            "mName": {
+            "1" : "School Co-ordinator",
+            "2": "School Co-ordinator",
+            "3" :"School Co-ordinator"
+          },
+   
+          "mIcon": "ion-ios-person-outline",
+          "mRef": "#/app/newsfeed",
+          "mId": "5-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mName": [
+            "Departments",
+            "Departments",
+            "Departments"
+          ],
+          "mIcon": "ion-ios-briefcase-outline",
+          "mRef": "",
+          "mItems": [
+            {
+              "mName": {
+            "1" : "Sports Department",
+            "2" : "Sports Department",
+            "3" : "Sports Department"
+          },
+
+              "mIcon": "ion-ios-americanfootball-outline",
+              "mRef": "#/app/newsfeed",
+              "mId": "6-npsbsk",
+              "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+            },
+            {
+            "mName": {
+            "1" : "Library",
+            "2" : "Library",
+            "3" : "Library"
+             },
+
+              
+              "mIcon": "ion-ios-bookmarks-outline",
+              "mRef": "#/app/newsfeed",
+              "mId": "7-npsbsk",
+              "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+
+            },
+            {
+
+          "mName": {
+            "1" : "Accounts Departments",
+            "2" : "Accounts Departments",
+            "3" : "Accounts Departments"
+             },
+              "mIcon": "ion-ios-calculator-outline",
+              "mRef": "#/app/newsfeed",
+              "mId": "8-npsbsk",
+              "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+            }
+          ]
+        },
+        {
+
+            "mName": {
+            "1" : "Extra Cirricular",
+            "2" : "Extra Cirricular",
+            "3" : "Extra Cirricular"
+             },
+
+          "mIcon": "ion-ios-mic-outline",
+          "mRef": "",
+          "mItems": [
+            {
+          "mName": {
+            "1" : "NCC & Scouts",
+            "2" : "NCC & Scouts",
+            "3" : "NCC & Scouts"
+             },
+              "mIcon": "ion-ios-body-outline",
+              "mRef": "#/app/newsfeed",
+              "mId": "9-npsbsk",
+               "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+            },
+            {
+              "mName": {
+            "1" : "Cultural Club",
+            "2" : "Cultural Club",
+            "3" : "Cultural Club"
+             },
+              "mIcon": "ion-ios-musical-note",
+              "mRef": "#/app/newsfeed",
+              "mId": "10-npsbsk",
+               "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+            }
+          ]
+        },
+        {
+         "mName": {
+            "1" : "App admin",
+            "2" : "App admin",
+            "3" : "App admin"
+             },
+          "mIcon": "ion-ios-keypad-outline",
+          "mRef": "#/app/newsfeed",
+          "mId": "11-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+            "mName": {
+            "1" : "School Policy",
+            "2" : "School Policy",
+            "3" : "School Policy"
+             },
+          "mIcon": "ion-ios-list-outline",
+          "mRef": "#/home/main",
+          "mId": "12-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+             "mName": {
+            "1" : "Parent Guide",
+            "2" : "Parent Guide",
+            "3" : "Parent Guide"
+             },
+          "mIcon": "ion-ios-eye-outline",
+          "mRef": "#/home/main",
+          "mId": "13-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        }
+      ],
+
+
+
+       "appPrograms": [
+        
+        {
+          "mIcon": "ion-radio-waves",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"School Radio",
+            "2" : "ಉಲ್ಲೇಖ",
+            "3" : "उल्लेख"
+          },
+          "mId": "51-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-book-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1": "Dairy",
+            "2": "ಉಲ್ಲೇಖ",
+            "3": "उल्लेख"
+          },
+          "mId": "52-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-stopwatch-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Time Table",
+            "2":"ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ",
+            "3":"पासवर्ड बदलें"
+          },
+          "mId": "53-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-android-checkmark-circle",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Attendance",
+            "2":"ವರದಿ",
+            "3":"रिपोर्ट"
+          },
+          "mId": "54-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-film-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Gallery",
+            "2":"ಲಾಗ್ ಔಟ್",
+            "3":"लोग आउट"
+          },
+          "mId": "55-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-chatboxes-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Messages",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "56-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-calendar-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Calander",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "57-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-pin",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Notice Board",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "58-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-android-create",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Online Test",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+         "mId": "59-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-podium",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Survey",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "60-npsbsk",
+          "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-social-buffer-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Assignments",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "61-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-paper-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Sylabus",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "62-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-cash",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Payments",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "63-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-paperclip",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Magazine",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "64-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-compose-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Notes",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "65-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-location-outline",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Locate Me",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "66-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-ios-refresh-empty",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Lost & Found",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "67-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-thermometer",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Leaves",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "68-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-arrow-return-left",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Feed back",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "69-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        },
+        {
+          "mIcon": "ion-university",
+          "mRef": "#/app/home",
+          "mText": {
+            "1":"Results",
+            "2":"ಸಹಾಯ",
+            "3":"मदद"
+          },
+          "mId": "70-npsbsk",
+           "mRunsOn" : ["1A-npsbsk","1B-npsbsk","1C-npsbsk"]
+        }
+      ]
+    
+
+  }
+
+}
+
+}

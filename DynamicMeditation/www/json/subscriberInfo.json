@@ -1,0 +1,111 @@
+{
+	"DocumentHeader": {
+		"DocumentType": "subscriberInformation",
+		"Author": "shrey/gautham",
+		"OrganizationId": "npsbsk",
+		"Datetime": "782345234543213",
+		"DocumentId": "100001",
+		"version" : "1.0",
+		"tags": "default"
+	},
+
+	"DocumentSubHeader": {
+		"ChannelId": "default",
+		"ProgramId": "default",
+		"ModeratorId": "default"
+	},
+
+
+	"DocumentBody": {
+
+		"ApplicationSpecificData": {
+			"SubscriberID": "1234-npsbsk",
+			"password": "1234",
+			"SubscriberName": "Shreyamsa",
+			"SubscriberRole": "student",
+			"SubscribedChannels": ["1B-npsbsk", "Principal-npsbsk", "Transport-npsbsk"],
+			"previlageLevels": {
+				"2-npsbsk": "rwx",
+				"3-npsbsk": "rwx",
+				"5-npsbsk": "rwx",
+				"4-npsbsk": "rwx",
+				"7-npsbsk" : "rw-",
+				"9-npsbsk": "r--",
+				"10-npsbsk": "rwx",
+				"11-npsbsk": "rwx",
+				"12-npsbsk": "rwx",
+				"13-npsbsk": "rwx",
+				"51-npsbsk": "rwx",
+				"52-npsbsk": "rwx",
+				"53-npsbsk": "rwx",
+				"54-npsbsk": "rwx",
+				"55-npsbsk": "rwx",
+				"56-npsbsk": "rwx",
+				"57-npsbsk": "rwx",
+				"60-npsbsk": "rwx",
+				"61-npsbsk": "rwx",
+				"62-npsbsk": "rwx"
+			},
+
+			"teacherFor": {
+				"science": ["1c-npsbsk", "2a-npsbsk", "2c-npsbsk"],
+				"maths": ["5c-npsbsk"]
+			},
+			"classTeacherFor": ["1C-npsbsk"],
+
+			"Subscribersspecific": {
+				"remarks": ["barred in Library", "excess usage in canteen credit"],
+				"abcentDays": ["23 May 2016", "2 Dec 2016"]
+			}
+
+		},
+		"Document_Details": {
+			"profile": {
+				"FirstName": {
+					"0": "Shreyamsa",
+					"1": "shrey"
+				},
+				"LastName": {
+					"0": "Puttaiah"
+				},
+
+				"FathersName": {
+					"0": "Father",
+					"1": "Appa"
+				},
+				"MothersName": {
+					"0": "Mother",
+					"1": "Amma"
+				},
+				"GaurdiansName": {
+					"0": "Guardian",
+					"1": "Ajja"
+				},
+				"MobileNumbers": ["9986024424", "9886242345", "9986048888", "9886578900"],
+				"EmailIds": ["gautham.mallik@gmail.com", "shrey.ei@gmail.com"],
+
+				"ClassTeacher": {
+					"0": "VidhyaBalan",
+					"1": "SilkSmitha"
+				},
+				"Designation": {
+					"0": "Student",
+					"1": "studant"
+				},
+				"Division": "2 B Division",
+				"Avatar": "1234_npsbsk_avatar.png",
+				"Titled": {
+					"0": "naughty",
+					"1": "Naati"
+				},
+				"Address": {
+					"0": "#123, 32nd cross, RajajiNagar 3rd block"
+				},
+				"BloodGroup": "O+",
+				 "DOB" : "12/12/2012",
+				 "EnrollmentNumber" : "1234",
+				"Gender": {"0":"Male","1":"Huduga"}
+			}
+		}
+	}
+}

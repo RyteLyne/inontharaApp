@@ -44,10 +44,10 @@
               </div>
               <!-- cd-timeline-img -->
               <div class="cd-timeline-content dark">
-              <div ng-if="activity.Image!=''">
-              <img  ng-src={{activity.Image}} style="max-width:100%"></img> </div>
                 <h5 class="marginBottom0 marginTop0">{{activity.Heading}}</h5>
                 <p class="marginTop5 cd-author">by {{activity.Author}} on {{activity.DateTime | date: "d MMM"}}</p>
+                 <div ng-if="activity.Image!=''">
+              <img  ng-src={{activity.Image}} style="max-width:100%"></img> </div>
                 <p class="timelineText">{{activity.TextPreview}}</p>
               </div>
             </div>

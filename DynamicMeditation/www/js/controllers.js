@@ -32,31 +32,64 @@ angular.module('DynamicMeditation.controllers', [])
 .controller('RightMenuCtrl', function($scope, $stateParams, $rootScope) {
  console.log("inJquery start");
 
- jQuery.getJSON('json/Programs.json', function(data) {
-  console.log("inJquery Right");
-   var items = data.RightPrograms;
+
+
+
+   var priv = {};
+
+   var Sub = $rootScope.GetDocument("SubscriberInfo");
+   console.log("Subscriber : ", Sub);
+
+
+   priv = Sub.DocumentBody.ApplicationSpecificData.previlageLevels;
+
+
+  /*
+  jQuery.getJSON('json/subscriberInfo.json', function(data) {
+
+   priv = data.DocumentBody.ApplicationSpecificData.previlageLevels;
+   console.log("priv:" ,priv);
+  });
+   
+ */
+
+
+
+
+///
+
+
+ //jQuery.getJSON('json/ProgramInfo.json', function(data) {
+ // console.log("inJquery Right");
+
+   var pro = $rootScope.GetDocument("ProgramInfo");
+   var items = pro.DocumentBody.ApplicationsSpecificData.appPrograms;
    console.log(items);
+
+
        $scope.rightItems = [];
-       var lang ="";
+       var lang = $rootScope.Language.toString();
+       var k=0;
 
    for (var i=0; i<items.length; i++) 
    {
     
+     if(priv[items[i].mId]==undefined)
+     continue;
      
-    $scope.rightItems[i] = {
+    $scope.rightItems[k] = {
       icon: items[i].mIcon,
       ref:  items[i].mRef,
-      text: items[i].mText[$rootScope.Language],
+      text: items[i].mText[lang]==undefined?items[i].mText["0"]:items[i].mText[lang],
       id:   items[i].mId,
       cnt:  $rootScope.NotificationCount["NcProgramId_" + items[i].mId]
     };
    
+   k++;
     
   }
  
    
-    })
-
    $scope.itemclick = function(id) {
    console.log("clicked Id" , id);
    $rootScope.SelChannel = id;
@@ -103,37 +136,53 @@ angular.module('DynamicMeditation.controllers', [])
   
   console.log("in Profile Load xxx");
 
-  jQuery.getJSON('json/profile.json', function(data) {
-  console.log("in Profile Load yyy");
+  //jQuery.getJSON('json/subscriberInfo.json', function(data) {
+  //console.log("in Profile Load yyy");
 
    //var basicprofile = data;
-   
-   if(data.profile[$rootScope.Language] != undefined)
-   $scope.profile=data.profile[$rootScope.Language];
-   else
-   $scope.profile=data.profile[0];
+   var language = "0";
 
-   /*
+   var sub = $rootScope.GetDocument("SubscriberInfo");
+
+   language = $rootScope.Language.toString();
+   var obj = sub.DocumentBody.Document_Details.profile;
+   console.log(language);
+
    $scope.profile=
    {
-   mName: data.profile[i].mName,
-   mGender: data.profile[i].mGender,
-   mDOB: data.profile[i].mDOB,
-   mBloodGroup:data.profile[i].mBloodGroup,	
-   mClass : data.profile[i].mClass,
-   mDivision : data.profile[i].mDivision,
-   mClassTeacher :data.profile[i].mClassTeacher,
-   mEnrollmentNo : data.profile[i].mEnrollmentNo,
-   mMomName : data.profile[i].mMomName,
-   mFatherName : data.profile[i].mFatherName,
-   mMomMobileNo : data.profile[i].mMomMobileNo,
-   mFatherMobileNo : data.profile[i].mFatherMobileNo,
-   mHomeAddress : data.profile[i].mHomeAddress
-   }*/
+   mName: obj.FirstName[language]== undefined ?obj.FirstName["0"]:obj.FirstName[language],
+   mGender : obj.Gender[language]== undefined ?obj.Gender["0"]:obj.Gender[language],
+   mDOB : obj.DOB,
+   mBloodGroup : obj.BloodGroup,	
+   mGrade : obj.Division,
+   mClassTeacher :  obj.ClassTeacher[language]== undefined ?obj.ClassTeacher["0"]:obj.ClassTeacher[language],
+   mEnrollmentNo : obj.EnrollmentNumber,
+   mMother :
+   {
+    Name :  obj.MothersName[language]== undefined ?obj.MothersName["0"]:obj.MothersName[language],
+    Mobile : obj.MobileNumbers[1],
+    Email : obj.EmailIds[1]
+   },
+   mFather :
+   {
+    Name : obj.FathersName[language]== undefined ?obj.FathersName["0"]:obj.FathersName[language],
+    Mobile : obj.MobileNumbers[0],
+    Email : obj.EmailIds[0]
+   },
+   mGaurdian :
+   {
+    Name : obj.GaurdiansName[language]== undefined ?obj.GaurdiansName["0"]:obj.GaurdiansName[language],
+    Mobile : obj.MobileNumbers[2],
+    Email : obj.EmailIds[2]
+   },
+   
+   mHomeAddress : obj.Address[language]== undefined ?obj.Address["0"]:obj.Address[language],
+   }
+
   
    console.log($scope.profile.mName);
        
-    }) //end of function($data);;
+   
 
 
 jQuery.getJSON('json/uiLanguage.json', function(data) {
@@ -168,57 +217,96 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
     var groupcnt=0;
 
    console.log("inside 456");
+
+
+
+   var priv = {};
+   var sub = $rootScope.GetDocument("SubscriberInfo");
+   priv = sub.DocumentBody.ApplicationSpecificData.previlageLevels;
+
+ /* jQuery.getJSON('json/subscriberInfo.json', function(data) {
+
+   priv = data.DocumentBody.ApplicationSpecificData.previlageLevels;
+   console.log("priv:" ,priv);
+
+
+  });*/
+
+  var pro = $rootScope.GetDocument("ProgramInfo");
+   
  
-  jQuery.getJSON('json/Programs.json', function(data) {
-  console.log("inJquery");
- // console.log(data);
-   var groups = data.LeftPrograms;
+   var groups = pro.DocumentBody.ApplicationsSpecificData.feedPrograms;
    console.log(groups);
-       $scope.groups = [];
+   $scope.groups = [];
  
-   console.log(groups);
+   console.log("groups:" ,groups);
+  
+
+  var k=0;
+  var language = $rootScope.Language.toString();
+
+  console.log("new Language ", language);
+
    for (var i=0; i<groups.length; i++) {
-    $scope.groups[i] = {
-      name: groups[i].mName[$rootScope.Language],
+
+if(groups[i].mId != undefined )
+    if(priv[groups[i].mId]==undefined)
+     continue;
+
+
+    $scope.groups[k] = {
+      name: groups[i].mName[language]== undefined ?groups[i].mName["0"]:groups[i].mName[language],
       icon: groups[i].mIcon,
       ref:  groups[i].mRef,
       id :  groups[i].mId,
-      cnt : $rootScope.NotificationCount["NcProgramId_" + groups[i].mId],
+      cnt : $rootScope.NotificationCount["Nc_" + groups[i].mId],
       items: []
     };
      if(groups[i].mItems !== undefined) //sub items present;;
      {
        groupcnt = 0;
+       l=0;
+
     for (var j=0; j<groups[i].mItems.length; j++) 
     {
-    //  console.log(groups.groups.[i].name)
    
+    if(priv[groups[i].mItems[j].mId]==undefined)
+     continue;
+  
      // $scope.groups[i].items.push(groups.groups[i].mItems[j]);
 
-      $scope.groups[i].items[j] = {
-      name: groups[i].mItems[j].mName[$rootScope.Language],
+
+
+      $scope.groups[k].items[l] = {
+      name: groups[i].mItems[j].mName[language]== undefined ?groups[i].mItems[j].mName["0"]:groups[i].mItems[j].mName[language],
       icon: groups[i].mItems[j].mIcon,
       ref: groups[i].mItems[j].mRef,
       id : groups[i].mItems[j].mId,
-      cnt : $rootScope.NotificationCount["NcProgramId_" + groups[i].mItems[j].mId],
+      cnt : $rootScope.NotificationCount["Nc_" + groups[i].mItems[j].mId],
       };
+        
+      
 
+        if($scope.groups[k].items[l].cnt > 0)
       groupcnt = groupcnt + $scope.groups[i].items[j].cnt;
+
+      l++;
 
     }
 
-       $scope.groups[i].cnt = groupcnt;
+       $scope.groups[k].cnt = groupcnt;
+
+       if(l<=0) k--; //remove parent element;;
 
      }
-     
+
+     k++;
+    
+  } //end of main for loop;;
 
 
 
-
-
-  }
    
-    });
 
      $scope.toggleGroup = function(group) {
        //console.log("toggle toggle");
