@@ -24,6 +24,7 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-b
 
  .state('app.home', {
     url: "/home",
+    controller: 'slideCtrl',
     views: {
       'content': {
         templateUrl: "templates/home.html"
@@ -124,6 +125,16 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-b
     url: "/login",
     templateUrl: "templates/login.html"
   })
+
+   .state('app.dashboardApps', {
+    url: "/dashboardApps",
+    views: {
+      'content': {
+    templateUrl: "templates/dashboardApps.html",
+      }
+    }
+  })
+
 
    .state('splash', {
     url: "/splash",
@@ -440,6 +451,7 @@ tempDoc.DocumentSubHeader={};
 tempDoc.DocumentSubHeader.ChannelId='somechannel';
 tempDoc.DocumentSubHeader.ProgramId='someProgram';
 tempDoc.DocumentSubHeader.ModeratorId='someModerator';
+tempDoc.DocumentSubHeader.tags=  tempDoc.DocumentSubHeader.ChannelId + '/'+ tempDoc.DocumentSubHeader.ProgramId+ '@' + tempDoc.DocumentHeader.OrganizationId
 
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
@@ -454,7 +466,8 @@ tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.t
 tempDoc.DocumentBody.DocumentDetails={};
 tempDoc.DocumentBody.DocumentDetails.messages=$scope.messages;
 console.log(tempDoc);
-doc2send= JSON.stringify(tempDoc);
+doc2send= tempDoc;
+//doc2send= JSON.stringify(tempDoc);
  //doc2send.subGroup = "chungling";//req.body.subGroup;
   //    doc2send.docType = "NewsFeed";//req.body.docType;
    //   doc2send.channels = "test";//req.body.channels;
@@ -468,7 +481,7 @@ doc2send= JSON.stringify(tempDoc);
      // console.log(doc2send.messages);
   //localStorage.setItem('recievedMessage', doc2send.messages);
   
-  Object.toparams = function ObjecttoParams(obj) 
+/*  Object.toparams = function ObjecttoParams(obj) 
 {
   var p = [];
   for (var key in obj) 
@@ -476,12 +489,13 @@ doc2send= JSON.stringify(tempDoc);
     p.push(key + '=' + encodeURIComponent(obj[key]));
   }
   return p.join('&');
-};
+};*/
   var req = 
 {
     method: 'POST',
     url: "http://chungling.azurewebsites.net/addPostM/",
-    data: Object.toparams(doc2send),
+    data: jQuery.param( doc2send ),
+    //Object.toparams(doc2send),
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }
 console.log(req.data);
@@ -848,20 +862,15 @@ myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHisto
     $scope.popover = popover;
   });
  
-  $scope.demo = 'ios';
-	
+ $scope.demo = 'ios';
   $scope.setPlatform = function(p) {
     document.body.classList.remove('platform-ios');
     document.body.classList.remove('platform-android');
     document.body.classList.add('platform-' + p);
-   // $scope.demo = p;
- 	console.log("setting platform as ios for popup alwasy");
-    //document.body.classList.add('platform-ios');
     $scope.demo = p;
   }
 
- $scope.setPlatform('ios');
-
+$scope.set
   console.log("in init control");
       $scope.goBack = function(){
       console.log("pressed goback");
