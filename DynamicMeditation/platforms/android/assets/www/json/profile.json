@@ -1,0 +1,50 @@
+{
+  "profile" : [
+   {
+   "mName": "Siddhant.G",
+   "mGender": "Male",
+   "mDOB": "03-12-2012",
+   "mBloodGroup": "O+ve",	
+   "mGrade" : "M1",
+   "mDivision" : "E",
+   "mClassTeacher" : "Alpana",
+   "mEnrollmentNo" : "012345689",
+   "mMomName" : "Ranjitha CN",
+   "mFatherName" : "Gautham M",
+   "mMomMobileNo" : "9986024424",
+   "mFatherMobileNo" : "9986024424",
+   "mHomeAddress" : "No 11, 14th Cross 16th Main Ideal Homes Layout RR Nagar Bangalore -10"
+   },
+   {
+   "mName": "ಸಿದ್ಧಾಂತ",
+   "mGender": "Male1",
+   "mDOB": "03-12-20121",
+   "mBloodGroup": "O+ve1",	
+   "mGrade" : "M11",
+   "mDivision" : "E1",
+   "mClassTeacher" : "Alpana1",
+   "mEnrollmentNo" : "0123456891",
+   "mMomName" : "ರಂಜಿತಾ",
+   "mFatherName" : "ಗೌತಮ್",
+   "mMomMobileNo" : "9986024424",
+   "mFatherMobileNo" : "9986024424",
+   "mHomeAddress" : "Home Address1"
+   },
+   {
+   "mName": "Siddhant.G2",
+   "mGender": "Male2",
+   "mDOB": "03-12-20122",
+   "mBloodGroup": "O+ve2",	
+   "mGrade" : "M12",
+   "mDivision" : "E2",
+   "mClassTeacher" : "Alpana2",
+   "mEnrollmentNo" : "0123456892",
+   "mMomName" : "Mother Name2",
+   "mFatherName" : "Father Name2",
+   "mMomMobileNo" : "Mother Mobile No2",
+   "mFatherMobileNo" : "Father Mobile No2",
+   "mHomeAddress" : "Home Address2"
+   }
+
+   ]  
+}

@@ -1,0 +1,109 @@
+{
+	"groups": [{
+		"mName": ["Gallery","ಗ್ಯಾಲರಿ","गेलरी"],
+		"mIcon": "ion-university",
+		"mRef" :"#/app/settings",
+		"mProgramId" : "1234"
+	}, 
+
+	{
+		"mName": ["Co-Ordinator","Co-Ordinator","Co-Ordinator"],
+		"mIcon": "ion-ios-people",
+		"mRef" :"#/app/profile",
+		"mProgramId" : "1234"
+	}, /*{
+		"mName": ["Physical Education","Physical Education","Physical Education"],
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/app/benefits",
+		"mProgramId" : "1234"
+	}, */ 
+      
+      {
+		"mName": ["Accounts Department","Accounts Department","Accounts Department"],
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main",
+		"mProgramId" : "1234"
+	}, 
+
+	/* {
+		"mName": "Transport Department",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main",
+		"mProgramId" : "1234"
+
+	}, */
+
+	{
+		"mName": ["Diary","Diary","Diary"],
+		"mIcon": "ion-card",
+		"mRef" :"",
+		"mItems": [{
+			"mName": ["Events","Events","Events"],
+			"mIcon": "ion-home",
+			"mRef" :"#/home/newsfeed",
+			"mProgramId" : "1234"
+		},/* {
+			"mName": "Announcements",
+			"mlName1" : "laitier",
+			"mlName2" : "laitier",
+			"mIcon": "ion-home",
+			"mRef" :"#/home/main",
+			"mProgramId" : "1234"
+		}, {
+			"mName": "Assignments",
+			"mlName1" : "laitier",
+			"mlName2" : "laitier",
+			"mIcon": "ion-home",
+			"mRef" :"#/home/main",
+			"mProgramId" : "1234"
+		},*/ {
+			"mName": ["Leaves","Leaves","Leaves"],
+			"mIcon": "ion-home",
+			"mRef" : "#/home/main",
+			"mProgramId" : "1234"
+		}]
+	}, {
+		"mName": ["Library","Library","Library"],
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main",
+		"mProgramId" : "1234"
+	} /*, {
+		"mName": "Class Teacher",
+		"mlName" : "laitier",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main",
+		"mProgramId" : "1234"
+	}, {
+		"mName": "Principal",
+		"mlName" : "laitier",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main",
+		"mProgramId" : "1234"
+	}, 
+      {
+		"mName": "Admin",
+		"mlName" : "laitier",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main",
+		"mProgramId" : "1234"
+	} ,
+
+	{
+		"mName": "Class Notes",
+		"mlName" : "laitier",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/home/main",
+		"mProgramId" : "1234"
+	}, 
+
+      {
+		"mName": "Language",
+		"mlName" : "laitier",
+		"mIcon": "ion-android-bicycle",
+		"mRef" :"#/app/language",
+		"mProgramId" : "1234"
+	} */
+
+
+	]
+}

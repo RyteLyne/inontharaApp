@@ -1,0 +1,32 @@
+{
+
+"slideImages": [
+{
+"name" : "1.jpg",
+"msg": "Language" 
+},
+{
+"name" : "2.jpg",
+"msg": "Language" 
+},
+{
+"name" : "3.jpg",
+"msg": "Language" 
+},
+{
+"name" : "4.jpg",
+"msg": "Language" 
+},
+{
+"name" : "5.jpg",
+"msg": "Language"  
+}
+],
+
+"loginScreen" :
+{
+"background" : "img/g20.png",
+"logo": "img/g74.png"
+}
+
+}

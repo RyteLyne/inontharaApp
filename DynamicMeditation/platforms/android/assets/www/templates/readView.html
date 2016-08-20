@@ -1,0 +1,29 @@
+<!--
+Create tabs with an icon and label, using the tabs-positive style.
+Each tab's child <ion-nav-view> directive will have its own
+navigation history that also transitions its views in and out.
+-->
+
+      <ion-view  title="News Post" ng-controller="readPageCtrl">
+      <ion-nav-bar class="bar-positive" >
+          
+            <ion-nav-buttons side="left" >
+              <button class="button button-icon button-clear ion-arrow-left-c" ng-click="goBack()" nav-direction="back">
+              </button> 
+            </ion-nav-buttons>
+           
+          </ion-nav-bar>
+       
+  
+
+      <ion-content>
+        <ion-list class="messages item-text-wrap">
+          <ion-item class="item-borderless" ng-repeat="message in messages" > 
+          <pre ng-bind-html="message.content"></pre>
+        </ion-list>
+      
+  
+      </ion-content>
+  
+
+    </ion-view>
