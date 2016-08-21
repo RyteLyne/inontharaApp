@@ -70,6 +70,8 @@ angular.module('DynamicMeditation.controllers', [])
        var lang = $rootScope.Language.toString();
        var k=0;
 
+       var SubChannels = Sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
+
 
 //load commonly used information onto AppUserInformation;;
 
@@ -100,6 +102,7 @@ angular.module('DynamicMeditation.controllers', [])
 
    console.log("App Information");
    console.log($rootScope.AppUserInformation);
+
   
 //end of AppUserInformation
   
@@ -108,24 +111,30 @@ angular.module('DynamicMeditation.controllers', [])
     
      if(priv[items[i].mId]==undefined)
      continue;
+
+     //console.log(items[i].mId);
      
     $scope.rightItems[k] = {
       icon: items[i].mIcon,
       ref:  items[i].mRef,
-      text: items[i].mText[lang]==undefined?items[i].mText["0"]:items[i].mText[lang],
+      text: items[i].mText[lang]==undefined?items[i].mText["1"]:items[i].mText[lang],
       id:   items[i].mId,
+      runson : items[i].mRunsOn,
       cnt:  $rootScope.NotificationCount["NcProgramId_" + items[i].mId]
     };
    
    k++;
     
   }
- 
    
-   $scope.itemclick = function(id) {
-   console.log("clicked Id" , id);
-   $rootScope.SelChannel = id;
-  }
+   $scope.itemclick = function(id,runson) 
+   {
+   console.log(id);
+   $rootScope.AppUserInformation.SelProgram = id;
+   console.log("clicked Id : " , $rootScope.AppUserInformation.SelProgram);
+   $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson,SubChannels);
+   console.log("runs on", $rootScope.AppUserInformation.runson);
+   }
 
 })
 
@@ -316,6 +325,8 @@ $scope.UiLanguageProfile =
   var k=0;
   var language = $rootScope.Language.toString();
 
+  var SubChannels = sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
+
 
   console.log("new Language ", language);
 
@@ -331,6 +342,7 @@ if(groups[i].mId != undefined )
       icon: groups[i].mIcon,
       ref:  groups[i].mRef,
       id :  groups[i].mId,
+      runson: groups[i].mRunsOn,
       cnt : $rootScope.NotificationCount["Nc_" + groups[i].mId],
       items: []
     };
@@ -359,6 +371,7 @@ if(groups[i].mId != undefined )
       icon: groups[i].mItems[j].mIcon,
       ref: groups[i].mItems[j].mRef,
       id : groups[i].mItems[j].mId,
+      runson: groups[i].mItems[j].mRunsOn,
       cnt : $rootScope.NotificationCount["Nc_" + groups[i].mItems[j].mId],
       };
         
@@ -440,12 +453,13 @@ if(groups[i].mId != undefined )
   }
 
 
-   $scope.itemclick = function(id) {
-   console.log("clicked Id" , id);
-   $rootScope.SelChannel = id;
+   $scope.itemclick = function(id,runson) {
+   $rootScope.AppUserInformation.SelProgram = id;
+   console.log("clicked Id : " , $rootScope.AppUserInformation.SelProgram);
+   $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson,SubChannels);
+   console.log("runs on", $rootScope.AppUserInformation.runson);
 
   }
-
 
 })
 

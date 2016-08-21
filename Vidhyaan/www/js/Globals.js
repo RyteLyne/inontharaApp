@@ -10,6 +10,7 @@ $rootScope.AppUserInformation =
  SelProgram : "0",
  WritePriv:false,
  XPriv:false,
+ runson:[],
  SubId : "",
  OrgId: "",
  OrgName : "",
@@ -28,6 +29,24 @@ $rootScope.AppUserInformation =
  }
 
   $rootScope.AvailableChannels = [];
+
+  $rootScope.GetProgramChannels =function (runson,subscribedchannels)
+  {
+    var userchannels= [];
+
+    for(var i=0;i<subscribedchannels.length;i++)
+     {
+       if(runson.indexOf(subscribedchannels[i])>-1)
+       {
+
+         if(userchannels.indexOf(subscribedchannels[i])<0) //tag doesnot exist;;
+         userchannels.push(subscribedchannels[i]);
+
+       }
+
+     }
+     return(userchannels);
+  }
 
  $rootScope.AddToTag= function(runson,subscribedchannels,progid, orgid)
    {
