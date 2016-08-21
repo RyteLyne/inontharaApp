@@ -1,4 +1,4 @@
-var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-button','DynamicMeditation.controllers','azure-mobile-service.module', 'azureBlobUpload','Global.controllers'])
+var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'DynamicMeditation.controllers','azure-mobile-service.module', 'azureBlobUpload'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -149,12 +149,8 @@ myApp.controller('PlatformCtrl2', function($scope, $rootScope, $state, $http) {
   $rootScope.SelChannel = 0;
 
 
-  pushNotification = PushNotification.init({
-    "android": { "senderID": "805533023268" },
-    "ios": { "alert": "true", "badge": "false", "sound": "true" }
-});
 
-pushNotification.on('notification', function (data) {
+$rootScope.pushNotification.on('notification', function (data) {
     // Display the alert message in an alert.
    console.log(data);
     alert(data.message);
@@ -246,7 +242,7 @@ console.log($scope.testinfo);
                    'ZDdASZhSitsYsklwZYlRqIDdxjdWAp17');
 console.log("registering push notification");*/
 
-pushNotification.on('registration', function (data) {
+$rootScope.pushNotification.on('registration', function (data) {
  
          
 console.log("registering push notification");
@@ -264,7 +260,7 @@ var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",
         // Register for notifications.
 
         $rootScope.mobileServiceClient.push.gcm.registerTemplate(handle,
-            'myTemplate', template,  ["Chungling-Global", "Chungling-Class1"])
+            'myTemplate', template, $rootScope.AvailableChannels)
             .done(registrationSuccess, registrationFailure);
              console.log($rootScope.mobileServiceClient);
     } else if (device.platform === 'iOS') {
@@ -276,8 +272,11 @@ var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",
      //  mobileServiceClient.push.apns.registerTemplate(handle,
        //     'myTemplate', template, null)
          //  .done(registrationSuccess, registrationFailure);
-            $rootScope.mobileServiceClient.push.apns.registerNative(data.registrationId, ["Chungling-Global", "Chungling-Class1"]).done(registrationSuccess, registrationFailure);
+            $rootScope.mobileServiceClient.push.apns.registerNative(data.registrationId, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
     }
+
+
+
 });
 
   
@@ -333,6 +332,9 @@ $scope.logoutFunc = function(){
     $state.go('menu.main/first',{}, {reload: true});
 }
 });
+
+
+
 
 
 myApp.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {

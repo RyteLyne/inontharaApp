@@ -512,7 +512,7 @@ $state.go('login',{},{reload:true});
  
 })
 
-.controller('LogInCtrl', function($scope,$rootScope,$state, $ionicScrollDelegate) {
+.controller('LogInCtrl', function($scope,$rootScope,$state, $ionicScrollDelegate,datafactory) {
 
 $scope.Credentials =
   {
@@ -524,27 +524,57 @@ jQuery.getJSON('json/settings.json', function(data) {
 
    $scope.loginImages = data.loginScreen;
 
-
   });
-  
-  
+
 
   $scope.login = function Login()
   {
    $scope.scrollSmallToTop();
-    console.log("UserName: ", $scope.Credentials.username, "Password: " , $scope.Credentials.password);
+   console.log("UserName: ", $scope.Credentials.username, "Password: " , $scope.Credentials.password);
+
   //login to server here, if success redirect to home page;;
   if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
    {
       console.log("new log in");
       window.localStorage.setItem("username",$scope.Credentials.username);
       window.localStorage.setItem("password",$scope.Credentials.password);
-      $state.go('app.home',{},{reload:true});
+    
    
-   };
+
+    
+
+  
+     
+      console.log("Getting From Server");
+      var docs = ["SubscriberInfo","ProgramInfo","ChannelInfo"];
+
+    
+      Promise.all([datafactory.getdata("1234-npsbsk","npsbsk","SubscriberInfo"),
+      datafactory.getdata("1234-npsbsk","npsbsk","ProgramInfo"),
+      datafactory.getdata("1234-npsbsk","npsbsk","ChannelInfo")]).then(function(){
+      $rootScope.LoadNotificationCounts();
+      $rootScope.GetAllTags();
+      console.log($rootScope.AvailableChannels);
+     
+     $rootScope.pushNotification = PushNotification.init({
+    "android": { "senderID": "805533023268" },
+    "ios": { "alert": "true", "badge": "false", "sound": "true" }
+       });
+
+      $state.go('app.home',{},{reload:true});
+      console.log("promise promise"); 
+
+        });
 
 
+     // $rootScope.PrepareDocs("1234-npsbsk","npsbsk","SubscriberInfo");
+     // $rootScope.PrepareDocs("1234-npsbsk","npsbsk","ProgramInfo");
+     // $rootScope.PrepareDocs("1234-npsbsk","npsbsk","ChannelInfo");
+     //  $rootScope.LoadNotificationCounts();
+      //GetAllTags();
+     // $state.go('app.home',{},{reload:true});
 
+  }
   }
 
 $scope.scrollSmallToTop = function() {

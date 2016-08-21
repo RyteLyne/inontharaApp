@@ -30,6 +30,8 @@ $rootScope.AppUserInformation =
 
   $rootScope.AvailableChannels = [];
   $rootScope.NotificationCounts = {};
+  //$rootScope.ServerStatus=0;
+  $rootScope.pushNotification={};
 
   $rootScope.GetProgramChannels =function (runson,subscribedchannels)
   {
@@ -76,8 +78,7 @@ $rootScope.AppUserInformation =
    }
 
 
-
-var GetAllTags = function()
+$rootScope.GetAllTags = function()
 {
 
 
@@ -85,10 +86,6 @@ var GetAllTags = function()
    var sub = $rootScope.GetDocument("SubscriberInfo");
    priv = sub.DocumentBody.ApplicationSpecificData.previlageLevels;
 
-
-
-
-  
 
 
   var subscribedchannels = sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
@@ -147,62 +144,18 @@ $rootScope.AddToTag(groups[i].mRunsOn,subscribedchannels,groups[i].mId,orid);
     $rootScope.AddToTag(items[k].mRunsOn,subscribedchannels,items[k].mId,orid);  
   }
 
-  console.log("final 1 Tags");
-  console.log($rootScope.AvailableChannels);
+  //console.log("final 1 Tags");
+  //console.log($rootScope.AvailableChannels);
 
 
 }
+
 
 
 
 
 //get basic document from server;;
-var GetDocFromServer = function(subid,orgid,docname)
-{
- 
-var details = {
 
-  "SubId" : subid,  //subscriberId
-  "DocName"  : docname, //document name
-  "OrgId" : orgid //organisation Id
-}
-
-doc2send = details;
-
-  var req = 
-{
-    method: 'POST',
-    url: "http://chungling.azurewebsites.net/VidgetDocM/",
-    //url: "http://localhost:3000/VidgetDocM/",
-    data: jQuery.param(doc2send),
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-}
-//console.log(req.data);
-      //  var defer = $q.defer();
-      //  $ionicLoading.show({
-   //   template: 'Loading...'
-    //});
-
-
-
-        $http(req).
-        success(function(data, status, headers, config) {
-            // alter data if needed
-          console.log(data);
-          console.log("server success");
-          window.localStorage.setItem(docname,JSON.stringify(data.Data));
-
-          //  defer.resolve(data);
- //$ionicLoading.hide();
-        }).
-        error(function(data, status, headers, config) {
-          console.log(data);
-          //  defer.reject();
-          console.log("Error getting from server");
-
-        });
-return;
-} 
 
 $rootScope.Testing = function(subid,orgid,docname)
 {
@@ -221,27 +174,27 @@ console.log("failed to get from server");
 
 
 
-
+/*
  $rootScope.PrepareDocs = function(subid,orgid,docname)
  {
 
  if(!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
   return;
  //temp line;;
- // window.localStorage.removeItem(docname);
+  window.localStorage.removeItem(docname);
 
      var doc = {};
   if (window.localStorage.getItem(docname) == undefined) //doesnot exist in localstorage
   {
     
-     GetDocFromServer(subid,orgid,docname);
+     datafactory.getdata(subid,orgid,docname)
   }
    else
    {
      console.log("found in localstorage");
 
    }
- }
+ }*/
 
 $rootScope.LoadNotificationCounts = function()
 {
@@ -347,12 +300,73 @@ $rootScope.GetUserChannels =function ()
 
 
 
-$rootScope.LoadNotificationCounts();
-$rootScope.PrepareDocs("1234-npsbsk","npsbsk","SubscriberInfo");
-$rootScope.PrepareDocs("1234-npsbsk","npsbsk","ProgramInfo");
-$rootScope.PrepareDocs("1234-npsbsk","npsbsk","ChannelInfo");
 
-GetAllTags();
 
 
 })
+
+
+
+.factory('datafactory', function($http, $q) {
+ var factory = {};
+
+
+
+factory.getdata = function (subid,orgid,docname)
+ {
+
+   var defer = $q.defer();
+
+   if(!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
+  return;
+
+  //temp line;;
+  window.localStorage.removeItem(docname);
+
+  if (window.localStorage.getItem(docname) != undefined)
+  {
+    console.log("found in local storage");
+    return; 
+  }
+
+  var details = {
+
+  "SubId" : subid,  //subscriberId
+  "DocName"  : docname, //document name
+  "OrgId" : orgid //organisation Id
+}
+
+doc2send = details;
+
+  var req = 
+{
+    method: 'POST',
+    url: "http://chungling.azurewebsites.net/VidgetDocM/",
+    //url: "http://localhost:3000/VidgetDocM/",
+    data: jQuery.param(doc2send),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}
+
+
+ $http(req).
+        success(function(data, status, headers, config) {
+            // alter data if needed
+          console.log(data);
+          console.log("server success");
+          window.localStorage.setItem(docname,JSON.stringify(data.Data));
+          defer.resolve(data.Data);
+
+        }).
+        error(function(data, status, headers, config) {
+          console.log(data);
+          //  defer.reject();
+          console.log("Error getting from server");
+          defer.reject();
+
+        });
+return defer.promise;
+}   
+ 
+ return factory;
+  
+});
