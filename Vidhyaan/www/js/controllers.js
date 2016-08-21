@@ -535,6 +535,9 @@ jQuery.getJSON('json/settings.json', function(data) {
   //login to server here, if success redirect to home page;;
   if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
    {
+
+      console.log("Mob Service client");
+      console.log($rootScope.mobileServiceClient);
       console.log("new log in");
       window.localStorage.setItem("username",$scope.Credentials.username);
       window.localStorage.setItem("password",$scope.Credentials.password);
@@ -548,6 +551,7 @@ jQuery.getJSON('json/settings.json', function(data) {
       console.log("Getting From Server");
       var docs = ["SubscriberInfo","ProgramInfo","ChannelInfo"];
 
+
     
       Promise.all([datafactory.getdata("1234-npsbsk","npsbsk","SubscriberInfo"),
       datafactory.getdata("1234-npsbsk","npsbsk","ProgramInfo"),
@@ -556,10 +560,7 @@ jQuery.getJSON('json/settings.json', function(data) {
       $rootScope.GetAllTags();
       console.log($rootScope.AvailableChannels);
      
-     $rootScope.pushNotification = PushNotification.init({
-    "android": { "senderID": "805533023268" },
-    "ios": { "alert": "true", "badge": "false", "sound": "true" }
-       });
+      $rootScope.InitPush();
 
       $state.go('app.home',{},{reload:true});
       console.log("promise promise"); 
@@ -671,10 +672,7 @@ $state.go('login',{},{reload:true});
 
 .controller('PlatformCtrl', function($scope, $rootScope, $state, $http) {
 	console.log("plaform controller");
-	 $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient(
-                   'https://edum.azure-mobile.net',
-                     'yVQPRKXxocEazjPjDXGSnmIpyCBTYc97');
-               console.log($scope.mobileServiceClient);
+	
 var currentPlatform = ionic.Platform.platform();
   var currentPlatformVersion = ionic.Platform.version();
  $rootScope.devWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
@@ -686,7 +684,7 @@ var currentPlatform = ionic.Platform.platform();
 if(window.localStorage.getItem("setting") != undefined) //default settings;;
 {
 
-$rootScope.Language = window.localStorage.getItem("language");
+$rootScope.Language = window.localStorage.getItem("language")
 
 }
 else
