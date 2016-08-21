@@ -33,8 +33,6 @@ angular.module('DynamicMeditation.controllers', [])
  console.log("inJquery start");
 
 
-
-
    var priv = {};
 
    var Sub = $rootScope.GetDocument("SubscriberInfo");
@@ -42,6 +40,7 @@ angular.module('DynamicMeditation.controllers', [])
 
 
    priv = Sub.DocumentBody.ApplicationSpecificData.previlageLevels;
+
 
 
   /*
@@ -71,6 +70,39 @@ angular.module('DynamicMeditation.controllers', [])
        var lang = $rootScope.Language.toString();
        var k=0;
 
+
+//load commonly used information onto AppUserInformation;;
+
+   $rootScope.AppUserInformation.PrivLevels = priv;
+   $rootScope.AppUserInformation.SubId = Sub.DocumentBody.ApplicationSpecificData.SubscriberID;
+   $rootScope.AppUserInformation.OrgId = Sub.DocumentHeader.OrganizationId;
+   $rootScope.AppUserInformation.OrgName = Sub.DocumentHeader.OrganizationName;
+
+   $rootScope.AppUserInformation.Class = Sub.DocumentBody.Document_Details.profile.Division;
+   
+   $rootScope.AppUserInformation.UserAvatar = Sub.DocumentBody.Document_Details.profile.Avatar;
+
+   var titled = Sub.DocumentBody.Document_Details.profile.Titled;
+
+   $rootScope.AppUserInformation.UserTag = titled[lang]==undefined ? titled["1"]: titled[lang];
+ 
+   var fname = Sub.DocumentBody.Document_Details.profile.FirstName;
+   var lname = Sub.DocumentBody.Document_Details.profile.LastName;
+
+   var fname1 = fname[lang]==undefined?fname["1"]:fname[lang];
+   var lname1 = lname[lang]==undefined?lname["1"]:lname[lang];
+
+
+   $rootScope.AppUserInformation.UserName = fname1 + " " + lname1;
+
+
+
+
+   console.log("App Information");
+   console.log($rootScope.AppUserInformation);
+  
+//end of AppUserInformation
+  
    for (var i=0; i<items.length; i++) 
    {
     
@@ -108,7 +140,7 @@ angular.module('DynamicMeditation.controllers', [])
    var items = data;
    console.log(items);
        $scope.popItems = [];
-       var lang ="";
+       var lang = $rootScope.Language.toString();
 
    for (var i=0; i<items.items.length; i++) 
    {
@@ -117,7 +149,9 @@ angular.module('DynamicMeditation.controllers', [])
     $scope.popItems[i] = {
       icon: items.items[i].mIcon,
       ref: items.items[i].mRef,
-      text: items.items[i].mText[$rootScope.Language]
+     
+
+      text: items.items[i].mText[lang]==undefined?items.items[i].mText["0"]:items.items[i].mText[lang]
     };
    
    
@@ -146,6 +180,7 @@ angular.module('DynamicMeditation.controllers', [])
 
    language = $rootScope.Language.toString();
    var obj = sub.DocumentBody.Document_Details.profile;
+
    console.log(language);
 
    $scope.profile=
@@ -181,23 +216,55 @@ angular.module('DynamicMeditation.controllers', [])
 
   
    console.log($scope.profile.mName);
-       
-   
+
+
+  // var prop = data.ProfilePage;
 
 
 jQuery.getJSON('json/uiLanguage.json', function(data) {
 
-if(data.ProfilePage[$rootScope.Language] != undefined)
- $scope.UiLanguageProfile = data.ProfilePage[$rootScope.Language];
- else
- $scope.UiLanguageProfile = data.ProfilePage[0];
 
 
- $scope.UiProfileReady=1;
- console.log("In uiLanguage zzz");
- //console.log("title", UiLanguageProfile.Title);
+$scope.UiLanguageProfile = 
+    {
+		Title : data.ProfilePage.Title[language]==undefined?data.ProfilePage.Title["1"]:data.ProfilePage.Title[language],
+
+		Name:  data.ProfilePage.Name[language]==undefined?data.ProfilePage.Name["1"]:data.ProfilePage.Name[language],
+
+		DOB: data.ProfilePage.DOB[language]==undefined?data.ProfilePage.DOB["1"]:data.ProfilePage.DOB[language],
+
+		Gender: data.ProfilePage.Gender[language]==undefined?data.ProfilePage.Gender["1"]:data.ProfilePage.Gender[language],
+
+		Grade: data.ProfilePage.Grade[language]==undefined?data.ProfilePage.Grade["1"]:data.ProfilePage.Grade[language],
+		Division:data.ProfilePage.Division[language]==undefined?data.ProfilePage.Division["1"]:data.ProfilePage.Division[language],
+		
+		EnrollmentNo:data.ProfilePage.EnrollmentNo[language]==undefined?data.ProfilePage.EnrollmentNo["1"]:data.ProfilePage.EnrollmentNo[language],
+		
+		BloodGroup: data.ProfilePage.BloodGroup[language]==undefined?data.ProfilePage.BloodGroup["1"]:data.ProfilePage.BloodGroup[language],
+		
+		ClassTeacher: data.ProfilePage.ClassTeacher[language]==undefined?data.ProfilePage.ClassTeacher["1"]:data.ProfilePage.ClassTeacher[language],
+		
+		MomName: data.ProfilePage.MomName[language]==undefined?data.ProfilePage.MomName["1"]:data.ProfilePage.MomName[language],
+		
+		FatherName: data.ProfilePage.FatherName[language]==undefined?data.ProfilePage.FatherName["1"]:data.ProfilePage.FatherName[language],
+		
+		MomMobileNo: data.ProfilePage.MomMobileNo[language]==undefined?data.ProfilePage.MomMobileNo["1"]:data.ProfilePage.MomMobileNo[language],
+		
+		FatherMobileNo:data.ProfilePage.FatherMobileNo[language]==undefined?data.ProfilePage.FatherMobileNo["1"]:data.ProfilePage.FatherMobileNo[language],
+		
+		HomeAddress:data.ProfilePage.HomeAddress[language]==undefined?data.ProfilePage.HomeAddress["1"]:data.ProfilePage.HomeAddress[language],
+    }
+
 
    });
+
+
+
+
+
+
+
+
 
 }) //end of function($scope);;
 
@@ -213,6 +280,8 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
    * @return {Number}
    */
     //var groups={};
+
+ 
 
     var groupcnt=0;
 
@@ -232,8 +301,10 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
 
   });*/
 
+  var subscribedchannels = sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
+
   var pro = $rootScope.GetDocument("ProgramInfo");
-   
+  var orid = sub.DocumentHeader.OrganizationId;
  
    var groups = pro.DocumentBody.ApplicationsSpecificData.feedPrograms;
    console.log(groups);
@@ -244,6 +315,7 @@ if(data.ProfilePage[$rootScope.Language] != undefined)
 
   var k=0;
   var language = $rootScope.Language.toString();
+
 
   console.log("new Language ", language);
 
@@ -262,6 +334,11 @@ if(groups[i].mId != undefined )
       cnt : $rootScope.NotificationCount["Nc_" + groups[i].mId],
       items: []
     };
+
+
+  
+
+
      if(groups[i].mItems !== undefined) //sub items present;;
      {
        groupcnt = 0;
@@ -570,7 +647,7 @@ $rootScope.Language = window.localStorage.getItem("language");
 }
 else
 {
-$rootScope.Language = 0;
+$rootScope.Language = 1;
 
 }
 
@@ -610,21 +687,11 @@ $rootScope.NotificationCount = {};
 
 
 
-/*
-NotificationCount["ProgramId_2"] = 5;
-NotificationCount["ProgramId_3"] = 8;
-
-window.localStorage.setItem("NotificationCount",JSON.stringify(NotificationCount));
-var test = JSON.parse(window.localStorage.getItem("NotificationCount"));
-
-console.log(test["ProgramId_2"]);
-console.log(test["ProgramId_3"]);*/
 }
 
 
 $rootScope.LoadNotificationCount();
 
-//$rootScope.LoadNotificationCount();
 
 
 })
@@ -835,7 +902,7 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
 
 $scope.choice = 
 {
-langchoice : 0,
+langchoice : 1,
 notichoice : 0
 };
 
@@ -850,7 +917,7 @@ console.log("Language : " , $rootScope.Language);
 if(window.localStorage.getItem("setting") == undefined) //default settings;;
 {
 window.localStorage.setItem("setting","1");
-window.localStorage.setItem("language",0);
+window.localStorage.setItem("language",1);
 window.localStorage.setItem("notichoice",0);
 console.log("Setting First Time");
 }
@@ -868,12 +935,24 @@ $scope.notificationstatus = "";
 
 jQuery.getJSON('json/uiLanguage.json', function(data) {
 
- 
-if(data.SettingsPage[$rootScope.Language] != undefined)
- $scope.UiLanguageSettings = data.SettingsPage[$rootScope.Language];
- else
-  $scope.UiLanguageSettings = data.SettingsPage[0];
+var lang = $rootScope.Language.toString();
 
+
+
+ $scope.UiLanguageSettings = 
+ {
+Title:  data.SettingsPage.Title[lang]==undefined?data.SettingsPage.Title["1"]:data.SettingsPage.Title[lang],
+ChangePassword : data.SettingsPage.ChangePassword[lang]==undefined?data.SettingsPage.ChangePassword["1"]:data.SettingsPage.ChangePassword[lang],
+OldPassword : data.SettingsPage.OldPassword[lang]==undefined?data.SettingsPage.OldPassword["1"]:data.SettingsPage.OldPassword[lang],
+NewPassword : data.SettingsPage.NewPassword[lang]==undefined?data.SettingsPage.NewPassword["1"]:data.SettingsPage.NewPassword[lang],
+RepeatPassword :  data.SettingsPage.RepeatPassword[lang]==undefined?data.SettingsPage.RepeatPassword["1"]:data.SettingsPage.RepeatPassword[lang],
+EnableNotification : data.SettingsPage.EnableNotification[lang]==undefined?data.SettingsPage.EnableNotification["1"]:data.SettingsPage.EnableNotification[lang],
+NotificationOn :  data.SettingsPage.NotificationOn[lang]==undefined?data.SettingsPage.NotificationOn["1"]:data.SettingsPage.NotificationOn[lang],
+NotificationOff : data.SettingsPage.NotificationOff[lang]==undefined?data.SettingsPage.NotificationOff["1"]:data.SettingsPage.NotificationOff[lang],
+Change : data.SettingsPage.Change[lang]==undefined?data.SettingsPage.Change["1"]:data.SettingsPage.Change[lang],
+Language: data.SettingsPage.Language[lang]==undefined?data.SettingsPage.Language["1"]:data.SettingsPage.Language[lang]
+
+}
 
 
 
@@ -882,11 +961,17 @@ if(data.SettingsPage[$rootScope.Language] != undefined)
  console.log($scope.LanguageOptions);
  //console.log("title", UiLanguageProfile.Title);
 
+
 if($scope.choice.notichoice == true)
  $scope.notificationstatus = $scope.UiLanguageSettings.NotificationOn;
  else
   $scope.notificationstatus = $scope.UiLanguageSettings.NotificationOff;
    });
+
+
+
+
+
 
  $scope.languageChange = function(item) 
  {

@@ -4,32 +4,32 @@
 {
  "mIcon" : "ion-link",
  "mRef"  : "#/app/home",
- "mText" : ["Refer", "Refer", "घर"]
+ "mText" : { "1": "Refer", "2" : "Refer", "3" :"घर"}
 },
 
 {
  "mIcon" : "ion-bug",
  "mRef"  : "#/app/benefits",
- "mText" : ["Report", "ಉಲ್ಲೇಖ", "उल्लेख"]
+ "mText" : {"1" : "Report", "2" : "ಉಲ್ಲೇಖ", "3" : "उल्लेख"}
 },
 {
  "mIcon" : "ion-help",
  "mRef"  : "#/home/main",
- "mText" : ["Help","ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","पासवर्ड बदलें"]
+ "mText" : {"1" : "Help","2": "ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","3" : "पासवर्ड बदलें"}
 
 },
 
 {
  "mIcon" : "ion-gear-b",
  "mRef"  : "#/app/settings",
- "mText" : ["Settings", "ವರದಿ",  "रिपोर्ट"]
+ "mText" : {"1" : "Settings", "2" : "ವರದಿ",  "3" : "रिपोर्ट"}
 
 },
 
 {
  "mIcon" : "ion-log-out",
  "mRef"  : "#/app/logout",
- "mText" : ["Logout", "Logout", "लोग आउट"]
+ "mText" : {"1" : "Logout", "2" : "Logout", "3" : "लोग आउट"}
 }
 
 ]

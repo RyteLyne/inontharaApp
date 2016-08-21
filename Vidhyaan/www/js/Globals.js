@@ -4,6 +4,137 @@ angular.module('Global.controllers', [])
 
     //window.localStorage.removeItem("subscriberInfo");
 
+$rootScope.AppUserInformation = 
+{
+ SelChannel : "0",
+ SelProgram : "0",
+ WritePriv:false,
+ XPriv:false,
+ SubId : "",
+ OrgId: "",
+ OrgName : "",
+ UserName : "",
+ UserTag: "", 
+ Class: "",
+ UserAvatar: "",
+ PrivLevels: {}
+}
+
+
+ $rootScope.BuildTag = function(channel,progid,orgid)
+ {
+     tag = channel + "_" + progid + "_" + orgid;
+     return(tag);
+ }
+
+  $rootScope.AvailableChannels = [];
+
+ $rootScope.AddToTag= function(runson,subscribedchannels,progid, orgid)
+   {
+     
+     console.log("Add to Tag");
+     //console.log(runson);
+     //console.log(subscribedchannels);
+	 //console.log(subscribedchannels.length);
+	 //console.log(runson.length);
+	
+     
+     for(var i=0;i<subscribedchannels.length;i++)
+     {
+       if(runson.indexOf(subscribedchannels[i])>-1)
+       {
+         //tag = subscribedchannels[i] + "_" + progid + "_" + orgid;
+         tag= $rootScope.BuildTag(subscribedchannels[i],progid,orgid);
+         console.log(tag);
+
+         if($rootScope.AvailableChannels.indexOf(tag)<0) //tag doesnot exist;;
+         $rootScope.AvailableChannels.push(tag);
+       }
+
+     }
+
+   }
+
+
+
+var GetAllTags = function()
+{
+
+
+   var priv = {};
+   var sub = $rootScope.GetDocument("SubscriberInfo");
+   priv = sub.DocumentBody.ApplicationSpecificData.previlageLevels;
+
+
+
+
+  
+
+
+  var subscribedchannels = sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
+
+  var pro = $rootScope.GetDocument("ProgramInfo");
+  var orid = sub.DocumentHeader.OrganizationId;
+ 
+  var groups = pro.DocumentBody.ApplicationsSpecificData.feedPrograms;
+   console.log(groups);
+
+
+
+   for (var i=0; i<groups.length; i++) {
+
+if(groups[i].mId != undefined )
+    if(priv[groups[i].mId]==undefined)
+     continue;
+
+if(groups[i].mId != undefined )
+$rootScope.AddToTag(groups[i].mRunsOn,subscribedchannels,groups[i].mId,orid);
+ 
+
+
+     if(groups[i].mItems !== undefined) //sub items present;;
+     {
+       
+
+    for (var j=0; j<groups[i].mItems.length; j++) 
+    {
+   
+    if(priv[groups[i].mItems[j].mId]==undefined)
+     continue;
+  
+    
+
+      $rootScope.AddToTag(groups[i].mItems[j].mRunsOn,subscribedchannels,groups[i].mItems[j].mId,orid);
+
+    }
+
+      
+     }
+
+    
+    
+  } //end of main for loop;;
+
+
+   var items = pro.DocumentBody.ApplicationsSpecificData.appPrograms;
+
+    for (var k=0; k<items.length; k++) 
+   {
+    
+     if(priv[items[k].mId]==undefined)
+     continue;
+     
+    $rootScope.AddToTag(items[k].mRunsOn,subscribedchannels,items[k].mId,orid);  
+  }
+
+  console.log("final 1 Tags");
+  console.log($rootScope.AvailableChannels);
+
+
+}
+
+
+
 
 //get basic document from server;;
 var GetDocFromServer = function(subid,orgid,docname)
@@ -196,6 +327,7 @@ $rootScope.PrepareDocs("1234-npsbsk","npsbsk","SubscriberInfo");
 $rootScope.PrepareDocs("1234-npsbsk","npsbsk","ProgramInfo");
 $rootScope.PrepareDocs("1234-npsbsk","npsbsk","ChannelInfo");
 $rootScope.LoadNotificationCounts();
+GetAllTags();
 
 
 })

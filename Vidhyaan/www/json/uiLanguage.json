@@ -1,122 +1,146 @@
 {
-"ProfilePage" : [
-{
-"Title" : "Profile",
-"Name"  : "Name",
-"DOB"   : "DOB",
-"Gender" : "Gender",
-"Grade" : "Grade",
-"Division"   : "Division",
-"EnrollmentNo" : "Enrollment No",
-"BloodGroup" : "Blood Group",
-"ClassTeacher" : "Class Teacher",
-"MomName" : "Mother Name",
-"FatherName" : "Father Name",
-"MomMobileNo" : "Mother Mobile No",
-"FatherMobileNo" : "Father Mobile No",
-"HomeAddress" : "Home Address"
-},
-{
-"Title" : "ಪ್ರೊಫೈಲ್",
-"Name"  : "Name1",
-"DOB"   : "ಹುಟ್ತಿದ ದಿನ",
-"Gender" : "ಲಿಂಗ",
-"Grade" : "ಗ್ರೇಡ್",
-"Division"   : "Division",
-"EnrollmentNo" : "Enrollment No1",
-"BloodGroup" : "Blood Group1",
-"ClassTeacher" : "Class Teacher1",
-"MomName" : "ತಾಯಿಯ ಹೆಸರು",
-"FatherName" : "ತಂದೆಯ ಹೆಸರು",
-"MomMobileNo" : "Mother Mobile No1",
-"FatherMobileNo" : "Father Mobile No1",
-"HomeAddress" : "Home Address1"
-},
-{
-"Title" : "Profile2",
-"Name"  : "Name2",
-"DOB"   : "DOB2",
-"Gender" : "Gender2",
-"Grade" : "Grade2",
-"Division"   : "Division",
-"EnrollmentNo" : "Enrollment No2",
-"BloodGroup" : "Blood Group2",
-"ClassTeacher" : "Class Teacher2",
-"MomName" : "Mother Name2",
-"FatherName" : "Father Name2",
-"MomMobileNo" : "Mother Mobile No2",
-"FatherMobileNo" : "Father Mobile No2",
-"HomeAddress" : "Home Address2"
-}
-],
+	"ProfilePage": {
+		"Title": {
+			"1": "Profile",
+			"2": "ಪ್ರೊಫೈಲ್",
+			"3": "profil"
+		},
+		"Name": {
+			"1": "Name",
+			"2": "Hesaru",
+			"3": "Naam"
+		},
+		"DOB": {
+			"1": "DOB",
+			"2": "Huttida dinanka",
+			"3": "Janam din"
+		},
+		"Gender": {
+			"1": "Gender",
+			"2": "ಲಿಂಗ",
+			"3": "Linga"
+		},
+		"Grade": {
+			"1": "Grade",
+			"2": "ಗ್ರೇಡ್",
+			"3": "Garad"
+		},
+		"Division": {
+			"1": "Division",
+			"2": "Division",
+			"3": "Division"
+		},
+		"EnrollmentNo": {
+			"1": "Enrollment No",
+			"2": "Enrollment No",
+			"3": "Enrollment No"
+		},
+		"BloodGroup": {
+			"1": "Blood Group",
+			"2": "Blood Group",
+			"3": "Blood Group"
+		},
+		"ClassTeacher": {
+			"1": "Class Teacher",
+			"2": "Class Teacher",
+			"3": "Class Teacher"
+		},
+		"MomName": {
+			"1": "Mother Name",
+			"2": "Mother Name",
+			"3": "Mother Name"
+		},
+		"FatherName": {
+			"1": "Father Name",
+			"2": "Father Name",
+			"3": "Father Name"
+		},
+		"MomMobileNo": {
+			"1": "Mother Mobile No",
+			"2": "Mother Mobile No",
+			"3": "Mother Mobile No"
+		},
+		"FatherMobileNo": {
+			"1": "Father Mobile No",
+			"2": "Father Mobile No",
+			"3": "Father Mobile No"
+		},
+		"HomeAddress": {
+			"1": "Home Address",
+			"2": "Home Address",
+			"3": "Home Address"
+		}
+	},
 
-"LanguageOptions" :
-[{"name": "English", "id": "0"}, {"name": "ಕನ್ನಡ", "id": "1"}, {"name": "हिंदी", "id": "2"},{"name": "中文", "id": "4"}],
+
+	"LanguageOptions": [{
+		"name": "English",
+		"id": "1"
+	}, {
+		"name": "ಕನ್ನಡ",
+		"id": "2"
+	}, {
+		"name": "हिंदी",
+		"id": "3"
+	}, {
+		"name": "中文",
+		"id": "4"
+	}],
 
 
-"SettingsPage" : [
-{
-"Title": "Settings",
-"ChangePassword" : "Change Password",
-"OldPassword" : "Old Password",
-"NewPassword" : "New Password",
-"RepeatPassword" : "Repeat Password",
-"EnableNotification" :"Enable Notifications",
-"NotificationOn" : "Notification On",
-"NotificationOff" : "Notification Off",
-"Change" : "Change",
-"Language" : "Language",
-"Id": "0"
-},
+	"SettingsPage": {
+		"Title": {
+			"1": "Settings",
+			"2": "ಸೆಟ್ಟಿಂಗ್",
+			"3": "Satting"
+		},
+		"ChangePassword": {
+			"1": "Change Password",
+			"2": "Change Password",
+			"3": "Change Password"
+		},
+		"OldPassword": {
+			"1": "Old Password",
+			"2": "Old Password",
+			"3": "Old Password"
+		},
+		"NewPassword": {
+			"1": "New Password",
+			"2": "New Password",
+			"3": "New Password"
+		},
+		"RepeatPassword": {
+			"1": "Repeat Password",
+			"2": "Repeat Password",
+			"3": "Repeat Password"
+		},
+		"EnableNotification": {
+			"1": "Enable Notifications",
+			"2": "Enable Notifications",
+			"3": "Enable Notifications"
+		},
+		"NotificationOn": {
+			"1": "Notification On",
+			"2": "Notification On",
+			"3": "Notification On"
+		},
+		"NotificationOff": {
+			"1": "Notification Off",
+			"2": "Notification Off",
+			"3": "Notification Off"
+		},
+		"Change": {
+			"1": "Change",
+			"2": "Change",
+			"3": "Change"
+		},
+		"Language": {
+			"1": "Language",
+			"2": "Baashe",
+			"3": "Baasha"
+		}
+	}
 
-{
-"Title": "ಸೆಟ್ಟಿಂಗ್",
-"ChangePassword" : "ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ",
-"OldPassword" : "ಹಳೆಯ ಗುಪ್ತಪದ",
-"NewPassword" : "ಹೊಸ ಗುಪ್ತಪದ",
-"RepeatPassword" : "ಪಾಸ್ವರ್ಡ್ ಪುನರಾವರ್ತಿಸಿ",
-"EnableNotification" :"ಅಧಿಸೂಚನೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು",
-"NotificationOn" : "ಅಧಿಸೂಚನೆ ಆನ್",
-"NotificationOff" : "ಅಧಿಸೂಚನೆ ಆಫ್",
-"Change" : "ಬದಲಾಯಿಸಿ",
-"Language" : "ಭಾಷೆ",
-"Id": "1"
-},
 
-{
-"Title": "Settings",
-"ChangePassword" : "पासवर्ड बदलें",
-"OldPassword" : "पुराना पासवर्ड",
-"NewPassword" : "नया पासवर्ड",
-"RepeatPassword" : "पासवर्ड दोहराएं",
-"EnableNotification" :"सूचनाएं सक्षम करें",
-"NotificationOn" : "अधिसूचना पर",
-"NotificationOff" : "अधिसूचना बंद",
-"Change" : "ठीक",
-"Language" : "भाषा",
-"Id": "2"
-},
-
-{
-"Title": "Dummy",
-"Id": "3"
-
-},
-
-{
-"Title": "设置",
-"ChangePassword" : "पासवर्ड बदलें",
-"OldPassword" : "पुराना पासवर्ड",
-"NewPassword" : "नया पासवर्ड",
-"RepeatPassword" : "पासवर्ड दोहराएं",
-"EnableNotification" :"सूचनाएं सक्षम करें",
-"NotificationOn" : "अधिसूचना पर",
-"NotificationOff" : "अधिसूचना बंद",
-"Change" : "ठीक",
-"Language" : "语言",
-"Id": "4"
-}
-
-]
 
 }
