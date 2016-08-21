@@ -209,7 +209,7 @@ console.log($scope.messages);
 myApp.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
  console.log("$rootScope.mobileServiceClient");
   console.log($rootScope.mobileServiceClient);
-
+console.log($rootScope.AppUserInformation);
   $scope.addText= function(){
   $scope.tag='p'
   $scope.tPlaceholder = " enter content";
@@ -279,20 +279,21 @@ console.log($scope.messages);
 var d = new Date();
 var curr_time = d.getTime();
  console.log(curr_time);
- var newID = $rootScope.userName + curr_time.toString()+'.news';
+ var newID = curr_time.toString()+'.'+$rootScope.AppUserInformation.SubId + '.newsFeed';
 
 var doc2send = {};
 tempDoc={};
 tempDoc.DocumentHeader ={};
 tempDoc.DocumentHeader.DocumentType='NewsFeed';
-tempDoc.DocumentHeader.Author= $rootScope.userName;
-tempDoc.DocumentHeader.OrganizationId = 'chungling';
+tempDoc.DocumentHeader.Author= $rootScope.AppUserInformation.UserName;
+tempDoc.DocumentHeader.AuthourID=$rootScope.AppUserInformation.SubId;
+tempDoc.DocumentHeader.OrganizationId = $rootScope.AppUserInformation.OrgId;
 tempDoc.DocumentHeader.Datetime=curr_time.toString(); 
 tempDoc.DocumentHeader.DocumentId=newID;
 
 tempDoc.DocumentSubHeader={};
-tempDoc.DocumentSubHeader.ChannelId='somechannel';
-tempDoc.DocumentSubHeader.ProgramId='someProgram';
+tempDoc.DocumentSubHeader.ChannelId=$rootScope.AppUserInformation.SelChannel;
+tempDoc.DocumentSubHeader.ProgramId=$rootScope.AppUserInformation.SelProgram;
 tempDoc.DocumentSubHeader.ModeratorId='someModerator';
 
 tempDoc.DocumentBody={};
@@ -302,11 +303,12 @@ tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='hello';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail='test.png';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='simpel text preview';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar='useridavatar.png';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName='Subscribers Name';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.toString();
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName=$rootScope.AppUserInformation.UserName;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.SubscribersID =  $rootScope.AppUserInformation.SubId
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.toString();;
  
 tempDoc.DocumentBody.DocumentDetails={};
-tempDoc.DocumentBody.DocumentDetails.messages=[];
+//tempDoc.DocumentBody.DocumentDetails.messages=[];
 tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.messages));
 console.log(tempDoc);
 doc2send= tempDoc;
@@ -709,13 +711,13 @@ myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHisto
     document.body.classList.remove('platform-ios');
     document.body.classList.remove('platform-android');
     document.body.classList.add('platform-' + p);
-   // $scope.demo = p;
+
  	console.log("setting platform as ios for popup alwasy");
     //document.body.classList.add('platform-ios');
     $scope.demo = p;
   }
 
- $scope.setPlatform('ios');
+// $scope.setPlatform('ios');
 
   console.log("in init control");
       $scope.goBack = function(){
