@@ -222,7 +222,6 @@ console.log("failed to get from server");
 
 
 
-  
  $rootScope.PrepareDocs = function(subid,orgid,docname)
  {
 
