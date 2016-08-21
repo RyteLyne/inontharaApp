@@ -163,7 +163,7 @@ var doc2req = {};
 doc2req.channels = data.message.replace("newsfeed from edumobi channel: ", "");
 doc2req.docID = data.title;
 
-  Object.toparams = function ObjecttoParams(obj) 
+/*  Object.toparams = function ObjecttoParams(obj) 
 {
   var p = [];
   for (var key in obj) 
@@ -171,12 +171,12 @@ doc2req.docID = data.title;
     p.push(key + '=' + encodeURIComponent(obj[key]));
   }
   return p.join('&');
-};
+};*/
   var req = 
 {
     method: 'POST',
     url: "http://chungling.azurewebsites.net/getPostM/",
-    data: Object.toparams(doc2req),
+    data: jQuery.param(doc2req),
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }
 console.log(req.data);
@@ -452,9 +452,10 @@ tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName='Subscriber
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.toString();
  
 tempDoc.DocumentBody.DocumentDetails={};
-tempDoc.DocumentBody.DocumentDetails.messages=$scope.messages;
+tempDoc.DocumentBody.DocumentDetails.messages=[];
+tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.messages));
 console.log(tempDoc);
-doc2send= JSON.stringify(tempDoc);
+doc2send= tempDoc;
  //doc2send.subGroup = "chungling";//req.body.subGroup;
   //    doc2send.docType = "NewsFeed";//req.body.docType;
    //   doc2send.channels = "test";//req.body.channels;
@@ -468,7 +469,7 @@ doc2send= JSON.stringify(tempDoc);
      // console.log(doc2send.messages);
   //localStorage.setItem('recievedMessage', doc2send.messages);
   
-  Object.toparams = function ObjecttoParams(obj) 
+/*  Object.toparams = function ObjecttoParams(obj) 
 {
   var p = [];
   for (var key in obj) 
@@ -476,12 +477,12 @@ doc2send= JSON.stringify(tempDoc);
     p.push(key + '=' + encodeURIComponent(obj[key]));
   }
   return p.join('&');
-};
+};*/
   var req = 
 {
     method: 'POST',
     url: "http://chungling.azurewebsites.net/addPostM/",
-    data: Object.toparams(doc2send),
+    data: jQuery.param(doc2send),
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }
 console.log(req.data);
