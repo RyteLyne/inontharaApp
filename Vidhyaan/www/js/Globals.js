@@ -228,7 +228,7 @@ console.log("failed to get from server");
  if(!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
   return;
  //temp line;;
-  //window.localStorage.removeItem(docname);
+ // window.localStorage.removeItem(docname);
 
      var doc = {};
   if (window.localStorage.getItem(docname) == undefined) //doesnot exist in localstorage
