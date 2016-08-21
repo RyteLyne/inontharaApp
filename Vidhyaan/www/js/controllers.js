@@ -120,7 +120,7 @@ angular.module('DynamicMeditation.controllers', [])
       text: items[i].mText[lang]==undefined?items[i].mText["1"]:items[i].mText[lang],
       id:   items[i].mId,
       runson : items[i].mRunsOn,
-      cnt:  $rootScope.NotificationCount["NcProgramId_" + items[i].mId]
+      cnt:  $rootScope.NotificationCounts["Nc_" + items[i].mId]==undefined?"":$rootScope.NotificationCounts["Nc_" + items[i].mId]
     };
    
    k++;
@@ -343,7 +343,7 @@ if(groups[i].mId != undefined )
       ref:  groups[i].mRef,
       id :  groups[i].mId,
       runson: groups[i].mRunsOn,
-      cnt : $rootScope.NotificationCount["Nc_" + groups[i].mId],
+      cnt : $rootScope.NotificationCounts["Nc_" + groups[i].mId]==undefined?"":$rootScope.NotificationCounts["Nc_" + groups[i].mId],
       items: []
     };
 
@@ -372,7 +372,7 @@ if(groups[i].mId != undefined )
       ref: groups[i].mItems[j].mRef,
       id : groups[i].mItems[j].mId,
       runson: groups[i].mItems[j].mRunsOn,
-      cnt : $rootScope.NotificationCount["Nc_" + groups[i].mItems[j].mId],
+      cnt : $rootScope.NotificationCounts["Nc_" + groups[i].mItems[j].mId]==undefined?"":$rootScope.NotificationCounts["Nc_" + groups[i].mItems[j].mId],
       };
         
       
@@ -666,45 +666,7 @@ $rootScope.Language = 1;
 }
 
 
-$rootScope.LoadNotificationCount = function()
-{
 
-console.log("hello from LoadNotificationCount");
-//read program id from file
-//var NotificationCount = {};
-
-$rootScope.NotificationCount = {};
-
-
-  jQuery.getJSON('json/Channel.json', function(data) {
-
-    
-   var Items = data.ProgramIds;
-  
-
-   for(var i =0; i<Items.length;i++)
-   {
-   var programName = 'NcProgramId_' +  Items[i];
-   if(window.localStorage.getItem(programName)==undefined)
-   $rootScope.NotificationCount[programName] = 10;
-   else
-   {
-   $rootScope.NotificationCount[programName] = window.localStorage.getItem(programName)
-   }
-     
-   }
-  
-
-  });
-
-
-
-
-
-}
-
-
-$rootScope.LoadNotificationCount();
 
 
 
@@ -980,7 +942,7 @@ if($scope.choice.notichoice == true)
  $scope.notificationstatus = $scope.UiLanguageSettings.NotificationOn;
  else
   $scope.notificationstatus = $scope.UiLanguageSettings.NotificationOff;
-   });
+  });
 
 
 

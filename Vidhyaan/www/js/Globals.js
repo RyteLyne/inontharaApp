@@ -29,6 +29,7 @@ $rootScope.AppUserInformation =
  }
 
   $rootScope.AvailableChannels = [];
+  $rootScope.NotificationCounts = {};
 
   $rootScope.GetProgramChannels =function (runson,subscribedchannels)
   {
@@ -248,14 +249,20 @@ $rootScope.LoadNotificationCounts = function()
  var roottag = "NotificationCount" ;
  var noti = {};
 
+ window.localStorage.removeItem(roottag);
+
  if(window.localStorage.getItem(roottag) == undefined)
  {
-  $rootScope.NotificationCounts = {};
+   console.log("notitag not found");
+   $rootScope.NotificationCounts["Nc_2-npsbsk"] = 6;
+   $rootScope.NotificationCounts["Nc_52-npsbsk"] = 2;
   return;
  }
  noti =window.localStorage.getItem(roottag); // get notification object;;
 
+ console.log("notitag found");
  $rootScope.NotificationCounts = noti;
+
  return;
 }
 
@@ -341,11 +348,11 @@ $rootScope.GetUserChannels =function ()
 
 
 
-
+$rootScope.LoadNotificationCounts();
 $rootScope.PrepareDocs("1234-npsbsk","npsbsk","SubscriberInfo");
 $rootScope.PrepareDocs("1234-npsbsk","npsbsk","ProgramInfo");
 $rootScope.PrepareDocs("1234-npsbsk","npsbsk","ChannelInfo");
-$rootScope.LoadNotificationCounts();
+
 GetAllTags();
 
 
