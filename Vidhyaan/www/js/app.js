@@ -290,9 +290,14 @@ tempDoc.DocumentHeader.AuthourID=$rootScope.AppUserInformation.SubId;
 tempDoc.DocumentHeader.OrganizationId = $rootScope.AppUserInformation.OrgId;
 tempDoc.DocumentHeader.Datetime=curr_time.toString(); 
 tempDoc.DocumentHeader.DocumentId=newID;
+tempDoc.DocumentHeader.NotificationTag=$rootScope.BuildTag(
+						$rootScope.AppUserInformation.runson[0],
+						$rootScope.AppUserInformation.SelProgram,
+						$rootScope.AppUserInformation.OrgId);
+
 
 tempDoc.DocumentSubHeader={};
-tempDoc.DocumentSubHeader.ChannelId=$rootScope.AppUserInformation.SelChannel;
+tempDoc.DocumentSubHeader.ChannelId=$rootScope.AppUserInformation.runson[0];
 tempDoc.DocumentSubHeader.ProgramId=$rootScope.AppUserInformation.SelProgram;
 tempDoc.DocumentSubHeader.ModeratorId='someModerator';
 
