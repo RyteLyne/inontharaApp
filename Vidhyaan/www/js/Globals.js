@@ -328,10 +328,10 @@ pushNotification.on('notification', function (data) {
     // Display the alert message in an alert.
    console.log(data);
     alert(data.message);
-    console.log(data.info);
+    console.log(data.additionalData.docID);
 var doc2req = {};
-doc2req.channels = data.message.replace("newsfeed from edumobi channel: ", "");
-doc2req.docID = data.title;
+
+doc2req.docID = data.additionalData.docID;
 
 /*  Object.toparams = function ObjecttoParams(obj) 
 {
@@ -357,45 +357,45 @@ console.log(req.data);
         $http(req).
         success(function(data, status, headers, config) {
             // alter data if needed
-          console.log(data.fetchedNews.messages);
+          console.log(data);
 
      
-var  messages  = JSON.parse(data.fetchedNews.messages);
+/*var  messages  = JSON.parse(data.fetchedNews.messages);
 console.log(messages);
 //ading the data to storage
 $scope.test = localStorage.getItem('test') ?
               JSON.parse(localStorage.getItem('test')) : 
               $scope.test=[],$scope.testInfo=[];   
-      $scope.test.push(angular.extend({}, messages));  
+      $scope.test.push(angular.extend({}, messages));  */
  
  //creating list preview  
-for(var i=0;i<messages.length;i++)
+/*for(var i=0;i<messages.length;i++)
 {
  if( messages[i].indexOf('<h1>')>-1)
  {
  $scope.testInfo[testinfo.length].heading= messages[i].replace('<h>','').replace('</h1>','');
  break;
  }
-}
+}*/
 
-for(var i=0;i<messages.length;i++)
+/*for(var i=0;i<messages.length;i++)
 {
 if(messages[i].indexOf('<img>')>-1)
 {
  $scope.testinfo[testinfo.length].image=messages[i];
 break;
 }
-}
-for(var i=0;i<messages.length;i++)
+}*/
+/*for(var i=0;i<messages.length;i++)
 {
  if(messages[i].indexof('<p>')>-1)
  {
  $scope.testinfo[testinfo.length].image=message[i];
  break
  }
-}
-console.log($scope.test);
-console.log($scope.testinfo);
+}*/
+//console.log($scope.test);
+//console.log($scope.testinfo);
    //  defer.resolve(data);
  //$ionicLoading.hide();
         }).
@@ -429,7 +429,7 @@ console.log($rootScope.mobileServiceClient);
     // Set the device-specific message template.
     if (platform == 'android' || platform == 'Android') {
         // Template registration.
-var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\", \"additionalData\":\"$(additionalData)\"}}"
+var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\",\"docID\":\"$(docID)\",\"additionalData\":\"$(additionalData)\"}}"
       //  var template = '{ "data" : {"message":"$(message)"}}';
         // Register for notifications.
 
@@ -440,7 +440,7 @@ var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",
     } else if (device.platform === 'iOS') {
         // Template registration.
         //var template = '{"aps": {"alert": "$(message)"}}';
-        var alertTemplate = "{\"aps\":{\"alert\":\"$(message)\",\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\", \"additionalData\":\"$(additionalData)\"}}";
+        var alertTemplate = "{\"aps\":{\"alert\":\"$(message)\",\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\",\"docID\":\"$(docID)\", \"additionalData\":\"$(additionalData)\"}}";
         // Register for notifications.      
         console.log(handle);      
      //  mobileServiceClient.push.apns.registerTemplate(handle,
