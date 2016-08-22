@@ -127,13 +127,15 @@ angular.module('DynamicMeditation.controllers', [])
     
   }
    
-   $scope.itemclick = function(id,runson) 
+   $scope.itemclick = function(id,runson,name) 
    {
    console.log(id);
    $rootScope.AppUserInformation.SelProgram = id;
+   $rootScope.AppUserInformation.SelProgName = name;
    console.log("clicked Id : " , $rootScope.AppUserInformation.SelProgram);
    $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson,SubChannels);
    console.log("runs on", $rootScope.AppUserInformation.runson);
+   console.log( $rootScope.AppUserInformation.SelProgName);
    }
 
 })
@@ -453,11 +455,13 @@ if(groups[i].mId != undefined )
   }
 
 
-   $scope.itemclick = function(id,runson) {
+   $scope.itemclick = function(id,runson,name) {
    $rootScope.AppUserInformation.SelProgram = id;
+   $rootScope.AppUserInformation.SelProgName = name;
    console.log("clicked Id : " , $rootScope.AppUserInformation.SelProgram);
    $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson,SubChannels);
    console.log("runs on", $rootScope.AppUserInformation.runson);
+   console.log( $rootScope.AppUserInformation.SelProgName);
 
   }
 
@@ -492,14 +496,7 @@ if(window.localStorage.getItem("setting") != undefined && window.localStorage.ge
 $scope.Credentials.username = window.localStorage.getItem("username");
 $scope.Credentials.password = window.localStorage.getItem("password");
 //login to server here, if success redirect to home page;;
-if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
-{
-
  $state.go('app.home',{},{reload:true});
-}
-else
- $state.go('login',{},{reload:true});
-
 }
 else
 $state.go('login',{},{reload:true});
@@ -512,7 +509,7 @@ $state.go('login',{},{reload:true});
  
 })
 
-.controller('LogInCtrl', function($scope,$rootScope,$state, $ionicScrollDelegate,datafactory) {
+.controller('LogInCtrl', function($scope,$rootScope,$state, $ionicScrollDelegate,datafactory,loginfactory) {
 
 $scope.Credentials =
   {
@@ -532,9 +529,17 @@ jQuery.getJSON('json/settings.json', function(data) {
    $scope.scrollSmallToTop();
    console.log("UserName: ", $scope.Credentials.username, "Password: " , $scope.Credentials.password);
 
-  //login to server here, if success redirect to home page;;
-  if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
-   {
+
+   Promise.all([loginfactory.getdata($scope.Credentials.username,$scope.Credentials.password)]).then(function(data){
+
+      console.log(data);
+
+      if(data == "false")
+      {
+      console.log("Unable to Login");
+      alert("Unable to Login");
+      return;
+      }
 
       console.log("Mob Service client");
       console.log($rootScope.mobileServiceClient);
@@ -543,15 +548,8 @@ jQuery.getJSON('json/settings.json', function(data) {
       window.localStorage.setItem("password",$scope.Credentials.password);
     
    
-
-    
-
-  
-     
       console.log("Getting From Server");
-      var docs = ["SubscriberInfo","ProgramInfo","ChannelInfo"];
-
-
+      
     
       Promise.all([datafactory.getdata("1234-npsbsk","npsbsk","SubscriberInfo"),
       datafactory.getdata("1234-npsbsk","npsbsk","ProgramInfo"),
@@ -565,18 +563,17 @@ jQuery.getJSON('json/settings.json', function(data) {
       $state.go('app.home',{},{reload:true});
       console.log("promise promise"); 
 
-        });
+        }); //getdata promise;;
 
+   }); //login promise;;
+    
+  //login to server here, if success redirect to home page;;
+  //if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
+   //{
 
-     // $rootScope.PrepareDocs("1234-npsbsk","npsbsk","SubscriberInfo");
-     // $rootScope.PrepareDocs("1234-npsbsk","npsbsk","ProgramInfo");
-     // $rootScope.PrepareDocs("1234-npsbsk","npsbsk","ChannelInfo");
-     //  $rootScope.LoadNotificationCounts();
-      //GetAllTags();
-     // $state.go('app.home',{},{reload:true});
-
+      
   }
-  }
+  //}
 
 $scope.scrollSmallToTop = function() {
  console.log("did i scroll");

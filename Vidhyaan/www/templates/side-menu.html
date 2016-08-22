@@ -47,7 +47,7 @@
 
             <div style="position:relative;" class="col col-33 col-center" >
     
-           <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if = "rightItems[$index]!=undefined" ng-click= "itemclick(rightItems[$index].id,rightItems[$index].runson)">
+           <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if = "rightItems[$index]!=undefined" ng-click= "itemclick(rightItems[$index].id,rightItems[$index].runson,rightItems[$index].text)">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index].icon}}"></i>
             </button>
@@ -57,7 +57,7 @@
             
            </div>
            <div style="position:relative;" class="col col-30 col-center">
-            <a class="element"  ng-href="{{rightItems[$index+1].ref}}" ng-if = "rightItems[$index+1]!=undefined" ng-click= "itemclick(rightItems[$index+1].id,rightItems[$index+1].runson)">
+            <a class="element"  ng-href="{{rightItems[$index+1].ref}}" ng-if = "rightItems[$index+1]!=undefined" ng-click= "itemclick(rightItems[$index+1].id,rightItems[$index+1].runson,rightItems[$index+1].text)">
             <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index+1].icon}}"></i>
             </button>
@@ -69,7 +69,7 @@
            </div>
 
            <div style="position:relative;" class="col col-30 col-center">     
-            <a  class="element" ng-href="{{rightItems[$index+2].ref}}" ng-if = "rightItems[$index+2]!=undefined" ng-click= "itemclick(rightItems[$index+2].id,rightItems[$index+2].runson)">
+            <a  class="element" ng-href="{{rightItems[$index+2].ref}}" ng-if = "rightItems[$index+2]!=undefined" ng-click= "itemclick(rightItems[$index+2].id,rightItems[$index+2].runson,rightItems[$index+2].text)">
                    <button class="button-circle" animate-ratio="fadeIn"  menu-close>
               <i class="{{rightItems[$index+2].icon}}"></i>
             </button>
@@ -177,7 +177,7 @@
           </ion-item>
 
 
-          <ion-item  id = "mainmenu" ng-if = "group.ref!=''" ng-href="{{group.ref}}" ng-click = "itemclick(group.id,group.runson)" menu-close>
+          <ion-item  id = "mainmenu" ng-if = "group.ref!=''" ng-href="{{group.ref}}" ng-click = "itemclick(group.id,group.runson,group.name)" menu-close>
          
           <i style="font-size:24px;" class="icon {{group.icon}}"></i> &nbsp {{group.name}}<span class="badge badge-dark  badge-shadow">{{group.cnt==0?"":group.cnt}}</span>
           
@@ -185,7 +185,7 @@
 
           <ion-item id = "submenu"
                     ng-repeat="item in group.items"
-                    ng-show="isGroupShown(group)" ng-href={{item.ref}} ng-click = "itemclick(item.id,item.runson)" menu-close>
+                    ng-show="isGroupShown(group)" ng-href={{item.ref}} ng-click = "itemclick(item.id,item.runson,item.name)" menu-close>
                 <i style="font-size:24px;" class="icon {{item.icon}}"></i> &nbsp {{item.name}}<span class="badge badge-shadow badge-dark">{{item.cnt==0?"":item.cnt}}</span> 
                          
           </ion-item>

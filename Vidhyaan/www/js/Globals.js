@@ -15,6 +15,7 @@ $rootScope.AppUserInformation =
 {
  SelChannel : "0",
  SelProgram : "0",
+ SelProgName: "",
  WritePriv:false,
  XPriv:false,
  runson:[],
@@ -537,4 +538,54 @@ return defer.promise;
  
  return factory;
   
+})
+
+
+.factory('loginfactory', function($http, $q) {
+ var factory = {};
+
+factory.getdata = function (Subid,Pass)
+ {
+
+ var defer = $q.defer();
+
+  var details = {
+
+  "SubId" : Subid,  //subscriberId
+  "Pass"  : Pass, //document name
+}
+
+doc2send = details;
+
+  var req = 
+{
+    method: 'POST',
+    url: "http://chungling.azurewebsites.net/VidLoginM/",
+    //url: "http://localhost:3000/VidgetDocM/",
+    data: jQuery.param(doc2send),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}
+
+
+ $http(req).
+        success(function(data, status, headers, config) {
+            // alter data if needed
+          console.log(data);
+          console.log("server success login");
+          defer.resolve(data.Data);
+
+        }).
+        error(function(data, status, headers, config) {
+          console.log(data);
+          //  defer.reject();
+          console.log("Error getting from server login");
+          defer.reject();
+
+        });
+return defer.promise;
+}   
+ 
+ return factory;
+  
 });
+
