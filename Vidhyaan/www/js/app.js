@@ -109,6 +109,15 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-b
     }
   })
 
+.state('app.dashboardApps', {
+    url: "/dashboardApps",
+    views: {
+      'content': {
+        templateUrl: "templates/dashboardApps.html",
+         
+      }
+    }
+  })
 
 .state('app.logout', {
     url: "/logout",
@@ -184,7 +193,6 @@ $scope.logoutFunc = function(){
     $state.go('menu.main/first',{}, {reload: true});
 }
 });
-
 
 
 
@@ -304,9 +312,9 @@ tempDoc.DocumentSubHeader.ModeratorId='someModerator';
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='hello';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='ಕನ್ನಡದ ಕಂದಗಳಿರ ಕೇಳಿ 中文報章';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail='test.png';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='simpel text preview';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='中文報章';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar='useridavatar.png';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName=$rootScope.AppUserInformation.UserName;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.SubscribersID =  $rootScope.AppUserInformation.SubId

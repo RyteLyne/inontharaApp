@@ -1,4 +1,99 @@
 angular.module('DynamicMeditation.controllers', [])
+/*
+ProfileCtrl
+RadioCtrl
+DiaryCtrl
+TimetableCtrl
+AttendanceCtrl
+GalleryCtrl
+MessagesCtrl
+CalendarCtrl
+NoticeboardCtrl
+OnlineCtrl
+SurveyCtrl
+AssignmentsCtrl
+"SyllabusCtrl"
+"PaymentsCtrl"
+"MagazinesCtrl"
+"NotesCtrl"
+"LocatemeCtrl"
+"LostnfoundCtrl"
+"LostnfoundCtrl"
+"LeavesCtrl"
+"feedbackCtrl"
+"ResultsCtrl"
+
+*/
+
+
+.controller('ResultsCtrl', function($scope) {
+console.log("in ResultsCtrl");
+
+})
+.controller('feedbackCtrl', function($scope) {
+
+  console.log("in feedbackCtrl");
+})
+.controller('LeavesCtrl', function($scope) {
+
+  console.log("in LeavesCtrl");
+})
+.controller('LostnfoundCtrl', function($scope) {
+  console.log("in LostnfoundCtrl");
+})
+.controller('LocatemeCtrl', function($scope) {
+  console.log("in LocatemeCtrl");
+})
+.controller('NotesCtrl', function($scope) {
+  console.log("in NotesCtrlCtrl");
+})
+.controller('MagazinesCtrl', function($scope) {
+  console.log("in MagazinesCtrl");
+})
+.controller('PaymentsCtrl', function($scope) {
+  console.log("in PaymentsCtrl");
+})
+.controller('SyllabusCtrl', function($scope) {
+  console.log("in SyllabusCtrl");
+})
+.controller('AssignmentsCtrl', function($scope) {
+  console.log("in AssignmentsCtrl");
+})
+.controller('SurveyCtrl', function($scope) {
+  console.log("in SurveyCtrl");
+})
+.controller('OnlineCtrl', function($scope) {
+  console.log("in OnlineCtrl");
+})
+.controller('NoticeboardCtrl', function($scope) {
+  console.log("in NoticboardCtrl");
+})
+.controller('CalendarCtrl', function($scope) {
+  console.log("in CalendarCtrl");
+})
+.controller('MessagesCtrl', function($scope) {
+  console.log("in MessagesCtrl");
+})
+.controller('GalleryCtrl', function($scope) {
+  console.log("in GalleryCtrl");
+})
+.controller('AttendanceCtrl', function($scope) {
+  console.log("in AttendanceCtrl");
+})
+.controller('TimetableCtrl', function($scope) {
+  console.log("in TimetableCtrl");
+})
+.controller('DiaryCtrl', function($scope) {
+  console.log("in DiaryCtrl");
+})
+.controller('RadioCtrl', function($scope) {
+console.log("in RadioCtrl");
+
+})
+.controller('ProfileCtrl', function($scope) {
+  console.log("in ProfileCtrl");
+})
+
 
 .controller('DashCtrl', function($scope) {})
 
