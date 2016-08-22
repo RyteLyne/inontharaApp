@@ -345,7 +345,7 @@ doc2req.docID = data.additionalData.docID;
   var req = 
 {
     method: 'POST',
-    url: "http://chungling.azurewebsites.net/getPostM/",
+    url: "http://chungling.azurewebsites.net/VidGetPostM/",
     data: jQuery.param(doc2req),
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }
