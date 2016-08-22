@@ -563,9 +563,23 @@ jQuery.getJSON('json/settings.json', function(data) {
       $state.go('app.home',{},{reload:true});
       console.log("promise promise"); 
 
-        }); //getdata promise;;
+        })//getdata promise;;
+       .catch(function(err)
+       {//force login next time;;
+      //window.localStorage.removeItem("username"); //uncomment these lines later;;
+      //window.localStorage.removeItem("password");
+      alert("Please check Internet Connection");
+      return;
+       });
 
-   }); //login promise;;
+
+   }) //login promise;;
+   .catch(function(err)
+    {
+      alert("Please check Internet Connection");
+      return;
+
+    });
     
   //login to server here, if success redirect to home page;;
   //if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
