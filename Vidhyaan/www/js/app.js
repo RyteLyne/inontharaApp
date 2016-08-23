@@ -199,23 +199,7 @@ $scope.logoutFunc = function(){
 
 
 
-<<<<<<< HEAD
 
-=======
-myApp.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
-$scope.readFunc= function(){
-
-}
-$scope.goBack = function(){
-   $ionicHistory.goBack();
-}
-
-$scope.readFunc();
-
-
-$scope.messages = JSON.parse(localStorage.getItem('recievedMessage'));
-console.log($scope.messages);
->>>>>>> f721a486a2ee0a7e4868a602c4fb54b4e1cfd4ef
 
 
 
