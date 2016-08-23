@@ -210,16 +210,18 @@ $rootScope.LoadNotificationCounts = function()
  var roottag = "NotificationCount" ;
  var noti = {};
 
- window.localStorage.removeItem(roottag);
+ //window.localStorage.removeItem(roottag);
 
  if(window.localStorage.getItem(roottag) == undefined)
  {
    console.log("notitag not found");
-   $rootScope.NotificationCounts["Nc_2-npsbsk"] = 6;
-   $rootScope.NotificationCounts["Nc_52-npsbsk"] = 2;
+   //$rootScope.NotificationCounts["Nc_2-npsbsk"] = 1;
+   //$rootScope.NotificationCounts["Nc_52-npsbsk"] = 1;
   return;
  }
- noti =window.localStorage.getItem(roottag); // get notification object;;
+ noti =JSON.parse(window.localStorage.getItem(roottag)); // get notification object;;
+
+ console.log(noti);
 
  console.log("notitag found");
  $rootScope.NotificationCounts = noti;
@@ -235,14 +237,27 @@ var roottag = "NotificationCount" ;
 var tag = "Nc_" + ProgramId;
 var noti = {};
 
+console.log("Inc Noti");
+console.log(ProgramId);
 
-if($rootScope.NotificationCounts[tag] == undefined || $rootScope.NotificationCounts[tag]<=0)
+if($rootScope.NotificationCounts[tag] == undefined)
 $rootScope.NotificationCounts[tag] = 1;
-
+else if ( $rootScope.NotificationCounts[tag]<=0)
+$rootScope.NotificationCounts[tag] = 1;
 else
 $rootScope.NotificationCounts[tag] = $rootScope.NotificationCounts[tag] + 1;
 
+
+
 window.localStorage.setItem(roottag,JSON.stringify($rootScope.NotificationCounts));
+
+//$rootScope.NotificationCounts[tag] = 10;
+
+console.log($rootScope.NotificationCounts[tag]);
+console.log(tag);
+console.log("Done");
+$rootScope.$broadcast('NotificationEvent', [ProgramId,$rootScope.NotificationCounts[tag]]);
+
 return;
 }
 
@@ -352,6 +367,7 @@ console.log(req.data);
             // alter data if needed
           console.log(data.fetchedNews);
           $rootScope.SaveNewsFeed(data.fetchedNews);
+          //gau
 
         }).
         error(function(data, status, headers, config) {
@@ -452,6 +468,8 @@ var fpreview = JSON.stringify(msg.DocumentBody.ApplicationSpecificeData.FeedPrev
 var addtline = "1"; //should read from docname
 var  msgtext =  JSON.stringify(msg.DocumentBody.DocumentDetails);
 
+$rootScope.IncNotificationCounts(progid);
+
  $cordovaSQLite.execute($rootScope.myDB, "INSERT INTO feedmsgs (docid, progid, posttime, fpreview, addtline, msg) VALUES (?,?,?,?,?,?)", [docid,progid,posttime,fpreview,addtline, msgtext])
         .then(function(results) 
         {
@@ -538,14 +556,14 @@ return defer.promise;
 
 .factory('feedlistfactory', function($q,$cordovaSQLite,$rootScope) {
  var factory = {};
- var ret =[];
+ 
  
 factory.getdata = function (progid)
  {
    var defer = $q.defer();
    //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
    //var myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
-
+   var ret =[];
    addtline = 1;
 
   console.log("in feedlist factory");
@@ -602,11 +620,12 @@ return defer.promise;
 
 .factory('timelinefactory', function($q,$cordovaSQLite,$rootScope) {
  var factory = {};
- var ret =[];
+ 
  
 factory.getdata = function ()
  {
    var defer = $q.defer();
+   var ret =[];
    //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
    //var myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
 
@@ -667,14 +686,14 @@ return defer.promise;
 
 .factory('feeddetailsfactory', function($q,$cordovaSQLite,$rootScope) {
  var factory = {};
- var ret =[];
+
  
 factory.getdata = function (docid)
  {
    var defer = $q.defer();
    //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
    //var myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
-
+    var ret =[];
    addtline = 1;
 
   console.log("in feed details factory");

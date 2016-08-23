@@ -136,6 +136,7 @@ angular.module('DynamicMeditation.controllers', [])
    $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson,SubChannels);
    console.log("runs on", $rootScope.AppUserInformation.runson);
    console.log( $rootScope.AppUserInformation.SelProgName);
+   //$rootScope.IncNotificationCounts("2-npsbsk");
    }
 
 })
@@ -203,6 +204,7 @@ angular.module('DynamicMeditation.controllers', [])
    mGrade : obj.Division,
    mClassTeacher :  obj.ClassTeacher[language]== undefined ?obj.ClassTeacher["0"]:obj.ClassTeacher[language],
    mEnrollmentNo : obj.EnrollmentNumber,
+   mOrganizationName : sub.DocumentHeader.OrganizationName,
    mMother :
    {
     Name :  obj.MothersName[language]== undefined ?obj.MothersName["0"]:obj.MothersName[language],
@@ -323,6 +325,8 @@ $scope.UiLanguageProfile =
  
    console.log("groups:" ,groups);
   
+  var globalIndex=0;
+  $scope.menulist = {};
 
   var k=0;
   var language = $rootScope.Language.toString();
@@ -349,8 +353,12 @@ if(groups[i].mId != undefined )
       items: []
     };
 
+if(groups[i].mId != undefined )
+{
+    $scope.menulist[groups[i].mId] = $scope.groups[k];
 
-  
+     globalIndex++;
+}
 
 
      if(groups[i].mItems !== undefined) //sub items present;;
@@ -395,6 +403,18 @@ if(groups[i].mId != undefined )
      k++;
     
   } //end of main for loop;;
+
+
+  $scope.$on('NotificationEvent', function(event, data) 
+  { 
+  console.log("Notification Event Fired");
+  console.log(data[0]);
+  console.log(data[1]);
+  //$scope.$digest();
+   //$scope.groups[0].cnt =10;
+   $scope.menulist[data[0]].cnt = data[1];
+   
+  });
 
 
 
@@ -516,10 +536,19 @@ $scope.Credentials =
     username : "",
     password : ""
   }
-
   //var dt = new Date("1471935995019");
   //console.log("Hellotesting");
   //console.log(dt);
+
+  /*$rootScope.LoadNotificationCounts();
+
+  $rootScope.IncNotificationCounts("hello");
+  $rootScope.IncNotificationCounts("hello1");
+  $rootScope.IncNotificationCounts("hello2");
+
+   $rootScope.IncNotificationCounts("hello");
+  $rootScope.IncNotificationCounts("hello1");
+  $rootScope.IncNotificationCounts("hello2");*/
 
 jQuery.getJSON('json/settings.json', function(data) {
 
@@ -605,59 +634,53 @@ $scope.scrollSmallToTop = function() {
 })
 
 
-.controller('newsfeedctrl', function($scope,$window,$state,$rootScope) {
+.controller('newsfeedctrl', function($scope,$window,$state,$rootScope,feedlistfactory) {
 
- // $scope.$on('$ionicView.beforeEnter', function(){
+////////////
 
-  /*   console.log("entered");
+ $scope.newslist="";
 
-  jQuery.getJSON('json/channel-program.json', function(data) {
-
-    var programName = 'ProgramId_' + $rootScope.SelChannel;
-
-    console.log(programName);
-
-    $scope.proData = data[programName].ProgramData; */
-
-
-
-  $scope.LoadNewsList = function()
+///////////
+  $scope.LoadFeedList = function()
   {
 
-    var itemname = "NewsList_" + $rootScope.SelChannel;
+   var progid = $rootScope.AppUserInformation.SelProgram;
 
-   $scope.newslist = JSON.parse(window.localStorage.getItem(itemname));
-   
-   if($scope.newslist == null)
+    Promise.all([feedlistfactory.getdata(progid)]).then(function(ret){
+      
+      $scope.newslist=ret[0];
+      console.log("DataLoaded feedlist");
+      console.log(ret);
+      //console.log( $scope.timeline[0].Heading);
+      //console.log( $scope.timeline[0].DateTime);
+
+
+        })//getdata promise;;
+       .catch(function(err)
+       {//force login next time;;
+      //window.localStorage.removeItem("username"); //uncomment these lines later;;
+      //window.localStorage.removeItem("password");
+      console.log("Error getting feedlist");
+      return;
+       });
+
+
+
+  }
+
+  $scope.LoadFeedList();
+  
+
+  $scope.itemclick = function(docId) 
    {
+   console.log("clicked");
+   console.log(docId);
+   $rootScope.AppUserInformation.DocId = docId;
+   $state.go('app.readView',{},{reload:true});
 
-   console.log("News Loaded from json");
-
-  jQuery.getJSON('json/Timeline.json', function(data) {
-
-   $scope.newslist = data.TimeLine; 
-   window.localStorage.setItem(itemname,JSON.stringify($scope.newslist));
-
-   });
-
-  
    }
-  else
-  {
-
-    console.log("News Loaded from localstorage");
-  }
-
-
-  }
-
-  $scope.LoadNewsList();
-  
 
   
-    
-
-
     $scope.SliceData = function(datatoslice)
     {
        if(datatoslice.length > 100)
@@ -755,6 +778,7 @@ $rootScope.Language = 1;
 
 })
 
+/*
 .controller('GlobalCtrl', function($scope,$rootScope){
 
 $rootScope.UpdateTimeLine = function(msg)
@@ -847,7 +871,7 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
 }
 
 
-})
+})*/
 
 
 
