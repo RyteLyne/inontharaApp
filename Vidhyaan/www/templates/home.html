@@ -37,15 +37,15 @@
           
 
       <section id="cd-timeline" class="cd-container" ng-controller='TimeLineCtrl'>
-          <div ng-repeat="activity in timeline">
-            <div class="cd-timeline-block">
+          <div  ng-repeat="activity in timeline">
+            <div class="cd-timeline-block" ng-click = itemclick(activity.MsgId)>
               <div class="cd-timeline-picture dark">
                 <img ng-src={{activity.Avatar}}></img>
               </div>
               <!-- cd-timeline-img -->
               <div class="cd-timeline-content dark">
                 <h5 class="marginBottom0 marginTop0">{{activity.Heading}}</h5>
-                <p class="marginTop5 cd-author">by {{activity.Author}} on {{activity.DateTime | date: "d MMM"}}</p>
+                <p class="marginTop5 cd-author">by {{activity.Author}} on {{activity.DateTime}}</p>
                  <div ng-if="activity.Image!=''">
               <img  ng-src={{activity.Image}} style="max-width:100%"></img> </div>
                 <p class="timelineText">{{activity.TextPreview}}</p>

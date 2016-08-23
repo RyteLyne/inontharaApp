@@ -1,6 +1,6 @@
-angular.module('Global.controllers', [])
+angular.module('Global.controllers', ['ngCordova'])
 
-.controller('GlobalCtrl1', function($rootScope,$http) {
+.controller('GlobalCtrl1', function($rootScope,$http,$cordovaSQLite) {
 
     //window.localStorage.removeItem("subscriberInfo");
 
@@ -26,6 +26,7 @@ $rootScope.AppUserInformation =
  UserTag: "", 
  Class: "",
  UserAvatar: "",
+ DocId: "", //used to traverse from timeline;;
  PrivLevels: {}
 }
 
@@ -333,15 +334,7 @@ var doc2req = {};
 
 doc2req.docID = data.additionalData.docID;
 
-/*  Object.toparams = function ObjecttoParams(obj) 
-{
-  var p = [];
-  for (var key in obj) 
-  {
-    p.push(key + '=' + encodeURIComponent(obj[key]));
-  }
-  return p.join('&');
-};*/
+
   var req = 
 {
     method: 'POST',
@@ -357,47 +350,9 @@ console.log(req.data);
         $http(req).
         success(function(data, status, headers, config) {
             // alter data if needed
-          console.log(data);
+          console.log(data.fetchedNews);
+          $rootScope.SaveNewsFeed(data.fetchedNews);
 
-     
-/*var  messages  = JSON.parse(data.fetchedNews.messages);
-console.log(messages);
-//ading the data to storage
-$scope.test = localStorage.getItem('test') ?
-              JSON.parse(localStorage.getItem('test')) : 
-              $scope.test=[],$scope.testInfo=[];   
-      $scope.test.push(angular.extend({}, messages));  */
- 
- //creating list preview  
-/*for(var i=0;i<messages.length;i++)
-{
- if( messages[i].indexOf('<h1>')>-1)
- {
- $scope.testInfo[testinfo.length].heading= messages[i].replace('<h>','').replace('</h1>','');
- break;
- }
-}*/
-
-/*for(var i=0;i<messages.length;i++)
-{
-if(messages[i].indexOf('<img>')>-1)
-{
- $scope.testinfo[testinfo.length].image=messages[i];
-break;
-}
-}*/
-/*for(var i=0;i<messages.length;i++)
-{
- if(messages[i].indexof('<p>')>-1)
- {
- $scope.testinfo[testinfo.length].image=message[i];
- break
- }
-}*/
-//console.log($scope.test);
-//console.log($scope.testinfo);
-   //  defer.resolve(data);
- //$ionicLoading.hide();
         }).
         error(function(data, status, headers, config) {
           console.log(data);
@@ -465,11 +420,50 @@ var registrationFailure = function (error) {
   };
 
 
+$rootScope.InitStorage = function()
+{
+
+$rootScope.myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
+
+$cordovaSQLite.execute($rootScope.myDB, 'CREATE TABLE IF NOT EXISTS feedmsgs (id integer primary key, docid text, progid text, posttime text, fpreview text, addtline integer, msg text)', [])
+        .then(function(results) 
+        {
+           
+      console.log('Table Created');
+           }, function(error) {
+            
+        console.log('Error occurred while create');
+
+        })
+
+}
 
 
 
+$rootScope.SaveNewsFeed= function(msg)
+{
+  //var myDB = $cordovaSQLite.openDB("Vidhyaan.db");
+//var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
 
+var docid = msg.DocumentHeader.DocumentId;
+var progid = msg.DocumentSubHeader.ProgramId;
+var posttime = msg.DocumentHeader.Datetime.toString();
+var fpreview = JSON.stringify(msg.DocumentBody.ApplicationSpecificeData.FeedPreview);
+var addtline = "1"; //should read from docname
+var  msgtext =  JSON.stringify(msg.DocumentBody.DocumentDetails);
 
+ $cordovaSQLite.execute($rootScope.myDB, "INSERT INTO feedmsgs (docid, progid, posttime, fpreview, addtline, msg) VALUES (?,?,?,?,?,?)", [docid,progid,posttime,fpreview,addtline, msgtext])
+        .then(function(results) 
+        {
+           
+      console.log('Inserted');
+           }, function(error) {
+            
+        console.log('Error occurred while insert');
+
+        })
+
+}
 
 
 })
@@ -539,6 +533,193 @@ return defer.promise;
  return factory;
   
 })
+
+
+
+.factory('feedlistfactory', function($q,$cordovaSQLite,$rootScope) {
+ var factory = {};
+ var ret =[];
+ 
+factory.getdata = function (progid)
+ {
+   var defer = $q.defer();
+   //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
+   //var myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
+
+   addtline = 1;
+
+  console.log("in feedlist factory");
+
+
+ $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview FROM feedmsgs where progid = ?', [progid])
+        .then(function(results) 
+        {
+
+console.log(results);
+console.log(results.rows.length);
+
+for(var i=0;i<results.rows.length;i++)
+{
+  var feedpreview = JSON.parse(results.rows.item(i).fpreview);
+   var dt = new Date(parseInt(results.rows.item(i).posttime));
+  
+  ret[i] = {
+  MsgId : results.rows.item(i).docid,
+  ProgId : results.rows.item(i).progid,
+  DateTime : dt.toString(),
+  Heading : feedpreview.Heading,
+  Author : feedpreview.AuthorName,
+  Avatar : feedpreview.AuthorAvatar,
+  TextPreview : feedpreview.ContentPreview,
+  Image : feedpreview.Thumbnail,
+  SubscribersID : feedpreview.SubscribersID
+  };
+
+  //ret.push(entry);
+}
+
+console.log("Got data for Feed List ");
+console.log(ret);
+defer.resolve(ret);
+
+
+            
+        }, function(error) {
+            
+         defer.reject("");
+
+        })
+
+
+return defer.promise;
+
+}   
+ return factory;
+  
+})
+
+
+
+.factory('timelinefactory', function($q,$cordovaSQLite,$rootScope) {
+ var factory = {};
+ var ret =[];
+ 
+factory.getdata = function ()
+ {
+   var defer = $q.defer();
+   //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
+   //var myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
+
+   addtline = "1"; //has to be string;;
+
+  console.log("in Timeline factory");
+
+
+ $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview FROM feedmsgs where addtline = ?', [addtline])
+        .then(function(results) 
+        {
+
+console.log(results);
+console.log(results.rows.length);
+
+for(var i=0;i<results.rows.length;i++)
+{
+  var feedpreview = JSON.parse(results.rows.item(i).fpreview);
+  var dt = new Date(parseInt(results.rows.item(i).posttime));
+  
+  ret[i] = {
+  MsgId : results.rows.item(i).docid,
+  ProgId : results.rows.item(i).progid,
+  DateTime : dt.toString(),
+  Heading : feedpreview.Heading,
+  Author : feedpreview.AuthorName,
+  Avatar : feedpreview.AuthorAvatar,
+  TextPreview : feedpreview.ContentPreview,
+  Image : feedpreview.Thumbnail,
+  SubscribersID : feedpreview.SubscribersID
+  };
+
+  //ret.push(entry);
+}
+
+console.log("Got data");
+console.log(ret);
+
+defer.resolve(ret);
+
+
+            
+        }, function(error) {
+            
+         defer.reject("");
+
+        })
+
+
+return defer.promise;
+
+}   
+ return factory;
+  
+})
+
+
+
+.factory('feeddetailsfactory', function($q,$cordovaSQLite,$rootScope) {
+ var factory = {};
+ var ret =[];
+ 
+factory.getdata = function (docid)
+ {
+   var defer = $q.defer();
+   //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
+   //var myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
+
+   addtline = 1;
+
+  console.log("in feed details factory");
+
+
+ $cordovaSQLite.execute($rootScope.myDB, 'SELECT msg,progid FROM feedmsgs where docid = ?', [docid])
+        .then(function(results) 
+        {
+
+console.log(results);
+console.log(results.rows.length);
+
+if(results.rows.length > 0)//atleast one record
+{
+ // console.log(results.rows.item(0).msg);
+ var messages = JSON.parse(results.rows.item(0).msg);
+ ret = messages.messages;
+ console.log(ret);
+
+}
+
+console.log("Got data for feed details");
+console.log(ret);
+
+defer.resolve(ret);
+
+
+            
+        }, function(error) {
+            
+         defer.reject("");
+
+        })
+
+
+return defer.promise;
+
+}   
+ return factory;
+  
+})
+
+
+
+
 
 
 .factory('loginfactory', function($http, $q) {

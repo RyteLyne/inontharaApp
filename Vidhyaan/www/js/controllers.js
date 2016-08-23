@@ -517,11 +517,19 @@ $scope.Credentials =
     password : ""
   }
 
+  //var dt = new Date("1471935995019");
+  //console.log("Hellotesting");
+  //console.log(dt);
+
 jQuery.getJSON('json/settings.json', function(data) {
 
    $scope.loginImages = data.loginScreen;
 
   });
+
+  $scope.Credentials.username = "1234-npsbsk";
+   $scope.Credentials.password = "1234";
+
 
 
   $scope.login = function Login()
@@ -625,7 +633,7 @@ $scope.scrollSmallToTop = function() {
 
    console.log("News Loaded from json");
 
-   jQuery.getJSON('json/Timeline.json', function(data) {
+  jQuery.getJSON('json/Timeline.json', function(data) {
 
    $scope.newslist = data.TimeLine; 
    window.localStorage.setItem(itemname,JSON.stringify($scope.newslist));
@@ -664,6 +672,42 @@ $scope.scrollSmallToTop = function() {
 
 
 })
+
+
+.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,feeddetailsfactory) {
+$scope.readFunc= function(){
+
+}
+$scope.goBack = function(){
+   $ionicHistory.goBack();
+}
+
+//$scope.readFunc();
+
+
+
+ Promise.all([feeddetailsfactory.getdata($rootScope.AppUserInformation.DocId)]).then(function(ret){
+      
+      $scope.messages=ret[0];
+      console.log("DataLoaded");
+      console.log($scope.messages);
+      
+        })//getdata promise;;
+       .catch(function(err)
+       {//force login next time;;
+      //window.localStorage.removeItem("username"); //uncomment these lines later;;
+      //window.localStorage.removeItem("password");
+      alert("Error getting message");
+      return;
+       });
+
+
+//$scope.messages = JSON.parse(localStorage.getItem('recievedMessage'));
+//console.log($scope.messages);
+
+})
+
+
 
 .controller('LogOutCtrl', function($scope,$window,$state) {
 
@@ -807,14 +851,14 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
 
 
 
-.controller('TimeLineCtrl', function($scope) {
+.controller('TimeLineCtrl', function($scope,timelinefactory, $rootScope,$state) {
 
 //window.localStorage.removeItem("TimeLine");
 
   $scope.LoadTimeLine = function()
   {
 
-   $scope.timeline = JSON.parse(window.localStorage.getItem("TimeLine"));
+   /*$scope.timeline = JSON.parse(window.localStorage.getItem("TimeLine"));
    
    if($scope.timeline == null)
    {
@@ -834,12 +878,44 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
   {
 
     console.log("Loaded from localstorage");
-  }
+  }*/
+    
+
+    Promise.all([timelinefactory.getdata()]).then(function(ret){
+      
+       $scope.timeline=ret[0];
+      console.log("DataLoaded");
+      console.log(ret);
+      console.log( $scope.timeline[0].Heading);
+      console.log( $scope.timeline[0].DateTime);
+
+
+        })//getdata promise;;
+       .catch(function(err)
+       {//force login next time;;
+      //window.localStorage.removeItem("username"); //uncomment these lines later;;
+      //window.localStorage.removeItem("password");
+      alert("Error getting timeline");
+      return;
+       });
+
+
+
 
 
   }
 
   $scope.LoadTimeLine();
+
+
+  $scope.itemclick = function(docId) 
+   {
+   console.log("clicked");
+   console.log(docId);
+   $rootScope.AppUserInformation.DocId = docId;
+   $state.go('app.readView',{},{reload:true});
+
+   }
 
 
 
