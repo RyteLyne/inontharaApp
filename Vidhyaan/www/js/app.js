@@ -111,6 +111,15 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-b
     }
   })
 
+.state('app.dashboardApps', {
+    url: "/dashboardApps",
+    views: {
+      'content': {
+        templateUrl: "templates/dashboardApps.html",
+         
+      }
+    }
+  })
 
 .state('app.logout', {
     url: "/logout",
@@ -190,7 +199,23 @@ $scope.logoutFunc = function(){
 
 
 
+<<<<<<< HEAD
 
+=======
+myApp.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
+$scope.readFunc= function(){
+
+}
+$scope.goBack = function(){
+   $ionicHistory.goBack();
+}
+
+$scope.readFunc();
+
+
+$scope.messages = JSON.parse(localStorage.getItem('recievedMessage'));
+console.log($scope.messages);
+>>>>>>> f721a486a2ee0a7e4868a602c4fb54b4e1cfd4ef
 
 
 
@@ -268,7 +293,6 @@ var d = new Date();
 var curr_time = d.getTime();
  console.log(curr_time);
  var newID = curr_time.toString()+'.'+$rootScope.AppUserInformation.SubId + '.newsFeed';
-
 var doc2send = {};
 tempDoc={};
 tempDoc.DocumentHeader ={};
@@ -292,9 +316,9 @@ tempDoc.DocumentSubHeader.ModeratorId='someModerator';
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='hello';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='ಕನ್ನಡದ ಕಂದಗಳಿರ ಕೇಳಿ 中文報章';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail='test.png';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='simpel text preview';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='中文報章';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar='useridavatar.png';
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName=$rootScope.AppUserInformation.UserName;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.SubscribersID =  $rootScope.AppUserInformation.SubId

@@ -1,6 +1,147 @@
- <ion-view  ng-controller = "ProfileLoad">    
+ <ion-view cache-view="false" ng-controller = "ProfileLoad">    
     <ion-content >
-       <div class="bar bar-header bar-positive">
+
+<div style="height:100vh;">
+
+  <div class="material-wrap" style="height:100%;">
+    
+<div class="material clearfix">
+	
+	<div class="profile">
+		<div class="cover">
+			<span class="vec vec_a"></span>
+			<span class="vec vec_b"></span>
+			<span class="vec vec_c"></span>
+			<span class="vec vec_d"></span>
+			<span class="vec vec_e"></span>
+		</div>
+		<div class="photo">
+			<a href="" target="_blank"><img src="img/sid.jpg" alt="Mohan"></a>
+		</div>
+		<div class="info">
+			<div class="name">{{profile.mName}}</div>
+			<div class="position">{{profile.mDesignation}}, {{profie.mGrade}}, {{profile.mOrganisationName}}</div>
+		
+		</div>
+		<input id="toggle" type="checkbox" class="plus"><label for="toggle" class="toggle"></label>
+		<div class="links">
+			<a href="" data-title="Parent"><i class="ionicon ion-person"></i></a>
+			<a href="" data-title="Principal"><i class="ion-person"></i></a>
+			<a href="" data-title="Co-Ordinator"><i class="icon ion-person"></i></a>
+			<a href="" data-title="Teacher"><i class="icon ion-person"></i></a>
+		</div>
+	</div>
+	
+	<div class="tabs-content">
+		<div class="friend-list">
+			<div class="list-ul">
+				<div class="list-li title">About {{profile.mName}}</div>
+				<div class="list-li clearfix">
+					<
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.DOB}}</div>
+						<div class="time">{{profile.mDOB}}</div>
+					</div>
+					
+				</div>
+				<div class="list-li clearfix">
+					<
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.Gender}}</div>
+						<div class="time">{{profile.mGender}}</div>
+					</div>
+					
+				</div>
+
+        	<div class="list-li clearfix">
+					<
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.Grade}}</div>
+						<div class="time">{{profile.mGrade}}</div>
+					</div>
+					
+				</div>
+ 	<div class="list-li clearfix">
+					<
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.ClassTeacher}}</div>
+						<div class="time">{{profile.mClassTeacher}}</div>
+					</div>
+					
+				</div>
+
+	<div class="list-li clearfix">
+					
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.EnrollmentNo}}</div>
+						<div class="time">{{profile.mEnrollmentNo}}</div>
+					</div>
+					
+				</div>
+
+			<div class="list-li clearfix">
+					
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.FathersName}}</div>
+						<div class="time">{{profile. mFather.Name}}</div>
+						<div class="time">{{profile. mFather.Mobile}}</div>
+						<div class="time">{{profile. mFather.email}}</div>
+					</div>
+					</div>
+					<div class="list-li clearfix">
+					
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.MothersName}}</div>
+						<div class="time">{{profile. mMother.Name}}</div>
+						<div class="time">{{profile. mMother.Mobile}}</div>
+						<div class="time">{{profile. mFather.email}}</div>
+					</div>
+					
+				</div>
+					<div class="list-li clearfix">
+					
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.GaurdiansName}}</div>
+						<div class="time">{{profile. mGaurdian.Name}}</div>
+						<div class="time">{{profile. mGaurdian.Mobile}}</div>
+						<div class="time">{{profile. mGaurdian.email}}</div>
+					</div>
+					
+				</div>
+					<div class="list-li clearfix">
+					
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.Address}}</div>
+						<div class="time">{{profile.mHomeAddress}}</div>
+					</div>
+					
+				</div>
+					<div class="list-li clearfix" ng-hide='true'>
+					
+					<div class="info pull-left">
+						<div class="name">{{UiLanguageProfile.EnrollmentNo}}</div>
+						<div class="time">{{profile.mEnrollmentNo}}</div>
+					</div>
+					
+				</div>
+
+				<div class="list-li clearfix" ng-hide='true'>
+					<div class="photo pull-left"></div>
+					<div class="info pull-left">
+						<div class="name">Didier Mailly</div>
+						<div class="time">5 min ago</div>
+					</div>
+					
+				</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+  <!--     <div class="bar bar-header bar-positive">
   <h1 class="title">{{UiLanguageProfile.Title}}</h1>
 </div> </br></br>
  <img id="profile-image" src="img/sid.jpg">
@@ -66,7 +207,7 @@
   <h3>{{UiLanguageProfile.FatherName}}: {{profile.mFatherName}}</h3>
   <h3>{{UiLanguageProfile.FatherMobileNo}}: {{profile.mFatherMobileNo}}</h3>
   <h3>{{UiLanguageProfile.HomeAddress}}: {{profile.mHomeAddress}}</h3>
-
+-->
 
      </ion-content>
       </ion-view>
