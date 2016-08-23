@@ -1,6 +1,6 @@
 var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'DynamicMeditation.controllers','azure-mobile-service.module', 'azureBlobUpload'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$rootScope) {
   $ionicPlatform.ready(function() {
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -9,6 +9,8 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-b
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
+      $rootScope.InitStorage();
+    
   });
 })
 
@@ -197,6 +199,9 @@ $scope.logoutFunc = function(){
 
 
 
+<<<<<<< HEAD
+
+=======
 myApp.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
 $scope.readFunc= function(){
 
@@ -210,8 +215,8 @@ $scope.readFunc();
 
 $scope.messages = JSON.parse(localStorage.getItem('recievedMessage'));
 console.log($scope.messages);
+>>>>>>> f721a486a2ee0a7e4868a602c4fb54b4e1cfd4ef
 
-});
 
 
 myApp.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {

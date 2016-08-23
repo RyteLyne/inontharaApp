@@ -10,8 +10,8 @@
 
 
 
-  <div ng-repeat = "data in newslist" href="#/app/readView" style="text-decoration:none;">
-   <div class="card">
+  <div ng-repeat = "data in newslist" style="text-decoration:none;">
+   <div class="card" ng-click = itemclick(data.MsgId)>
    <div class="item item-avatar">
       <img src="{{data.Avatar}}">
       <h2> {{data.Heading}} {{SelChannel}}<h2>
