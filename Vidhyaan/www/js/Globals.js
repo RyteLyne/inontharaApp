@@ -205,6 +205,7 @@ console.log("failed to get from server");
    }
  }*/
 
+/*
 $rootScope.LoadNotificationCounts = function()
 {
  var roottag = "NotificationCount" ;
@@ -228,12 +229,12 @@ $rootScope.LoadNotificationCounts = function()
 
  return;
 }
-
+*/
 
 $rootScope.IncNotificationCounts=function(ProgramId)
 {
 
-var roottag = "NotificationCount" ;
+//var roottag = "NotificationCount" ;
 var tag = "Nc_" + ProgramId;
 var noti = {};
 
@@ -247,11 +248,6 @@ $rootScope.NotificationCounts[tag] = 1;
 else
 $rootScope.NotificationCounts[tag] = $rootScope.NotificationCounts[tag] + 1;
 
-
-
-window.localStorage.setItem(roottag,JSON.stringify($rootScope.NotificationCounts));
-
-//$rootScope.NotificationCounts[tag] = 10;
 
 console.log($rootScope.NotificationCounts[tag]);
 console.log(tag);
@@ -269,18 +265,68 @@ var tag = "Nc_" + ProgramId;
 var noti = {};
 
 
-if($rootScope.NotificationCounts[tag] == undefined || $rootScope.NotificationCounts[tag]<=0)
+if($rootScope.NotificationCounts[tag] == undefined)
 $rootScope.NotificationCounts[tag] = 0;
-
+else if ($rootScope.NotificationCounts[tag]<=0)
+$rootScope.NotificationCounts[tag] = 0;
 else
 $rootScope.NotificationCounts[tag] = $rootScope.NotificationCounts[tag] - 1;
 
-window.localStorage.setItem(roottag,JSON.stringify($rootScope.NotificationCounts));
+
+$rootScope.$broadcast('NotificationEvent', [ProgramId,$rootScope.NotificationCounts[tag]]);
+
 return;  
 }
 
+$rootScope.MarkAsRead = function (docid)
+{
+  var unread = "0";
+
+$cordovaSQLite.execute($rootScope.myDB, 'UPDATE feedmsgs set unread = ? where docid = ?', [unread,docid])
+        .then(function(results) 
+        {
+
+console.log(results);
+console.log("update unread success");
+}, function(error) {
+            
+         console.log("failed to update unread");
+
+        })
+
+}
+
+$rootScope.LoadNotificationCounts = function()
+{
+  var unread = "1";
+  var ret = [];
+
+$cordovaSQLite.execute($rootScope.myDB, 'SELECT progid, count(unread) AS cnt from feedmsgs  where unread = ? GROUP BY progid', [unread])
+        .then(function(results) 
+        {
+
+console.log(results);
+console.log("read noti success");
 
 
+for(var i=0;i<results.rows.length;i++)
+{
+  var tag = "Nc_" + results.rows.item(i).progid;
+  $rootScope.NotificationCounts[tag] = results.rows.item(i).cnt;
+  console.log(tag);
+  console.log($rootScope.NotificationCounts[tag]);
+}
+console.log("Calculated Noti Counts");
+//console.log(ret);
+
+}, function(error) {
+            
+         console.log("read noti failed");
+
+        })
+
+
+}
 
 
 $rootScope.GetDocument = function(docname)
@@ -449,7 +495,7 @@ $rootScope.myDB = window.openDatabase("Vidhyaan.db", '1', 'my', 1024 * 1024 * 10
 
 }
 
-$cordovaSQLite.execute($rootScope.myDB, 'CREATE TABLE IF NOT EXISTS feedmsgs (id integer primary key, docid text, progid text, posttime text, fpreview text, addtline integer, msg text)', [])
+$cordovaSQLite.execute($rootScope.myDB, 'CREATE TABLE IF NOT EXISTS feedmsgs (id integer primary key, docid text, progid text, posttime text, fpreview text, addtline integer, msg text, unread integer)', [])
         .then(function(results) 
         {
            
@@ -474,11 +520,12 @@ var progid = msg.DocumentSubHeader.ProgramId;
 var posttime = msg.DocumentHeader.Datetime.toString();
 var fpreview = JSON.stringify(msg.DocumentBody.ApplicationSpecificeData.FeedPreview);
 var addtline = "1"; //should read from docname
+var unread = "1"; //unread new message
 var  msgtext =  JSON.stringify(msg.DocumentBody.DocumentDetails);
 
 $rootScope.IncNotificationCounts(progid);
 
- $cordovaSQLite.execute($rootScope.myDB, "INSERT INTO feedmsgs (docid, progid, posttime, fpreview, addtline, msg) VALUES (?,?,?,?,?,?)", [docid,progid,posttime,fpreview,addtline, msgtext])
+ $cordovaSQLite.execute($rootScope.myDB, "INSERT INTO feedmsgs (docid, progid, posttime, fpreview, addtline, msg, unread) VALUES (?,?,?,?,?,?,?)", [docid,progid,posttime,fpreview,addtline, msgtext,unread])
         .then(function(results) 
         {
            
@@ -577,7 +624,7 @@ factory.getdata = function (progid)
   console.log("in feedlist factory");
 
 
- $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview FROM feedmsgs where progid = ?', [progid])
+ $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview, unread FROM feedmsgs where progid = ?', [progid])
         .then(function(results) 
         {
 
@@ -592,6 +639,7 @@ for(var i=0;i<results.rows.length;i++)
   ret[i] = {
   MsgId : results.rows.item(i).docid,
   ProgId : results.rows.item(i).progid,
+  Unread : results.rows.item(i).unread,
   DateTime : dt.toString(),
   Heading : feedpreview.Heading,
   Author : feedpreview.AuthorName,
@@ -657,6 +705,7 @@ for(var i=0;i<results.rows.length;i++)
   ret[i] = {
   MsgId : results.rows.item(i).docid,
   ProgId : results.rows.item(i).progid,
+  Unread : results.rows.item(i).unread,
   DateTime : dt.toString(),
   Heading : feedpreview.Heading,
   Author : feedpreview.AuthorName,

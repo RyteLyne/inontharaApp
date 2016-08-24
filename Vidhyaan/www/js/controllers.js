@@ -232,6 +232,7 @@ console.log("in RadioCtrl");
    console.log("runs on", $rootScope.AppUserInformation.runson);
    console.log( $rootScope.AppUserInformation.SelProgName);
    //$rootScope.IncNotificationCounts("2-npsbsk");
+   //$rootScope.MarkAsRead("2-npsbsk");
    }
 
 })
@@ -689,7 +690,7 @@ jQuery.getJSON('json/settings.json', function(data) {
       $rootScope.LoadNotificationCounts();
       $rootScope.GetAllTags();
       console.log($rootScope.AvailableChannels);
-     console.log("before push registration");
+      console.log("before push registration");
       $rootScope.InitPush();
 
       $state.go('app.home',{},{reload:true});
@@ -770,6 +771,8 @@ $scope.scrollSmallToTop = function() {
    {
    console.log("clicked");
    console.log(docId);
+   $rootScope.MarkAsRead(docId);
+   $rootScope.DecNotificationCounts($rootScope.AppUserInformation.SelProgram);
    $rootScope.AppUserInformation.DocId = docId;
    $state.go('app.readView',{},{reload:true});
 
