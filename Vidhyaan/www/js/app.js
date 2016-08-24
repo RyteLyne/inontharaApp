@@ -3,8 +3,6 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("thish is the grand begin");
   $ionicPlatform.ready(function() {
-<<<<<<< HEAD
-
 
 /* var push = new Ionic.Push({
       "debug": true
@@ -15,7 +13,6 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
       console.log("My Device token:",token.token);
       push.saveToken(token);  // persist the token in the Ionic Platform
     });*/
-
 
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
