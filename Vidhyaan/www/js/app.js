@@ -3,6 +3,7 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("thish is the grand begin");
   $ionicPlatform.ready(function() {
+
 /* var push = new Ionic.Push({
       "debug": true
     });
@@ -631,9 +632,9 @@ function gotFileEntry(imageURI) {
      // nextMessage.content= $sce.trustAsHtml('<img src="' + ImageData+'"></img><br> Loading.. <meter value="2" max="100"></meter>');
     //  $scope.tempImageHtml ='<img src="' +ImageData+'"></img><br>';
             
-nextMessage.content= $sce.trustAsHtml('<img src="' + $scope.ImageData+'"></img><br> Loading.. <progress value="2" max="100"></progress>');
+nextMessage.content= $sce.trustAsHtml('<img ng-src="' + $scope.ImageData+'"></img><br> Loading.. <progress value="2" max="100"></progress>');
      $scope.tempImageHtml = {};
-      $scope.tempImageHtml.content ='<img src="' + $scope.ImageData+'"></img><br>';
+      $scope.tempImageHtml.content ='<img ng-src="' + $scope.ImageData+'"></img><br>';
        $scope.messages.push(angular.extend({}, nextMessage));  
 			$scope.$apply(function () {
 				//$scope.images.push(entry.nativeURL);
