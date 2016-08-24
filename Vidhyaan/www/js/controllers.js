@@ -663,8 +663,10 @@ $scope.Credentials.password = window.localStorage.getItem("password");
 $rootScope.InitStorage();
 $rootScope.LoadNotificationCounts();
 $rootScope.GetAllTags();
-$rootScope.InitPush();
 
+if (window.cordova) {
+$rootScope.InitPush();
+}
 //login to server here, if success redirect to home page;;
  $state.go('app.home',{},{reload:true});
 }

@@ -10,6 +10,14 @@ angular.module('Global.controllers', ['ngCordova'])
 
 
                console.log($rootScope.mobileServiceClient);
+          
+$rootScope.getBlob = function ()
+{
+console.log("substitued pic",this.src);
+console.log("failed pic", this.srcErr);
+
+
+}
 
 $rootScope.AppUserInformation = 
 {
@@ -379,7 +387,7 @@ $rootScope.GetUserChannels =function ()
    console.log("platfromctrl2 ionic.platform.ready function");
    //gcmapp will deprecated from here 
  // gcmapp.Initialize();
-
+ 
   $rootScope.SelChannel = 0;
 
     pushNotification = PushNotification.init({

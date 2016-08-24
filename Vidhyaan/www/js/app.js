@@ -450,7 +450,6 @@ function uploadCompleted(){
        $scope.add();
           $ionicScrollDelegate.scrollBottom();
 }
-
     var readCompleted = function (evt) {
     if (evt.target.readyState == FileReader.DONE) {
     console.log("read completed so im here");
