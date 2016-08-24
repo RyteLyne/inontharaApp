@@ -1,4 +1,4 @@
-angular.module('DynamicMeditation.controllers', [])
+angular.module('Vidhyaan.controllers', [])
 /*
 ProfileCtrl
 RadioCtrl
@@ -689,7 +689,7 @@ jQuery.getJSON('json/settings.json', function(data) {
       $rootScope.LoadNotificationCounts();
       $rootScope.GetAllTags();
       console.log($rootScope.AvailableChannels);
-     
+     console.log("before push registration");
       $rootScope.InitPush();
 
       $state.go('app.home',{},{reload:true});
@@ -700,7 +700,7 @@ jQuery.getJSON('json/settings.json', function(data) {
        {//force login next time;;
       //window.localStorage.removeItem("username"); //uncomment these lines later;;
       //window.localStorage.removeItem("password");
-      alert("Please check Internet Connection");
+      alert("Please check Internet Connection1");
       return;
        });
 
@@ -708,7 +708,7 @@ jQuery.getJSON('json/settings.json', function(data) {
    }) //login promise;;
    .catch(function(err)
     {
-      alert("Please check Internet Connection");
+      alert("Please check Internet Connection2");
       return;
 
     });

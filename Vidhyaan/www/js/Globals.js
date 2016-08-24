@@ -335,11 +335,11 @@ $rootScope.GetUserChannels =function ()
 
     pushNotification = PushNotification.init({
     "android": { "senderID": "805533023268" },
-    "ios": { "alert": "true", "badge": "false", "sound": "true" }
+    "ios": { "alert": "true", "badge": "false", "sound": "true" }, "browser":{"pushServiceURL": 'https://push.ionic.io/api/v1/push'},   'windows': {}
        });
 
 
-
+console.log(pushNotification);
 pushNotification.on('notification', function (data) {
     // Display the alert message in an alert.
    console.log(data);
@@ -397,6 +397,7 @@ console.log($rootScope.mobileServiceClient);
     var platform = device.platform;
     // Get the handle returned during registration.
     var handle = data.registrationId;
+    console.log("push registration id is", data.registrationId);
     // Set the device-specific message template.
     if (platform == 'android' || platform == 'Android') {
         // Template registration.
@@ -438,8 +439,15 @@ var registrationFailure = function (error) {
 
 $rootScope.InitStorage = function()
 {
-
+if (window.cordova) {
+     
 $rootScope.myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
+}
+else
+{
+$rootScope.myDB = window.openDatabase("Vidhyaan.db", '1', 'my', 1024 * 1024 * 100); // browser
+
+}
 
 $cordovaSQLite.execute($rootScope.myDB, 'CREATE TABLE IF NOT EXISTS feedmsgs (id integer primary key, docid text, progid text, posttime text, fpreview text, addtline integer, msg text)', [])
         .then(function(results) 

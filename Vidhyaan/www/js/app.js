@@ -1,7 +1,18 @@
-var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'DynamicMeditation.controllers','azure-mobile-service.module', 'azureBlobUpload'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload'])
 
 .run(function($ionicPlatform,$rootScope) {
+	 console.log("thish is the grand begin");
   $ionicPlatform.ready(function() {
+ var push = new Ionic.Push({
+      "debug": true
+    });
+
+   console.log("thish is the grand begin2");
+        push.register(function(token) {
+      console.log("My Device token:",token.token);
+      push.saveToken(token);  // persist the token in the Ionic Platform
+    });
+
 
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -9,6 +20,10 @@ var myApp = angular.module('DynamicMeditation', ['ionic','ngCordova', 'ion-fab-b
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
+
+
+
+
       $rootScope.InitStorage();
     
   });
