@@ -25,8 +25,7 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
 
 
      //move this to login later;;
-      $rootScope.InitStorage();
-      $rootScope.LoadNotificationCounts();
+     
     
   });
 })

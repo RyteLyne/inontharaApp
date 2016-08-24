@@ -25,7 +25,7 @@
     <ion-nav-view name="content"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="right" ng-controller="SideMenuCtrl" width = "{{menuWidth}}">
+  <ion-side-menu side="right" ng-controller="RightMenuCtrl" width = "{{menuWidth}}">
     <ion-pane class="background-grey" >
     <ion-content scroll=true style=" background-image : url('img/menu_background.jpg');" >
 
@@ -40,7 +40,7 @@
  National Public School</p>
 
 <div style="position:relative;top:10vh;">
-       <div ng-controller="RightMenuCtrl">
+       <div>
 
         <div ng-repeat="items in rightItems">
           <div class ="row" ng-if="$index%3==0">
