@@ -438,7 +438,7 @@ function xhrfail(message){
   console.log(message);
 }
 function uploadCompleted(){
-   
+  
   console.log("uploadCompleted");
   console.log($scope.messages[$scope.messages.length-1].content);
   $scope.messages.pop();
@@ -446,7 +446,6 @@ function uploadCompleted(){
   newMessage = $scope.tempImageHtml;
     $scope.messages.push(angular.extend({}, newMessage));
     $scope.$apply();
-
   //$scope.messages[$scope.messages.length-1].content=   $scope.tempImageHtml.slice();
        $scope.myInput='';
        $scope.add();
