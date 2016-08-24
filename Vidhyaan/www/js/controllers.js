@@ -129,6 +129,7 @@ console.log("in RadioCtrl");
 
 
    var priv = {};
+   $scope.menulist = {};
 
    var Sub = $rootScope.GetDocument("SubscriberInfo");
    console.log("Subscriber : ", Sub);
@@ -217,6 +218,8 @@ console.log("in RadioCtrl");
       runson : items[i].mRunsOn,
       cnt:  $rootScope.NotificationCounts["Nc_" + items[i].mId]==undefined?"":$rootScope.NotificationCounts["Nc_" + items[i].mId]
     };
+
+     $scope.menulist[items[i].mId] = $scope.rightItems[k];
    
    k++;
     
@@ -234,6 +237,33 @@ console.log("in RadioCtrl");
    //$rootScope.IncNotificationCounts("2-npsbsk");
    //$rootScope.MarkAsRead("2-npsbsk");
    }
+
+  $scope.$on('NotificationEvent', function(event, data) 
+  { 
+  console.log("Notification Event Fired Right");
+  console.log(data[0]); //programId;;
+  console.log(data[1]);//notification count;;
+
+   if($scope.menulist[data[0]] !=undefined)
+   $scope.menulist[data[0]].cnt = data[1];
+  });
+
+
+   $scope.$on('NotificationsReady', function(event, data) 
+  { 
+  console.log("Notification Ready Fired Right");
+  console.log(data[0]);
+   var tg = data[0];
+  
+  for(var i=0;i<tg.length;i++)
+   {
+     var tag = "Nc_" + tg[i];
+   if($scope.menulist[tg[i]] !=undefined) 
+   $scope.menulist[tg[i]].cnt = $rootScope.NotificationCounts[tag];
+   console.log($rootScope.NotificationCounts[tg[i]]);
+   }
+
+  });
 
 })
 
@@ -421,7 +451,6 @@ $scope.UiLanguageProfile =
  
    console.log("groups:" ,groups);
   
-  var globalIndex=0;
   $scope.menulist = {};
 
   var k=0;
@@ -453,7 +482,6 @@ if(groups[i].mId != undefined )
 {
     $scope.menulist[groups[i].mId] = $scope.groups[k];
 
-     globalIndex++;
 }
 
 
@@ -471,7 +499,6 @@ if(groups[i].mId != undefined )
      // $scope.groups[i].items.push(groups.groups[i].mItems[j]);
 
 
-
       $scope.groups[k].items[l] = {
       name: groups[i].mItems[j].mName[language]== undefined ?groups[i].mItems[j].mName["0"]:groups[i].mItems[j].mName[language],
       icon: groups[i].mItems[j].mIcon,
@@ -480,6 +507,8 @@ if(groups[i].mId != undefined )
       runson: groups[i].mItems[j].mRunsOn,
       cnt : $rootScope.NotificationCounts["Nc_" + groups[i].mItems[j].mId]==undefined?"":$rootScope.NotificationCounts["Nc_" + groups[i].mItems[j].mId],
       };
+
+      $scope.menulist[groups[i].mItems[j].mId] =  $scope.groups[k].items[l];
         
       
 
@@ -508,9 +537,27 @@ if(groups[i].mId != undefined )
   console.log(data[1]);
   //$scope.$digest();
    //$scope.groups[0].cnt =10;
+   if($scope.menulist[data[0]] !=undefined)
    $scope.menulist[data[0]].cnt = data[1];
-   
   });
+
+  $scope.$on('NotificationsReady', function(event, data) 
+  { 
+  console.log("Notification Ready Fired");
+  console.log(data[0]);
+   var tg = data[0];
+  
+  for(var i=0;i<tg.length;i++)
+   {
+     var tag = "Nc_" + tg[i];
+   if($scope.menulist[tg[i]] !=undefined) 
+   $scope.menulist[tg[i]].cnt = $rootScope.NotificationCounts[tag];
+   console.log($rootScope.NotificationCounts[tg[i]]);
+   }
+
+  });
+
+  
 
 
 
@@ -578,6 +625,7 @@ if(groups[i].mId != undefined )
    $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson,SubChannels);
    console.log("runs on", $rootScope.AppUserInformation.runson);
    console.log( $rootScope.AppUserInformation.SelProgName);
+   $rootScope.$broadcast('FeedProgramEvent', []);
 
   }
 
@@ -607,10 +655,16 @@ $scope.Credentials =
     password : ""
   }
 
-if(window.localStorage.getItem("setting") != undefined && window.localStorage.getItem("username") != undefined && window.localStorage.getItem("password") != undefined) //default settings;;
+if(window.localStorage.getItem("username") != undefined && window.localStorage.getItem("password") != undefined) //default settings;;
 {
 $scope.Credentials.username = window.localStorage.getItem("username");
 $scope.Credentials.password = window.localStorage.getItem("password");
+
+$rootScope.InitStorage();
+$rootScope.LoadNotificationCounts();
+$rootScope.GetAllTags();
+$rootScope.InitPush();
+
 //login to server here, if success redirect to home page;;
  $state.go('app.home',{},{reload:true});
 }
@@ -687,11 +741,13 @@ jQuery.getJSON('json/settings.json', function(data) {
       Promise.all([datafactory.getdata("1234-npsbsk","npsbsk","SubscriberInfo"),
       datafactory.getdata("1234-npsbsk","npsbsk","ProgramInfo"),
       datafactory.getdata("1234-npsbsk","npsbsk","ChannelInfo")]).then(function(){
+      $rootScope.InitStorage();
       $rootScope.LoadNotificationCounts();
       $rootScope.GetAllTags();
       console.log($rootScope.AvailableChannels);
       console.log("before push registration");
       $rootScope.InitPush();
+
 
       $state.go('app.home',{},{reload:true});
       console.log("promise promise"); 
@@ -788,10 +844,30 @@ $scope.scrollSmallToTop = function() {
 
     }
 
+ $scope.$on('NewFeedEvent', function(event, data) 
+  { 
+  console.log("News Event Fired in news feed ctrl");
+  //console.log(data[0]); //feed preview data;;
+
+   $scope.LoadFeedList();
+  //$scope.timeline.unshift(data[0]);
+
+   //console.log( $scope.timeline);
+
+  });
+
+
+$scope.$on('FeedProgramEvent', function(event, data) 
+  { 
+  console.log("Feed program Event Fired in news feed ctrl");
   
 
+   $scope.LoadFeedList();
+  //$scope.timeline.unshift(data[0]);
 
+  });
 
+  
 })
 
 
@@ -832,11 +908,9 @@ $scope.goBack = function(){
 
 .controller('LogOutCtrl', function($scope,$window,$state) {
 
-if(window.localStorage.getItem("setting") != undefined) //default settings;;
-{
+
 window.localStorage.removeItem("username");
 window.localStorage.removeItem("password");
-}
 
 console.log("Log out");
 
@@ -976,36 +1050,14 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
 .controller('TimeLineCtrl', function($scope,timelinefactory, $rootScope,$state) {
 
 //window.localStorage.removeItem("TimeLine");
+$scope.timeline = [];
 
   $scope.LoadTimeLine = function()
   {
 
-   /*$scope.timeline = JSON.parse(window.localStorage.getItem("TimeLine"));
-   
-   if($scope.timeline == null)
-   {
-
-   console.log("Loaded from json");
-
-   jQuery.getJSON('json/Timeline.json', function(data) {
-
-   $scope.timeline = data.TimeLine; 
-   window.localStorage.setItem("TimeLine",JSON.stringify($scope.timeline));
-
-   });
-
-  
-   }
-  else
-  {
-
-    console.log("Loaded from localstorage");
-  }*/
-    
-
     Promise.all([timelinefactory.getdata()]).then(function(ret){
       
-       $scope.timeline=ret[0];
+      $scope.timeline=ret[0];
       console.log("DataLoaded");
       console.log(ret);
       console.log( $scope.timeline[0].Heading);
@@ -1020,10 +1072,6 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
       alert("Error getting timeline");
       return;
        });
-
-
-
-
 
   }
 
@@ -1040,41 +1088,24 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
    }
 
 
+ $scope.$on('NewFeedEvent', function(event, data) 
+  { 
+  console.log("News Event Fired Right");
+  //console.log(data[0]); //feed preview data;;
+
+   $scope.LoadTimeLine();
+  //$scope.timeline.unshift(data[0]);
+
+   //console.log( $scope.timeline);
+
+  });
+
+//docid, progid, posttime, fpreview, unread
+
+  //var feedpreview = JSON.parse(data[3]);
+   
 
 
-/*
-  $scope.timeline = [{
-    date: new Date(),
-    title: "Your kids education",
-    author: "Class Teacher",
-    profilePicture: "https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg",
-    text: "Your kids education is very important",
-    type: "location"
-
-  }, {
-    date: new Date(),
-    title: "For my friends",
-    author: "Sara Orwell",
-    profilePicture: "https://lh5.googleusercontent.com/-ZadaXoUTBfs/AAAAAAAAAAI/AAAAAAAAAGA/19US52OmBqc/photo.jpg",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-    type: "text"
-
-  }, {
-    date: new Date(),
-    title: "Look at my video!",
-    author: "Miranda Smith",
-    profilePicture: "https://static.licdn.com/scds/common/u/images/apps/plato/home/photo_profile_headshot_200x200_v2.jpg",
-    text: "Lorem ipsum dolor sit amet",
-    type: "video"
-
-  }, {
-    date: new Date(),
-    title: "Awesome picture",
-    author: "John Mybeweeg",
-    profilePicture: "http://www.lawyersweekly.com.au/images/LW_Media_Library/LW-602-p24-partner-profile.jpg",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-    type: "picture"
-  }] */
 })
 
 .controller('IconsCtrl', function($scope) {

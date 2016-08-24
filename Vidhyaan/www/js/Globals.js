@@ -315,8 +315,11 @@ for(var i=0;i<results.rows.length;i++)
   $rootScope.NotificationCounts[tag] = results.rows.item(i).cnt;
   console.log(tag);
   console.log($rootScope.NotificationCounts[tag]);
+  ret[i] = results.rows.item(i).progid;
 }
 console.log("Calculated Noti Counts");
+$rootScope.$broadcast('NotificationsReady', [ret]);
+
 //console.log(ret);
 
 }, function(error) {
@@ -519,15 +522,21 @@ var docid = msg.DocumentHeader.DocumentId;
 var progid = msg.DocumentSubHeader.ProgramId;
 var posttime = msg.DocumentHeader.Datetime.toString();
 var fpreview = JSON.stringify(msg.DocumentBody.ApplicationSpecificeData.FeedPreview);
+var fpreview1 = msg.DocumentBody.ApplicationSpecificeData.FeedPreview;
 var addtline = "1"; //should read from docname
 var unread = "1"; //unread new message
 var  msgtext =  JSON.stringify(msg.DocumentBody.DocumentDetails);
 
-$rootScope.IncNotificationCounts(progid);
 
  $cordovaSQLite.execute($rootScope.myDB, "INSERT INTO feedmsgs (docid, progid, posttime, fpreview, addtline, msg, unread) VALUES (?,?,?,?,?,?,?)", [docid,progid,posttime,fpreview,addtline, msgtext,unread])
         .then(function(results) 
         {
+          //fire newfeedarrived;;
+          $rootScope.IncNotificationCounts(progid);
+
+    
+          $rootScope.$broadcast('NewFeedEvent', []);
+
            
       console.log('Inserted');
            }, function(error) {
@@ -624,7 +633,7 @@ factory.getdata = function (progid)
   console.log("in feedlist factory");
 
 
- $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview, unread FROM feedmsgs where progid = ?', [progid])
+ $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview, unread FROM feedmsgs where progid = ? ORDER BY posttime DESC', [progid])
         .then(function(results) 
         {
 
@@ -690,7 +699,7 @@ factory.getdata = function ()
   console.log("in Timeline factory");
 
 
- $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview FROM feedmsgs where addtline = ?', [addtline])
+ $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview FROM feedmsgs where addtline = ? ORDER BY posttime DESC LIMIT 25', [addtline])
         .then(function(results) 
         {
 
