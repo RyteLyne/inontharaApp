@@ -3,6 +3,18 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("thish is the grand begin");
   $ionicPlatform.ready(function() {
+<<<<<<< HEAD
+
+
+/* var push = new Ionic.Push({
+      "debug": true
+    });
+
+   console.log("thish is the grand begin2");
+        push.register(function(token) {
+      console.log("My Device token:",token.token);
+      push.saveToken(token);  // persist the token in the Ionic Platform
+    });*/
 
 
 
@@ -15,8 +27,9 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
 
 
 
-
+     //move this to login later;;
       $rootScope.InitStorage();
+      $rootScope.LoadNotificationCounts();
     
   });
 })
