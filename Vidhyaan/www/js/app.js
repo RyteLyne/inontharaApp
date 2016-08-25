@@ -459,20 +459,27 @@ function uploadCompleted(){
         // Build the request URI with the SAS, which gives us permissions to upload.
     //    var uriWithAccess = insertedItem.imageUri + "?" + insertedItem.sasQueryString;
         console.log($rootScope.mobileServiceClient);
-  $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
+ /* $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
     body: { fileName: $scope.newFileName, Type: 'jpeg', UserPhone: '555-555-1234' },
     method: "put"
-}).done(function (response) {
-    
-   console.log(response);
-   console.log(response.result.sasUrl);
-   var uriWithAccess = response.result.sasUrl;
+}).done(function (response) */
+
+var fileToSend = {"fileName": $scope.newFileName};
+ var req = 
+{
+    method: 'POST',
+    url: "http://chungling.azurewebsites.net/putblob/",
+    data: jQuery.param(fileToSend),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}
+          $http(req).
+        success(function(data, status, headers, config) { 
+          console.log(data);
+             var uriWithAccess = data.sasUrl;
     var xhr = new XMLHttpRequest();
         xhr.onerror = xhrfail;
         xhr.onloadend = uploadCompleted;
         xhr.open("PUT", uriWithAccess, true);
-      
-
         xhr.setRequestHeader('x-ms-blob-type', 'BlockBlob');
         xhr.setRequestHeader('x-ms-blob-content-type', 'image/jpeg');
 $ionicScrollDelegate.scrollBottom();
@@ -489,12 +496,13 @@ $ionicScrollDelegate.scrollBottom();
   };
 
         xhr.send(requestData);
-}, function(error) {
-    alert(error.result);
-});
 
-     
-
+        }).
+        error(function(data, status, headers, config) {
+          console.log(data);
+         
+        });
+ 
    
     console.log($scope.messages);
        
