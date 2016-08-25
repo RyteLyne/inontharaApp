@@ -1,4 +1,4 @@
-var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback'])
 
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("thish is the grand begin");
