@@ -219,9 +219,11 @@ $scope.logoutFunc = function(){
 
 
 
+
 myApp.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
- console.log("$rootScope.mobileServiceClient");
-  console.log($rootScope.mobileServiceClient);
+// console.log("$rootScope.mobileServiceClient");
+ $scope.imagePath = cordova.file.dataDirectory;
+//  console.log($rootScope.mobileServiceClient);
 console.log($rootScope.AppUserInformation);
   $scope.addText= function(){
   $scope.tag='p'
@@ -312,7 +314,6 @@ tempDoc.DocumentSubHeader={};
 tempDoc.DocumentSubHeader.ChannelId=$rootScope.AppUserInformation.runson[0];
 tempDoc.DocumentSubHeader.ProgramId=$rootScope.AppUserInformation.SelProgram;
 tempDoc.DocumentSubHeader.ModeratorId='someModerator';
-
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
@@ -458,7 +459,7 @@ function uploadCompleted(){
 
         // Build the request URI with the SAS, which gives us permissions to upload.
     //    var uriWithAccess = insertedItem.imageUri + "?" + insertedItem.sasQueryString;
-        console.log($rootScope.mobileServiceClient);
+    //    console.log($rootScope.mobileServiceClient);
  /* $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
     body: { fileName: $scope.newFileName, Type: 'jpeg', UserPhone: '555-555-1234' },
     method: "put"
@@ -565,9 +566,9 @@ var curr_month = d.getMonth();
 var curr_year = d.getFullYear();
 var curr_time = d.getTime();
  console.log(curr_time);
- var newFileName = $rootScope.userName + curr_time.toString()+'.jpg';
- newFileName=newFileName.replace(/ /g,"");
- console.log(newFileName);
+ var newFileName = $rootScope.AppUserInformation.SubId+'_' + curr_time.toString()+'.jpg';
+ //newFileName=newFileName.replace(/ /g,"");
+ console.log("new name adde to the file is ", newFileName);
  $scope.newFileName = newFileName;
 
 
@@ -587,7 +588,7 @@ function createFileEntry(fileURI) {
 function copyFile(fileEntry) {
 			var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
 			var newName = newFileName;
- 
+ console.log("true orgin is ", cordova.file.dataDirectory + newFileName);
 			window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
 				fileEntry.copyTo(
 					fileSystem2,
@@ -600,7 +601,8 @@ function copyFile(fileEntry) {
 		}
 		
 function onCopySuccess(entry) {
-        console.log("copy successful");
+        console.log("copy successful ",entry.nativeURL);
+        console.log(entry);
         console.log(entry.nativeURL);
         $scope.ImageData = entry.nativeURL;
 
@@ -667,27 +669,7 @@ nextMessage.content= $sce.trustAsHtml('<img ng-src="' + $scope.ImageData+'"></im
    
 }
 
-    $scope.addPic = function() {
-   var nextMessage = messageOptions[messageIter++ % messageOptions.length];
-   
- $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
-    body: { fileName: $scope.newFileName, Fileype: 'jpeg', UserPhone: '555-555-1234' },
-    method: "get"
-}).done(function (response) {
     
-   console.log(response);
-   console.log(response.result.sasUrl);
-   var uriWithAccess = response.result.sasUrl;
-}, function(error) {
-    alert(error.result);
-});
-
-     
-
-console.log("nextmessage content is" + nextMessage.content);
-   
-    console.log($scope.messages);
-  };
 
 });
 
