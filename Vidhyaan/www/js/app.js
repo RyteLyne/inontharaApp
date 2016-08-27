@@ -640,9 +640,10 @@ function gotFileEntry(imageURI) {
      // nextMessage.content= $sce.trustAsHtml('<img src="' + ImageData+'"></img><br> Loading.. <meter value="2" max="100"></meter>');
     //  $scope.tempImageHtml ='<img src="' +ImageData+'"></img><br>';
             
-nextMessage.content= $sce.trustAsHtml('<img ng-src="' + $scope.ImageData+'"></img><br> Loading.. <progress value="2" max="100"></progress>');
+nextMessage.content= $sce.trustAsHtml('<img src="' + $scope.ImageData+'"></img><br> Loading.. <progress value="2" max="100"></progress>');
      $scope.tempImageHtml = {};
-      $scope.tempImageHtml.content ='<img ng-src="' + $scope.ImageData+'"></img><br>';
+     //<img image="{{(cordova.file.dataDirectory + AppUserInformation.UserAvatar)}}"  image-holder="img/avatar.svg" > <img>
+      $scope.tempImageHtml.content =$sce.trustAsHtml('<img image="{{(\'' + $scope.ImageData+'\')}}"></img><br>');
        $scope.messages.push(angular.extend({}, nextMessage));  
 			$scope.$apply(function () {
 				//$scope.images.push(entry.nativeURL);
