@@ -439,12 +439,15 @@ function xhrfail(message){
 function uploadCompleted(){
   
   console.log("uploadCompleted");
+  console.log($scope.tempImageHtml);
   console.log($scope.messages[$scope.messages.length-1].content);
   $scope.messages.pop();
   var newMessage = {};
   newMessage = $scope.tempImageHtml;
     $scope.messages.push(angular.extend({}, newMessage));
+    console.log($scope.messages);
     $scope.$apply();
+    console.log($scope.messages);
   //$scope.messages[$scope.messages.length-1].content=   $scope.tempImageHtml.slice();
        $scope.myInput='';
        $scope.add();
@@ -459,20 +462,27 @@ function uploadCompleted(){
         // Build the request URI with the SAS, which gives us permissions to upload.
     //    var uriWithAccess = insertedItem.imageUri + "?" + insertedItem.sasQueryString;
         console.log($rootScope.mobileServiceClient);
-  $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
+ /* $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
     body: { fileName: $scope.newFileName, Type: 'jpeg', UserPhone: '555-555-1234' },
     method: "put"
-}).done(function (response) {
-    
-   console.log(response);
-   console.log(response.result.sasUrl);
-   var uriWithAccess = response.result.sasUrl;
+}).done(function (response) */
+
+var fileToSend = {"fileName": $scope.newFileName};
+ var req = 
+{
+    method: 'POST',
+    url: "http://chungling.azurewebsites.net/putblob/",
+    data: jQuery.param(fileToSend),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}
+          $http(req).
+        success(function(data, status, headers, config) { 
+          console.log(data);
+             var uriWithAccess = data.sasUrl;
     var xhr = new XMLHttpRequest();
         xhr.onerror = xhrfail;
         xhr.onloadend = uploadCompleted;
         xhr.open("PUT", uriWithAccess, true);
-      
-
         xhr.setRequestHeader('x-ms-blob-type', 'BlockBlob');
         xhr.setRequestHeader('x-ms-blob-content-type', 'image/jpeg');
 $ionicScrollDelegate.scrollBottom();
@@ -489,12 +499,13 @@ $ionicScrollDelegate.scrollBottom();
   };
 
         xhr.send(requestData);
-}, function(error) {
-    alert(error.result);
-});
 
-     
-
+        }).
+        error(function(data, status, headers, config) {
+          console.log(data);
+         
+        });
+ 
    
     console.log($scope.messages);
        
@@ -579,6 +590,8 @@ function createFileEntry(fileURI) {
 function copyFile(fileEntry) {
 			var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
 			var newName = newFileName;
+			console.log("copy file entry");
+			console.log(newFileName);
  
 			window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
 				fileEntry.copyTo(
@@ -630,9 +643,9 @@ function gotFileEntry(imageURI) {
      // nextMessage.content= $sce.trustAsHtml('<img src="' + ImageData+'"></img><br> Loading.. <meter value="2" max="100"></meter>');
     //  $scope.tempImageHtml ='<img src="' +ImageData+'"></img><br>';
             
-nextMessage.content= $sce.trustAsHtml('<img ng-src="' + $scope.ImageData+'"></img><br> Loading.. <progress value="2" max="100"></progress>');
+nextMessage.content= $sce.trustAsHtml('<img src="' + $scope.ImageData+'"></img><br> Loading.. <progress value="2" max="100"></progress>');
      $scope.tempImageHtml = {};
-      $scope.tempImageHtml.content ='<img ng-src="' + $scope.ImageData+'"></img><br>';
+      $scope.tempImageHtml.content ='<img src="' + $scope.ImageData+'"></img><br>';
        $scope.messages.push(angular.extend({}, nextMessage));  
 			$scope.$apply(function () {
 				//$scope.images.push(entry.nativeURL);
