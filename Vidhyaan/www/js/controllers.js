@@ -730,8 +730,8 @@ jQuery.getJSON('json/settings.json', function(data) {
       return;
       }
 
-      console.log("Mob Service client");
-      console.log($rootScope.mobileServiceClient);
+     // console.log("Mob Service client");
+      //console.log($rootScope.mobileServiceClient);
       console.log("new log in");
       window.localStorage.setItem("username",$scope.Credentials.username);
       window.localStorage.setItem("password",$scope.Credentials.password);

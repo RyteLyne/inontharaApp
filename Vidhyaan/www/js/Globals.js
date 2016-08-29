@@ -33,7 +33,7 @@ $rootScope.AppUserInformation =
  UserName : "",
  UserTag: "", 
  Class: "",
- UserAvatar: "",
+ UserAvatar: "sid.jpg",
  DocId: "", //used to traverse from timeline;;
  PrivLevels: {}
 }

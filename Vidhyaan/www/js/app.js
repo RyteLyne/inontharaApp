@@ -1,4 +1,4 @@
-var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Editor.controllers','Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback'])
 
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("thish is the grand begin");
@@ -152,6 +152,11 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
     templateUrl: "templates/login.html"
   })
 
+  /*.state('feedinput', {
+    url: "/feedinput",
+    templateUrl: "templates/feedinput.html"
+  })*/
+
    .state('splash', {
     url: "/splash",
     templateUrl: "templates/splash.html"
@@ -214,15 +219,12 @@ $scope.logoutFunc = function(){
 
 
 
-
-
-
-
-
-myApp.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
- console.log("$rootScope.mobileServiceClient");
-  console.log($rootScope.mobileServiceClient);
+myApp.controller('EditorCtrl1', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
+// console.log("$rootScope.mobileServiceClient");
+ $scope.imagePath = cordova.file.dataDirectory;
+//  console.log($rootScope.mobileServiceClient);
 console.log($rootScope.AppUserInformation);
+
   $scope.addText= function(){
   $scope.tag='p'
   $scope.tPlaceholder = " enter content";
@@ -232,7 +234,8 @@ console.log($rootScope.AppUserInformation);
      $scope.tag='h1';
      $scope.tPlaceholder= " enter heading";
   }
-      $scope.addText();
+  
+  $scope.addText();
   $scope.showActionsheet = function() {
       
     $ionicActionSheet.show({
@@ -272,7 +275,8 @@ console.log($rootScope.AppUserInformation);
     console.log("reached here");
 
     $ionicHistory.goBack();
-  }    
+  }
+      
 
  $scope.myInput='';
   var messageOptions = [
@@ -312,7 +316,6 @@ tempDoc.DocumentSubHeader={};
 tempDoc.DocumentSubHeader.ChannelId=$rootScope.AppUserInformation.runson[0];
 tempDoc.DocumentSubHeader.ProgramId=$rootScope.AppUserInformation.SelProgram;
 tempDoc.DocumentSubHeader.ModeratorId='someModerator';
-
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
@@ -342,15 +345,7 @@ doc2send= tempDoc;
      // console.log(doc2send.messages);
   //localStorage.setItem('recievedMessage', doc2send.messages);
   
-/*  Object.toparams = function ObjecttoParams(obj) 
-{
-  var p = [];
-  for (var key in obj) 
-  {
-    p.push(key + '=' + encodeURIComponent(obj[key]));
-  }
-  return p.join('&');
-};*/
+
   var req = 
 {
     method: 'POST',
@@ -391,27 +386,7 @@ $scope.messages = [];
     if($scope.myInput!='')
     $scope.messages.push( angular.extend({}, nextMessage));
     $scope.myInput='';
-  /* var nextMessage = messageOptions[messageIter++ % messageOptions.length];
-   if($scope.myInput!='')
-   {
-    console.log($scope.myInput);
-    nextMessage.content=$scope.myInput;
-    $scope.messages.push(angular.extend({}, nextMessage));
-    $scope.myInput='';
-console.log("testing new mobile service hosted in second account");
-  mobileServiceClient = new WindowsAzure.MobileServiceClient(
-                    'https://edumobi1.azure-mobile.net',
-                     'ZDdASZhSitsYsklwZYlRqIDdxjdWAp17');
- mobileServiceClient.invokeApi("post_news", {
-    body: { Size: 'Large', Flavor: 'Four Cheeses', UserPhone: '555-555-1234' },
-    method: "post"
-}).done(function (response) {
-    
-   console.log(response);
-}, function(error) {
-    alert(error.result);
-});
-  }*/
+
   $ionicScrollDelegate.scrollBottom();
 //$ionicDelegate.scrollBottom(true);
     console.log($scope.messages);
@@ -461,7 +436,7 @@ function uploadCompleted(){
 
         // Build the request URI with the SAS, which gives us permissions to upload.
     //    var uriWithAccess = insertedItem.imageUri + "?" + insertedItem.sasQueryString;
-        console.log($rootScope.mobileServiceClient);
+    //    console.log($rootScope.mobileServiceClient);
  /* $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
     body: { fileName: $scope.newFileName, Type: 'jpeg', UserPhone: '555-555-1234' },
     method: "put"
@@ -477,8 +452,9 @@ var fileToSend = {"fileName": $scope.newFileName};
 }
           $http(req).
         success(function(data, status, headers, config) { 
-          console.log(data);
-             var uriWithAccess = data.sasUrl;
+        console.log(data);
+        var uriWithAccess = data.sasUrl;
+
     var xhr = new XMLHttpRequest();
         xhr.onerror = xhrfail;
         xhr.onloadend = uploadCompleted;
@@ -493,7 +469,7 @@ $ionicScrollDelegate.scrollBottom();
         
       progressBar.value = (e.loaded / e.total) * 100;
       progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
-   console.log(progressBar.value);
+   	  console.log(progressBar.value);
   // $scope.$apply();
     }
   };
@@ -546,6 +522,8 @@ function readImage(imageURI) {
 
 }
 
+
+
 $scope.gcmButton = function()
 {
   console.log("in button func");
@@ -568,9 +546,9 @@ var curr_month = d.getMonth();
 var curr_year = d.getFullYear();
 var curr_time = d.getTime();
  console.log(curr_time);
- var newFileName = $rootScope.userName + curr_time.toString()+'.jpg';
- newFileName=newFileName.replace(/ /g,"");
- console.log(newFileName);
+ var newFileName = $rootScope.AppUserInformation.SubId+'_' + curr_time.toString()+'.jpg';
+ //newFileName=newFileName.replace(/ /g,"");
+ console.log("new name adde to the file is ", newFileName);
  $scope.newFileName = newFileName;
 
 
@@ -581,7 +559,9 @@ var curr_time = d.getTime();
  
  function onSuccess(ImageData){
 //from here copy new file starts
+console.log("before create file entry", ImageData);
 createFileEntry(ImageData);
+
 
 function createFileEntry(fileURI) {
 			window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
@@ -590,9 +570,12 @@ function createFileEntry(fileURI) {
 function copyFile(fileEntry) {
 			var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
 			var newName = newFileName;
-			console.log("copy file entry");
-			console.log(newFileName);
- 
+			console.log("copyfile ", fileEntry);
+			
+
+
+ console.log("true orgin is ", cordova.file.dataDirectory + newFileName);
+
 			window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
 				fileEntry.copyTo(
 					fileSystem2,
@@ -605,7 +588,8 @@ function copyFile(fileEntry) {
 		}
 		
 function onCopySuccess(entry) {
-        console.log("copy successful");
+        console.log("copy successful ",entry.nativeURL);
+        console.log(entry);
         console.log(entry.nativeURL);
         $scope.ImageData = entry.nativeURL;
 
@@ -646,6 +630,10 @@ function gotFileEntry(imageURI) {
 nextMessage.content= $sce.trustAsHtml('<img src="' + $scope.ImageData+'"></img><br> Loading.. <progress value="2" max="100"></progress>');
      $scope.tempImageHtml = {};
       $scope.tempImageHtml.content ='<img src="' + $scope.ImageData+'"></img><br>';
+
+     //<img image="{{(cordova.file.dataDirectory + AppUserInformation.UserAvatar)}}"  image-holder="img/avatar.svg" > <img>
+     // $scope.tempImageHtml.content =$sce.trustAsHtml('<img image="{{(\'' + $scope.ImageData+'\')}}"></img><br>');
+
        $scope.messages.push(angular.extend({}, nextMessage));  
 			$scope.$apply(function () {
 				//$scope.images.push(entry.nativeURL);
@@ -672,27 +660,7 @@ nextMessage.content= $sce.trustAsHtml('<img src="' + $scope.ImageData+'"></img><
    
 }
 
-    $scope.addPic = function() {
-   var nextMessage = messageOptions[messageIter++ % messageOptions.length];
-   
- $rootScope.mobileServiceClient.invokeApi("getuploadblobsas", {
-    body: { fileName: $scope.newFileName, Fileype: 'jpeg', UserPhone: '555-555-1234' },
-    method: "get"
-}).done(function (response) {
     
-   console.log(response);
-   console.log(response.result.sasUrl);
-   var uriWithAccess = response.result.sasUrl;
-}, function(error) {
-    alert(error.result);
-});
-
-     
-
-console.log("nextmessage content is" + nextMessage.content);
-   
-    console.log($scope.messages);
-  };
 
 });
 
