@@ -1,4 +1,5 @@
-var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Editor.controllers','Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards'])
+
 
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("thish is the grand begin");
