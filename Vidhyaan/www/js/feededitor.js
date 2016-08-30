@@ -3,10 +3,12 @@ angular.module('Editor.controllers', ['ngCordova'])
 
 .controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload) {
 
-$scope.messages = [];
+//$scope.messages = [];
 $scope.ServerMessage = [];
 $scope.typedData= {};
 $scope.typedData.data = "";
+
+console.log("data dir:",cordova.file.dataDirectory);
 
 function AddMessageToServer(type, msg)
 {
@@ -32,9 +34,10 @@ console.log($scope.typedData.data);
   $scope.myInput = $scope.typedData.data;
   console.log("add text");
   console.log($scope.typedData.data);
-  $scope.add();
+  //$scope.add();
   AddMessageToServer($scope.tag,$scope.typedData.data);
-
+  $scope.myInput="";
+  $ionicScrollDelegate.scrollBottom();
       }
 
 }
@@ -167,11 +170,20 @@ console.log("copy successful ",entry.nativeURL);
  Promise.all([imageUpload.getdata(entry)]).then(function(ret)
       {
       var fName = entry.fullPath.substr(entry.fullPath.lastIndexOf('/') + 1);
-      var nextMessage ={};
-       nextMessage.content = "<img src = '" + entry.nativeURL + "' />"
-       console.log(nextMessage.content);
-       $scope.messages.push( angular.extend({}, nextMessage));
+      //var nextMessage ={};
+       //nextMessage.content = "<img src = '" + entry.nativeURL + "' />"
+       //console.log(nextMessage.content);
+       //$scope.messages.push( angular.extend({}, nextMessage));
+       //$scope.tempfilename = $rootScope.FeedImagePath + fName;
+       //console.log("temp file Name: ", $scope.tempfilename);
+       $ionicLoading.show({
+      template: 'Updating...'
+       });
+
        AddMessageToServer("img",fName);
+       
+       $ionicLoading.hide();
+       $ionicScrollDelegate.scrollBottom();
 
         })//getdata promise;;
        .catch(function(err)
@@ -194,19 +206,6 @@ console.log("copy successful ",entry.nativeURL);
 ///////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////
-
-
- $scope.add = function() {
-    var nextMessage ={};
-    nextMessage.content = '<'+$scope.tag + '>' +$scope.myInput+'</'+$scope.tag+'>';
-    if($scope.myInput!='')
-    $scope.messages.push( angular.extend({}, nextMessage));
-    $scope.myInput='';
-
-  $ionicScrollDelegate.scrollBottom();
-//$ionicDelegate.scrollBottom(true);
-    console.log($scope.messages);
-  };
 
 
 function ShowChannelSel()
@@ -412,12 +411,7 @@ factory.getdata = function (fileEntry)
 
 
 
-
-
-
-
-
-.factory('imageUpload', function($http, $q) {
+.factory('imageUpload', function($http, $q,$ionicLoading) {
  var factory = {};
 
 
@@ -459,15 +453,17 @@ factory.getdata = function (fileEntry)
 
     }
     else
-    {console.log("file reading failed"); defer.reject();}
+    {console.log("file reading failed"); defer.reject(); $ionicLoading.hide();}
      
 
 function uploadCompleted(){
+   $ionicLoading.hide();
 	defer.resolve();
 }
 
 function xhrfail(message){
   console.log("xhr fail");
+  $ionicLoading.hide();
   defer.reject();
 }
 
@@ -482,7 +478,9 @@ console.log("read failed");
  }
 
 
-
+$ionicLoading.show({
+      template: 'Uploading...'
+       });
 
 //get filename from file entry;;
 var fileName = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
@@ -518,12 +516,13 @@ console.log("FileName", fileName);
             // Read the captured file into a byte array.
             // This function is not currently supported on Windows Phone.
             reader.readAsArrayBuffer(file);
-        }, function(Message){defer.reject();});
+        }, function(Message){defer.reject(); $ionicLoading.hide();});
 
 
        }).
         error(function(data, status, headers, config) {
           console.log(data);
+          $ionicLoading.hide();
           defer.reject();
         });
 

@@ -1,4 +1,4 @@
- <ion-view  title="Edit Newspost" ng-controller="EditorCtrl">
+ <ion-view  title="Edit Newspost" ng-controller="EditorCtrl" cache-view="false">
       <ion-nav-bar class="bar-positive" >
           
             <ion-nav-buttons side="left" >
@@ -21,8 +21,17 @@
       <ion-content has-header="true" class="padding" >
  
         <ion-list class="messages item-text-wrap">
-          <ion-item class="item-borderless" ng-repeat="message in messages" > 
-          <pre ng-bind-html="message.content"></pre>
+          <ion-item class="item-borderless" ng-repeat="message in ServerMessage" > 
+          <!--<pre ng-bind-html="message.content"></pre>-->
+          <div ng-if = "message.type=='h1'">
+          <h1>{{message.msg}}</h1>
+          </div>
+          <div ng-if = "message.type =='p'">
+          <p>{{message.msg}}</p>
+          </div>
+          <div ng-if = "message.type =='img'">
+          <img image = "{{rootFeedImagePath + message.msg }}" ></img>
+          </div>
         </ion-list>
       
   

@@ -19,6 +19,8 @@ console.log("failed pic", this.srcErr);
 
 }
 
+$rootScope.rootFeedImagePath = cordova.file.dataDirectory;
+
 $rootScope.AppUserInformation = 
 {
  SelChannel : "0",
