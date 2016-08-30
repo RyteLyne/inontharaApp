@@ -1,0 +1,19 @@
+<ion-view view-title="Channel Selection" >
+    <ion-content padding="true" overflow-scroll="false">
+
+ <ion-checkbox ng-model="AllChannels.checked" ng-change = "OnAllClick()">All</ion-checkbox>
+
+  <div ng-repeat="item in Channels">
+    <ion-checkbox ng-model="item.ischecked">{{item.Title}}</ion-checkbox> 
+  </div>
+
+ <button class="button button-positive button-outline" ng-click = "OnOkChannelSel()">
+  Done
+</button>
+
+<button class="button button-positive button-outline" ng-click = "OnCancelChannelSel()">
+  Cancel
+</button>
+
+    </ion-content>
+     </ion-view>

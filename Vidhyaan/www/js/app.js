@@ -296,7 +296,7 @@ console.log($scope.messages);
 var d = new Date();
 var curr_time = d.getTime();
  console.log(curr_time);
- var newID = curr_time.toString()+'.'+$rootScope.AppUserInformation.SubId + '.newsFeed';
+var newID = curr_time.toString()+'.'+$rootScope.AppUserInformation.SubId + '.newsFeed';
 var doc2send = {};
 tempDoc={};
 tempDoc.DocumentHeader ={};

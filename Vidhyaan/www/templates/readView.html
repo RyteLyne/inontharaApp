@@ -17,9 +17,22 @@ navigation history that also transitions its views in and out.
   
 
       <ion-content>
+       <!-- <ion-list class="messages item-text-wrap">
+          <ion-item class="item-borderless" ng-repeat="message in messages" > 
+          <pre ng-bind-html="message.txt"></pre>
+        </ion-list> -->
+
         <ion-list class="messages item-text-wrap">
           <ion-item class="item-borderless" ng-repeat="message in messages" > 
-          <pre ng-bind-html="message.content"></pre>
+          <div ng-if = "message.type=='h1'">
+          <h1>{{message.msg}}</h1>
+          </div>
+          <div ng-if = "message.type =='p'">
+          <p>{{message.msg}}</p>
+          </div>
+          <div ng-if = "message.type =='img'">
+          <img image = {{message.msg}}></img>
+          </div>
         </ion-list>
       
   

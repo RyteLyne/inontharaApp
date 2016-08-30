@@ -166,17 +166,18 @@ console.log("copy successful ",entry.nativeURL);
 
  Promise.all([imageUpload.getdata(entry)]).then(function(ret)
       {
-      
+      var fName = entry.fullPath.substr(entry.fullPath.lastIndexOf('/') + 1);
       var nextMessage ={};
        nextMessage.content = "<img src = '" + entry.nativeURL + "' />"
        console.log(nextMessage.content);
        $scope.messages.push( angular.extend({}, nextMessage));
+       AddMessageToServer("img",fName);
 
         })//getdata promise;;
        .catch(function(err)
        {
 
-      console.log("Error getting feedlist");
+      console.log("Error uploading Image");
       alert("unable to Upload Image");
       return;
        });
@@ -207,7 +208,212 @@ console.log("copy successful ",entry.nativeURL);
     console.log($scope.messages);
   };
 
+
+function ShowChannelSel()
+{
+  $scope.Channels = [];
+  $scope.AllChannels={};
+  $scope.AllChannels.checked = false;
+  var item = {}
+
+for(var i=0;i<$rootScope.AppUserInformation.runson.length;i++)
+{
+
+  item.Title = $rootScope.AppUserInformation.runson[i]; //should be name;;
+  item.Id = $rootScope.AppUserInformation.runson[i]; //should be name;;
+  item.ischecked = false;
+
+   $scope.Channels.push( angular.extend({}, item));
+}
+
+$ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
+  scope: $scope,
+  animation: 'slide-in-up',
+  
+}).then(function(modal) {
+  console.log("Modal");
+  $scope.modal = modal;
+  $scope.modal.show();
+});
+
+
+}
+
+
+  $scope.postMessage =function()
+  {
+    if($scope.ServerMessage.length <1) // not even one message;;
+    return;
+
+    console.log($scope.ServerMessage);
+    if($rootScope.AppUserInformation.runson.length > 1)
+    ShowChannelSel();
+    else
+    {
+       $scope.TagsToSend = [];
+       var tag =$rootScope.BuildTag($rootScope.AppUserInformation.runson[0],
+						$rootScope.AppUserInformation.SelProgram,
+						$rootScope.AppUserInformation.OrgId);
+       $scope.TagsToSend.push( angular.extend({}, tag));
+       SendMessageToServer();
+      
+    }
+
+  }
+
+  $scope.OnAllClick = function()
+  {
+    console.log("clicked");
+    var state = false;
+
+    if($scope.AllChannels.checked == true)
+    state = true;
+
+
+    for(var i=0;i<$scope.Channels.length;i++)
+    {
+     $scope.Channels[i].ischecked = state;
+    }
+
+  }
+
+
+   $scope.OnOkChannelSel = function()
+   {
+    //console.log("Ok selected Channel Sel");
+    //if($scope.AllChannels.checked == true)
+    //console.log("All Channels Selected");
+    //else
+    //console.log("All not selected");
+
+    $scope.TagsToSend = [];
+
+    for(var i=0;i<$scope.Channels.length;i++)
+    {
+     if($scope.Channels[i].ischecked == true)
+     {
+       console.log("Checked");
+
+      var tag =$rootScope.BuildTag($scope.Channels[i].Id,
+						$rootScope.AppUserInformation.SelProgram,
+						$rootScope.AppUserInformation.OrgId);
+       $scope.TagsToSend.push( angular.extend({}, tag));
+     }
+
+    }
+
+    console.log( $scope.TagsToSend);
+    
+    if($scope.TagsToSend.length >0)//atleast one channel selected;;
+    {
+       $scope.modal.hide();
+      
+      SendMessageToServer();
+
+    }
+
+   }
+
+  $scope.OnCancelChannelSel = function()
+   {
+    console.log("Cancel selected Channel Sel");
+     $scope.modal.hide();
+   }
+
+
+
+function SendMessageToServer()
+{
+
+   $ionicLoading.show({
+      template: 'Sending...'
+       });
+
+var d = new Date();
+var curr_time = d.getTime();
+ console.log(curr_time);
+var newID = curr_time.toString()+'.'+$rootScope.AppUserInformation.SubId + '.newsFeed';
+var doc2send = {};
+tempDoc={};
+tempDoc.DocumentHeader ={};
+tempDoc.DocumentHeader.DocumentType='NewsFeed';
+tempDoc.DocumentHeader.Author= $rootScope.AppUserInformation.UserName;
+tempDoc.DocumentHeader.AuthourID=$rootScope.AppUserInformation.SubId;
+tempDoc.DocumentHeader.OrganizationId = $rootScope.AppUserInformation.OrgId;
+tempDoc.DocumentHeader.Datetime=curr_time.toString(); 
+tempDoc.DocumentHeader.DocumentId=newID;
+tempDoc.DocumentHeader.NotificationTag= $scope.TagsToSend;
+
+
+tempDoc.DocumentSubHeader={};
+tempDoc.DocumentSubHeader.ChannelId=$rootScope.AppUserInformation.runson[0];
+tempDoc.DocumentSubHeader.ProgramId=$rootScope.AppUserInformation.SelProgram;
+tempDoc.DocumentSubHeader.ModeratorId='someModerator';
+tempDoc.DocumentBody={};
+tempDoc.DocumentBody.ApplicationSpecificeData={};
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='ಕನ್ನಡದ ಕಂದಗಳಿರ ಕೇಳಿ 中文報章';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail='test.png';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='中文報章';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar='useridavatar.png';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName=$rootScope.AppUserInformation.UserName;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.SubscribersID =  $rootScope.AppUserInformation.SubId
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.toString();;
+ 
+tempDoc.DocumentBody.DocumentDetails={};
+//tempDoc.DocumentBody.DocumentDetails.messages=[];
+tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.ServerMessage));
+console.log(tempDoc);
+doc2send= tempDoc;
+
+  
+  var req = 
+{
+    method: 'POST',
+    url: "http://chungling.azurewebsites.net/addPostM/",
+    data: jQuery.param(doc2send),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}
+console.log(req.data);
+        $http(req).
+        success(function(data, status, headers, config) {
+            // alter data if needed
+          console.log(data);
+          alert("Message Sent");
+          $ionicLoading.hide();
+          //close the view here;;
+
+        }).
+        error(function(data, status, headers, config) {
+          console.log(data);
+          alert("Message Sending Failed");
+          $ionicLoading.hide();
+        });
+
+}
+
+
 })
+
+
+
+
+.factory('postmessagefactory', function($http, $q) {
+ var factory = {};
+
+factory.getdata = function (fileEntry)
+ {
+
+
+ }
+
+})
+
+
+
+
+
+
 
 
 
@@ -318,7 +524,7 @@ console.log("FileName", fileName);
        }).
         error(function(data, status, headers, config) {
           console.log(data);
-          defer.Reject();
+          defer.reject();
         });
 
 
