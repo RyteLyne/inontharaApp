@@ -1,4 +1,5 @@
-var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','ionic.contrib.ui.tinderCards2','cards'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards'])
+
 
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("thish is the grand begin");
@@ -152,6 +153,11 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
     templateUrl: "templates/login.html"
   })
 
+  /*.state('feedinput', {
+    url: "/feedinput",
+    templateUrl: "templates/feedinput.html"
+  })*/
+
    .state('splash', {
     url: "/splash",
     templateUrl: "templates/splash.html"
@@ -214,17 +220,12 @@ $scope.logoutFunc = function(){
 
 
 
-
-
-
-
-
-
-myApp.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
+myApp.controller('EditorCtrl1', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet) {
 // console.log("$rootScope.mobileServiceClient");
  $scope.imagePath = cordova.file.dataDirectory;
 //  console.log($rootScope.mobileServiceClient);
 console.log($rootScope.AppUserInformation);
+
   $scope.addText= function(){
   $scope.tag='p'
   $scope.tPlaceholder = " enter content";
@@ -234,7 +235,8 @@ console.log($rootScope.AppUserInformation);
      $scope.tag='h1';
      $scope.tPlaceholder= " enter heading";
   }
-      $scope.addText();
+  
+  $scope.addText();
   $scope.showActionsheet = function() {
       
     $ionicActionSheet.show({
@@ -274,7 +276,8 @@ console.log($rootScope.AppUserInformation);
     console.log("reached here");
 
     $ionicHistory.goBack();
-  }    
+  }
+      
 
  $scope.myInput='';
   var messageOptions = [
@@ -343,15 +346,7 @@ doc2send= tempDoc;
      // console.log(doc2send.messages);
   //localStorage.setItem('recievedMessage', doc2send.messages);
   
-/*  Object.toparams = function ObjecttoParams(obj) 
-{
-  var p = [];
-  for (var key in obj) 
-  {
-    p.push(key + '=' + encodeURIComponent(obj[key]));
-  }
-  return p.join('&');
-};*/
+
   var req = 
 {
     method: 'POST',
@@ -392,27 +387,7 @@ $scope.messages = [];
     if($scope.myInput!='')
     $scope.messages.push( angular.extend({}, nextMessage));
     $scope.myInput='';
-  /* var nextMessage = messageOptions[messageIter++ % messageOptions.length];
-   if($scope.myInput!='')
-   {
-    console.log($scope.myInput);
-    nextMessage.content=$scope.myInput;
-    $scope.messages.push(angular.extend({}, nextMessage));
-    $scope.myInput='';
-console.log("testing new mobile service hosted in second account");
-  mobileServiceClient = new WindowsAzure.MobileServiceClient(
-                    'https://edumobi1.azure-mobile.net',
-                     'ZDdASZhSitsYsklwZYlRqIDdxjdWAp17');
- mobileServiceClient.invokeApi("post_news", {
-    body: { Size: 'Large', Flavor: 'Four Cheeses', UserPhone: '555-555-1234' },
-    method: "post"
-}).done(function (response) {
-    
-   console.log(response);
-}, function(error) {
-    alert(error.result);
-});
-  }*/
+
   $ionicScrollDelegate.scrollBottom();
 //$ionicDelegate.scrollBottom(true);
     console.log($scope.messages);
@@ -440,12 +415,15 @@ function xhrfail(message){
 function uploadCompleted(){
   
   console.log("uploadCompleted");
+  console.log($scope.tempImageHtml);
   console.log($scope.messages[$scope.messages.length-1].content);
   $scope.messages.pop();
   var newMessage = {};
   newMessage = $scope.tempImageHtml;
     $scope.messages.push(angular.extend({}, newMessage));
+    console.log($scope.messages);
     $scope.$apply();
+    console.log($scope.messages);
   //$scope.messages[$scope.messages.length-1].content=   $scope.tempImageHtml.slice();
        $scope.myInput='';
        $scope.add();
@@ -475,8 +453,9 @@ var fileToSend = {"fileName": $scope.newFileName};
 }
           $http(req).
         success(function(data, status, headers, config) { 
-          console.log(data);
-             var uriWithAccess = data.sasUrl;
+        console.log(data);
+        var uriWithAccess = data.sasUrl;
+
     var xhr = new XMLHttpRequest();
         xhr.onerror = xhrfail;
         xhr.onloadend = uploadCompleted;
@@ -491,7 +470,7 @@ $ionicScrollDelegate.scrollBottom();
         
       progressBar.value = (e.loaded / e.total) * 100;
       progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
-   console.log(progressBar.value);
+   	  console.log(progressBar.value);
   // $scope.$apply();
     }
   };
@@ -544,6 +523,8 @@ function readImage(imageURI) {
 
 }
 
+
+
 $scope.gcmButton = function()
 {
   console.log("in button func");
@@ -579,7 +560,9 @@ var curr_time = d.getTime();
  
  function onSuccess(ImageData){
 //from here copy new file starts
+console.log("before create file entry", ImageData);
 createFileEntry(ImageData);
+
 
 function createFileEntry(fileURI) {
 			window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
@@ -588,7 +571,12 @@ function createFileEntry(fileURI) {
 function copyFile(fileEntry) {
 			var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
 			var newName = newFileName;
+			console.log("copyfile ", fileEntry);
+			
+
+
  console.log("true orgin is ", cordova.file.dataDirectory + newFileName);
+
 			window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
 				fileEntry.copyTo(
 					fileSystem2,
@@ -642,8 +630,11 @@ function gotFileEntry(imageURI) {
             
 nextMessage.content= $sce.trustAsHtml('<img src="' + $scope.ImageData+'"></img><br> Loading.. <progress value="2" max="100"></progress>');
      $scope.tempImageHtml = {};
+      $scope.tempImageHtml.content ='<img src="' + $scope.ImageData+'"></img><br>';
+
      //<img image="{{(cordova.file.dataDirectory + AppUserInformation.UserAvatar)}}"  image-holder="img/avatar.svg" > <img>
-      $scope.tempImageHtml.content =$sce.trustAsHtml('<img image="{{(\'' + $scope.ImageData+'\')}}"></img><br>');
+     // $scope.tempImageHtml.content =$sce.trustAsHtml('<img image="{{(\'' + $scope.ImageData+'\')}}"></img><br>');
+
        $scope.messages.push(angular.extend({}, nextMessage));  
 			$scope.$apply(function () {
 				//$scope.images.push(entry.nativeURL);

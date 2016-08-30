@@ -23,6 +23,7 @@ angular.module('angularImgFallback', [])
     	      	};
     			img.onerror = function(){
     	      		element.attr('src',scope.imageHolder||missingDefault); 
+
     	      	
     	      		 console.log("the image failed load was.....", scope.image);
     	      	// fileToRecieve=scope.image;
