@@ -289,38 +289,7 @@ console.log("in RadioCtrl");
        var SubChannels = Sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
 
 
-//load commonly used information onto AppUserInformation;;
 
-   $rootScope.AppUserInformation.PrivLevels = priv;
-   $rootScope.AppUserInformation.SubId = Sub.DocumentBody.ApplicationSpecificData.SubscriberID;
-   $rootScope.AppUserInformation.OrgId = Sub.DocumentHeader.OrganizationId;
-   $rootScope.AppUserInformation.OrgName = Sub.DocumentHeader.OrganizationName;
-
-   $rootScope.AppUserInformation.Class = Sub.DocumentBody.Document_Details.profile.Division;
-   
-   $rootScope.AppUserInformation.UserAvatar = Sub.DocumentBody.Document_Details.profile.Avatar;
-
-   var titled = Sub.DocumentBody.Document_Details.profile.Titled;
-
-   $rootScope.AppUserInformation.UserTag = titled[lang]==undefined ? titled["1"]: titled[lang];
- 
-   var fname = Sub.DocumentBody.Document_Details.profile.FirstName;
-   var lname = Sub.DocumentBody.Document_Details.profile.LastName;
-
-   var fname1 = fname[lang]==undefined?fname["1"]:fname[lang];
-   var lname1 = lname[lang]==undefined?lname["1"]:lname[lang];
-
-
-   $rootScope.AppUserInformation.UserName = fname1 + " " + lname1;
-
-
-
-
-   console.log("App Information");
-   console.log($rootScope.AppUserInformation);
-
-  
-//end of AppUserInformation
   
    for (var i=0; i<items.length; i++) 
    {

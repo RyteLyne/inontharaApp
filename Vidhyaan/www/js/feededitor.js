@@ -4,9 +4,10 @@ angular.module('Editor.controllers', ['ngCordova'])
 .controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload) {
 
 //$scope.messages = [];
-$scope.ServerMessage = [];
+$scope.serverMessage = [];
 $scope.typedData= {};
 $scope.typedData.data = "";
+//$scope.firstImage = "";
 
 console.log("data dir:",cordova.file.dataDirectory);
 
@@ -18,7 +19,7 @@ var obj =
  "msg" : msg
 };
 
-$scope.ServerMessage.push(angular.extend({}, obj));
+$scope.serverMessage.push(angular.extend({}, obj));
 
 }
 
@@ -241,10 +242,10 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
 
   $scope.postMessage =function()
   {
-    if($scope.ServerMessage.length <1) // not even one message;;
+    if($scope.serverMessage.length <1) // not even one message;;
     return;
 
-    console.log($scope.ServerMessage);
+    console.log($scope.serverMessage);
     if($rootScope.AppUserInformation.runson.length > 1)
     ShowChannelSel();
     else
@@ -328,6 +329,48 @@ function SendMessageToServer()
       template: 'Sending...'
        });
 
+var firstImage = "";
+var heading = "New Message";
+var txt = "New Message";
+
+var imgFlag = false;
+var h1Flag = false;
+var pFlag = false;
+
+
+
+for(var i=0;i< $scope.serverMessage.length; i++)
+{
+if($scope.serverMessage[i].type == "img" && imgFlag == false)
+ {
+ firstImage= $scope.serverMessage[i].msg;
+ imgFlag = true;
+ }
+
+if($scope.serverMessage[i].type == "h1" && h1Flag == false)
+ {
+  if($scope.serverMessage[i].msg.length > 50)
+ heading= $scope.serverMessage[i].msg.slice(0,50);
+ else
+  heading= $scope.serverMessage[i].msg;
+ h1Flag = true;
+ }
+
+ if($scope.serverMessage[i].type == "p" && pFlag == false)
+ {
+    if($scope.serverMessage[i].msg.length > 50)
+     txt= $scope.serverMessage[i].msg.slice(0,50);
+     else
+      txt= $scope.serverMessage[i].msg;
+ pFlag = true;
+ }
+
+ if(imgFlag == true && h1Flag == true && pFlag == true)
+ break;
+
+}
+
+
 var d = new Date();
 var curr_time = d.getTime();
  console.log(curr_time);
@@ -351,17 +394,17 @@ tempDoc.DocumentSubHeader.ModeratorId='someModerator';
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='ಕನ್ನಡದ ಕಂದಗಳಿರ ಕೇಳಿ 中文報章';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail='test.png';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='中文報章';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar='useridavatar.png';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading=heading;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail= firstImage;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview= txt;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar=$rootScope.AppUserInformation.UserAvatar;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName=$rootScope.AppUserInformation.UserName;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.SubscribersID =  $rootScope.AppUserInformation.SubId
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.toString();;
  
 tempDoc.DocumentBody.DocumentDetails={};
 //tempDoc.DocumentBody.DocumentDetails.messages=[];
-tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.ServerMessage));
+tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.serverMessage));
 console.log(tempDoc);
 doc2send= tempDoc;
 

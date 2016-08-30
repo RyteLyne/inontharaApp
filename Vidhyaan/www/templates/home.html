@@ -23,7 +23,11 @@
    <!--   <img ng-src="{{('assets/img/networkicons/'+network.actual+'.png')}}" onerror="this.src='assets/img/networkicons/default.png'" /> -->
    <!--       <img ng-src="{{('img/sid2.jpg')}}"  onerror="this.srcErr=this.src;this.src='img/avatar.svg';getBlob();" style= "width:350px;height:350px;max-width:100px;max-height:100px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;right:10px;top:23vh;z-index:1; background-color:#eee;"> 
    --> 
-    <img image="{{(cordova.file.dataDirectory + AppUserInformation.UserAvatar)}}"  image-holder="img/avatar.svg" style= "width:350px;height:350px;max-width:100px;max-height:100px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;right:10px;top:23vh;z-index:1; background-color:#eee;"> 
+   <img image= "{{rootAvatarPath + AppUserInformation.UserAvatar}}"  style= "width:350px;height:350px;max-width:100px;max-height:100px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;right:10px;top:23vh;z-index:1; background-color:#eee;">
+
+ 
+ <!--<img image = "{{'file:///data/user/0/com.kshipra.Vidhyaan/files/1234_npsbsk_avatar.jpg'}}" style= "width:350px;height:350px;max-width:100px;max-height:100px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;right:10px;top:23vh;z-index:1; background-color:#eee;"> 
+-->
 <!--   <img image="{{'img/sid2.jpg''}}" image-loading="/image/loading.gif" image-holder="/image/error.png" />
  -->     </img> </div>
           
@@ -43,14 +47,14 @@
           <div  ng-repeat="activity in timeline">
             <div class="cd-timeline-block" ng-click = itemclick(activity.MsgId)>
               <div class="cd-timeline-picture dark">
-                <img ng-src={{activity.Avatar}}></img>
+                <img image = "{{rootAvatarPath + activity.Avatar}}" image-holder="img/avatar.svg"></img>
               </div>
               <!-- cd-timeline-img -->
               <div class="cd-timeline-content dark">
                 <h5 class="marginBottom0 marginTop0">{{activity.Heading}}</h5>
                 <p class="marginTop5 cd-author">by {{activity.Author}} on {{activity.DateTime}}</p>
                  <div ng-if="activity.Image!=''">
-              <img  ng-src={{activity.Image}} style="max-width:100%"></img> </div>
+              <img  image = "{{rootFeedImagePath + activity.Image}}" style="max-width:100%"></img> </div>
                 <p class="timelineText">{{activity.TextPreview}}</p>
               </div>
             </div>

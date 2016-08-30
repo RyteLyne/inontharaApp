@@ -13,20 +13,17 @@
   <div ng-repeat = "data in newslist" style="text-decoration:none;">
    <div class="card" ng-click = itemclick(data.MsgId)>
    <div class="item item-avatar">
-      <img ng-src="{{data.Avatar}}">
+    <img image = "{{rootAvatarPath + data.Avatar}}" image-holder="img/avatar.svg"></img>
       <h2> {{data.Heading}} {{SelChannel}}<h2>
       <h3>{{data.Author}}</h3>
         <h4>{{data.DateTime}}</h4>
    </div>
 
    <div class="item item-body">
-      <img class="full-image" ng-src="{{data.Image}}">
+    <div ng-if="data.Image!=''">
+     <img  image = "{{rootFeedImagePath + data.Image}}" style="max-width:100%" class="full-image"></img> </div>
       {{data.TextPreview}} ...
     <break>
-    <div>
-     <a style="text-align:right;"> read more .. 
-  </a>
-</div>
 </div>
 </div>
 </div>
