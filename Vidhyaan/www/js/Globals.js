@@ -19,6 +19,9 @@ console.log("failed pic", this.srcErr);
 
 }
 
+$rootScope.rootFeedImagePath = cordova.file.dataDirectory;
+$rootScope.rootAvatarPath = cordova.file.dataDirectory;
+
 $rootScope.AppUserInformation = 
 {
  SelChannel : "0",
@@ -33,7 +36,7 @@ $rootScope.AppUserInformation =
  UserName : "",
  UserTag: "", 
  Class: "",
- UserAvatar: "sid.jpg",
+ UserAvatar: "",
  DocId: "", //used to traverse from timeline;;
  PrivLevels: {}
 }
@@ -144,6 +147,44 @@ $rootScope.AddToTag(groups[i].mRunsOn,subscribedchannels,groups[i].mId,orid);
 
       
      }
+
+
+     //load commonly used information onto AppUserInformation;;
+     var lang = $rootScope.Language.toString();
+
+   $rootScope.AppUserInformation.PrivLevels = priv;
+   $rootScope.AppUserInformation.SubId = sub.DocumentBody.ApplicationSpecificData.SubscriberID;
+   $rootScope.AppUserInformation.OrgId = sub.DocumentHeader.OrganizationId;
+   $rootScope.AppUserInformation.OrgName = sub.DocumentHeader.OrganizationName;
+
+   $rootScope.AppUserInformation.Class = sub.DocumentBody.Document_Details.profile.Division;
+   
+   $rootScope.AppUserInformation.UserAvatar = sub.DocumentBody.Document_Details.profile.Avatar;
+
+   var titled = sub.DocumentBody.Document_Details.profile.Titled;
+
+   $rootScope.AppUserInformation.UserTag = titled[lang]==undefined ? titled["1"]: titled[lang];
+ 
+   var fname = sub.DocumentBody.Document_Details.profile.FirstName;
+   var lname = sub.DocumentBody.Document_Details.profile.LastName;
+
+   var fname1 = fname[lang]==undefined?fname["1"]:fname[lang];
+   var lname1 = lname[lang]==undefined?lname["1"]:lname[lang];
+
+
+   $rootScope.AppUserInformation.UserName = fname1 + " " + lname1;
+
+
+
+
+   console.log("App Information");
+   console.log($rootScope.AppUserInformation);
+
+  
+//end of AppUserInformation
+
+
+
 
     
     

@@ -31,7 +31,7 @@ navigation history that also transitions its views in and out.
           <p>{{message.msg}}</p>
           </div>
           <div ng-if = "message.type =='img'">
-          <img image = {{message.msg}}></img>
+          <img image = "{{rootFeedImagePath + message.msg }}"></img>
           </div>
         </ion-list>
       

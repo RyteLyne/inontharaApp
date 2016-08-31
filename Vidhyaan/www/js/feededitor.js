@@ -3,10 +3,13 @@ angular.module('Editor.controllers', ['ngCordova'])
 
 .controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload) {
 
-$scope.messages = [];
-$scope.ServerMessage = [];
+//$scope.messages = [];
+$scope.serverMessage = [];
 $scope.typedData= {};
 $scope.typedData.data = "";
+//$scope.firstImage = "";
+
+console.log("data dir:",cordova.file.dataDirectory);
 
 function AddMessageToServer(type, msg)
 {
@@ -16,7 +19,7 @@ var obj =
  "msg" : msg
 };
 
-$scope.ServerMessage.push(angular.extend({}, obj));
+$scope.serverMessage.push(angular.extend({}, obj));
 
 }
 
@@ -32,9 +35,10 @@ console.log($scope.typedData.data);
   $scope.myInput = $scope.typedData.data;
   console.log("add text");
   console.log($scope.typedData.data);
-  $scope.add();
+  //$scope.add();
   AddMessageToServer($scope.tag,$scope.typedData.data);
-
+  $scope.myInput="";
+  $ionicScrollDelegate.scrollBottom();
       }
 
 }
@@ -167,11 +171,20 @@ console.log("copy successful ",entry.nativeURL);
  Promise.all([imageUpload.getdata(entry)]).then(function(ret)
       {
       var fName = entry.fullPath.substr(entry.fullPath.lastIndexOf('/') + 1);
-      var nextMessage ={};
-       nextMessage.content = "<img src = '" + entry.nativeURL + "' />"
-       console.log(nextMessage.content);
-       $scope.messages.push( angular.extend({}, nextMessage));
+      //var nextMessage ={};
+       //nextMessage.content = "<img src = '" + entry.nativeURL + "' />"
+       //console.log(nextMessage.content);
+       //$scope.messages.push( angular.extend({}, nextMessage));
+       //$scope.tempfilename = $rootScope.FeedImagePath + fName;
+       //console.log("temp file Name: ", $scope.tempfilename);
+       $ionicLoading.show({
+      template: 'Updating...'
+       });
+
        AddMessageToServer("img",fName);
+       
+       $ionicLoading.hide();
+       $ionicScrollDelegate.scrollBottom();
 
         })//getdata promise;;
        .catch(function(err)
@@ -194,19 +207,6 @@ console.log("copy successful ",entry.nativeURL);
 ///////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////
-
-
- $scope.add = function() {
-    var nextMessage ={};
-    nextMessage.content = '<'+$scope.tag + '>' +$scope.myInput+'</'+$scope.tag+'>';
-    if($scope.myInput!='')
-    $scope.messages.push( angular.extend({}, nextMessage));
-    $scope.myInput='';
-
-  $ionicScrollDelegate.scrollBottom();
-//$ionicDelegate.scrollBottom(true);
-    console.log($scope.messages);
-  };
 
 
 function ShowChannelSel()
@@ -242,10 +242,10 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
 
   $scope.postMessage =function()
   {
-    if($scope.ServerMessage.length <1) // not even one message;;
+    if($scope.serverMessage.length <1) // not even one message;;
     return;
 
-    console.log($scope.ServerMessage);
+    console.log($scope.serverMessage);
     if($rootScope.AppUserInformation.runson.length > 1)
     ShowChannelSel();
     else
@@ -329,6 +329,48 @@ function SendMessageToServer()
       template: 'Sending...'
        });
 
+var firstImage = "";
+var heading = "New Message";
+var txt = "New Message";
+
+var imgFlag = false;
+var h1Flag = false;
+var pFlag = false;
+
+
+
+for(var i=0;i< $scope.serverMessage.length; i++)
+{
+if($scope.serverMessage[i].type == "img" && imgFlag == false)
+ {
+ firstImage= $scope.serverMessage[i].msg;
+ imgFlag = true;
+ }
+
+if($scope.serverMessage[i].type == "h1" && h1Flag == false)
+ {
+  if($scope.serverMessage[i].msg.length > 50)
+ heading= $scope.serverMessage[i].msg.slice(0,50);
+ else
+  heading= $scope.serverMessage[i].msg;
+ h1Flag = true;
+ }
+
+ if($scope.serverMessage[i].type == "p" && pFlag == false)
+ {
+    if($scope.serverMessage[i].msg.length > 50)
+     txt= $scope.serverMessage[i].msg.slice(0,50);
+     else
+      txt= $scope.serverMessage[i].msg;
+ pFlag = true;
+ }
+
+ if(imgFlag == true && h1Flag == true && pFlag == true)
+ break;
+
+}
+
+
 var d = new Date();
 var curr_time = d.getTime();
  console.log(curr_time);
@@ -352,17 +394,17 @@ tempDoc.DocumentSubHeader.ModeratorId='someModerator';
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading='ಕನ್ನಡದ ಕಂದಗಳಿರ ಕೇಳಿ 中文報章';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail='test.png';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview='中文報章';
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar='useridavatar.png';
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading=heading;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail= firstImage;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview= txt;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar=$rootScope.AppUserInformation.UserAvatar;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName=$rootScope.AppUserInformation.UserName;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.SubscribersID =  $rootScope.AppUserInformation.SubId
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.toString();;
  
 tempDoc.DocumentBody.DocumentDetails={};
 //tempDoc.DocumentBody.DocumentDetails.messages=[];
-tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.ServerMessage));
+tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.serverMessage));
 console.log(tempDoc);
 doc2send= tempDoc;
 
@@ -412,12 +454,7 @@ factory.getdata = function (fileEntry)
 
 
 
-
-
-
-
-
-.factory('imageUpload', function($http, $q) {
+.factory('imageUpload', function($http, $q,$ionicLoading) {
  var factory = {};
 
 
@@ -459,15 +496,17 @@ factory.getdata = function (fileEntry)
 
     }
     else
-    {console.log("file reading failed"); defer.reject();}
+    {console.log("file reading failed"); defer.reject(); $ionicLoading.hide();}
      
 
 function uploadCompleted(){
+   $ionicLoading.hide();
 	defer.resolve();
 }
 
 function xhrfail(message){
   console.log("xhr fail");
+  $ionicLoading.hide();
   defer.reject();
 }
 
@@ -482,7 +521,9 @@ console.log("read failed");
  }
 
 
-
+$ionicLoading.show({
+      template: 'Uploading...'
+       });
 
 //get filename from file entry;;
 var fileName = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
@@ -518,12 +559,13 @@ console.log("FileName", fileName);
             // Read the captured file into a byte array.
             // This function is not currently supported on Windows Phone.
             reader.readAsArrayBuffer(file);
-        }, function(Message){defer.reject();});
+        }, function(Message){defer.reject(); $ionicLoading.hide();});
 
 
        }).
         error(function(data, status, headers, config) {
           console.log(data);
+          $ionicLoading.hide();
           defer.reject();
         });
 
