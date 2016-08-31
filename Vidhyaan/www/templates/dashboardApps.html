@@ -62,64 +62,68 @@
 
   </div>
   
-   <div ng-if="AppUserInformation.SelProgram=='54-npsbsk'">
-  <div no-scroll >
+<div ng-if="AppUserInformation.SelProgram=='54-npsbsk'">
+    <ion-pane no-scroll>
 
 
-    <div ng-controller="CardsCtrl" class="background-grey" >
+        <div ng-controller="CardsCtrl" class="background-grey">
 
-      <div class="td-title">
-        <div class="row">
-          <div class="col">Master: <span>{{ cards.master.length }}</span></div>
-          <div class="col">Cards: <span>{{ cards.active.length }}</span></div>
-          <div class="col">Discards: <span>{{ cards.discards.length }}</span></div>
-        </div>
-        <div class="row">
-          <div class="col">Liked: <span>{{ cards.liked.length }}</span></div>
-          <div class="col">Disliked: <span>{{ cards.disliked.length }}</span></div>
-        </div>
-      </div>
+            <div class="td-title">
+                <div class="row">
+                    <div class="col">Master: <span>{{ cards.master.length }}</span>
+                    </div>
+                    <div class="col">Cards: <span>{{ cards.active.length }}</span>
+                    </div>
+                    <div class="col">Discards: <span>{{ cards.discards.length }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">Liked: <span>{{ cards.liked.length }}</span>
+                    </div>
+                    <div class="col">Disliked: <span>{{ cards.disliked.length }}</span>
+                    </div>
+                </div>
+            </div>
 
 
-      <!-- *************************
+            <!-- *************************
         TD Cards
         - We start off with an ng-if so that the cards are not generated
           unless $scope.cards is not 'null'
       ************************* -->
-      <div ng-if="cards.active">
-        <td-cards>
-          <td-card ng-repeat="card in cards.active" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)">
-            <div class="image" ng-controller="CardCtrl">
-              <div class="no-text"><i class="icon ion-thumbsdown"></i></div>
-              <div class="yes-text"><i class="icon ion-thumbsup"></i></div>
-              <!-- *************************
+            <div ng-if="cards.active">
+                <td-cards>
+                    <td-card ng-repeat="card in cards.active" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)">
+                        <div class="image" ng-controller="CardCtrl">
+                            <div class="no-text"><i class="icon ion-thumbsdown"></i>
+                            </div>
+                            <div class="yes-text"><i class="icon ion-thumbsup"></i>
+                            </div>
+                            <!-- *************************
                 Discard
                 - The card is removed from the deck and a fly away animation is triggered.
                 - onClickTransitionOut is found in ionic.tdcards.js
                 - Animation can be customized by changing defaults
               ************************* -->
-              <div class="discard" ng-click="onClickTransitionOut(card)">DISCARD</div>
-              <img ng-src="{{ card.image }}">
-            </div>
-          </td-card>
-          <!-- *************************
+                            <div class="discard" ng-click="onClickTransitionOut(card)">DISCARD</div>
+                            <img ng-src="{{ card.image }}">
+                        </div>
+                    </td-card>
+                    <!-- *************************
             End Card
             - 'drag' is set to false. The user cannot drag it.
             - 'refreshCards()' reloads all cards that have NOT been discarded.
           ************************* -->
-          <td-card id="end-card" drag="false">
-            <i class="icon ion-ios-refresh disable-user-behavior" ng-click="refreshCards()"></i>
-          </td-card>
-        </td-cards>
-      </div>
+                    <td-card id="end-card" drag="false">
+                        <i class="icon ion-ios-refresh disable-user-behavior" ng-click="refreshCards()"></i>
+                    </td-card>
+                </td-cards>
+            </div>
 
- </div>
- 
-  </div>
-  </div>
+        </div>
 
-
-  </div>
+    </ion-pane>
+</div>
   
    <div ng-if="AppUserInformation.SelProgram=='55-npsbsk'" >
   <div ng-controller=GalleryCtrl>
@@ -216,25 +220,10 @@
 
    <div ng-if="AppUserInformation.SelProgram=='66-npsbsk'" >
   <div ng-controller="LocatemeCtrl" >
+    <div style="width:100%;height:400px" id="map_canvas"></div>
 
- 
-    <div style="height:100%;">
-   <div >
-  
-   </div>
-  
-      <div id="map" data-tap-disabled="true">  can you see this <br>
-   and this 
-   <br>
-   alsoe this</div>
-       
-    </div>
-    <ion-footer-bar class="bar-dark">
-      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
-    </ion-footer-bar>
-
-
-  </div>
+            Map above
+</div>
   </div>
 
    <div ng-if="AppUserInformation.SelProgram=='67-npsbsk'" >

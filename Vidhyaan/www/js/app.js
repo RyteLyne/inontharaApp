@@ -4,6 +4,9 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("thish is the grand begin");
   $ionicPlatform.ready(function() {
+  	  if (window.plugin) {
+                map = window.plugin.google.maps.Map;//.getMap(div);
+            }
 
 /* var push = new Ionic.Push({
       "debug": true
