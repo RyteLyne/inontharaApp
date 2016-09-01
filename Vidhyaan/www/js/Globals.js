@@ -21,6 +21,8 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
         OrgId: "",
         OrgName: "",
         UserName: "",
+        firstName:"",
+        lastName:"",
         UserTag: "",
         Class: "",
         UserAvatar: "",
@@ -99,6 +101,8 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
             var lname = sub.DocumentBody.Document_Details.profile.LastName;
             var fname1 = fname[lang] == undefined ? fname["1"] : fname[lang];
             var lname1 = lname[lang] == undefined ? lname["1"] : lname[lang];
+            $rootScope.AppUserInformation.firstName = fname1;
+            $rootScope.AppUserInformation.lastName = lname1;
             $rootScope.AppUserInformation.UserName = fname1 + " " + lname1;
             console.log("App Information");
             console.log($rootScope.AppUserInformation);

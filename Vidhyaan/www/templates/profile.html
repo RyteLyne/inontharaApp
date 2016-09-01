@@ -16,20 +16,17 @@
 			<span class="vec vec_e"></span>
 		</div>
 		<div class="photo">
-			<a href="" target="_blank"><img image="{{(cordova.file.dataDirectory + AppUserInformation.UserAvatar)}}"  image-holder="img/avatar.svg" > 
+			<a href="" target="_blank"><img image="{{rootAvatarPath + AppUserInformation.UserAvatar}}"  image-holder="img/avatar.svg" > 
 <img></a>
 		</div>
 		<div class="info">
-			<div class="name">{{profile.mName}}</div>
-			<div class="position">{{profile.mDesignation}}, {{profie.mGrade}}, {{profile.mOrganisationName}}</div>
-		
+			<div class="name">{{profile.mFirstName + " " +profile.mLastName}}</div>
+			<div class="position">{{profile.mOrganizationName}}</div>
+		    <div class="position">{{profile.mDesignation}}</div>
 		</div>
 		<input id="toggle" type="checkbox" class="plus"><label for="toggle" class="toggle"></label>
 		<div class="links">
-			<a href="" data-title="Parent"><i class="ionicon ion-person"></i></a>
-			<a href="" data-title="Principal"><i class="ion-person"></i></a>
-			<a href="" data-title="Co-Ordinator"><i class="icon ion-person"></i></a>
-			<a href="" data-title="Teacher"><i class="icon ion-person"></i></a>
+			
 		</div>
 	</div>
 	
