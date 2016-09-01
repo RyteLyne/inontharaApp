@@ -1,4 +1,4 @@
-var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards', 'elastichat', 'monospaced.elastic','angularMoment'])
 
 
 .run(function($ionicPlatform,$rootScope) {
@@ -65,19 +65,6 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
   })
 
 
-   .state('app.instructions', {
-    url: "/instructions",
-    views: {
-      'content': {
-        templateUrl: "templates/instructions.html",
-       
-      }
-    }
-  })
-
-  
-
-
   .state('app.settings', {
     url: "/settings",
     views: {
@@ -140,6 +127,8 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','G
       }
     }
   })
+
+
 
 .state('app.logout', {
     url: "/logout",
@@ -769,6 +758,7 @@ myApp.controller('rightViewCtrl',function($scope, $ionicSideMenuDelegate, $state
 */
  });
 });
+
 
 
 

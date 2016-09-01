@@ -9,7 +9,14 @@ $scope.typedData= {};
 $scope.typedData.data = "";
 //$scope.firstImage = "";
 
+
 //console.log("data dir:",cordova.file.dataDirectory);
+
+
+if(window.cordova)
+{
+console.log("data dir:",cordova.file.dataDirectory);
+}
 
 function AddMessageToServer(type, msg)
 {
