@@ -46,15 +46,21 @@
 			"3": "Class Teacher"
 		},
 		"MomName": {
-			"1": "Mother Name",
-			"2": "Mother Name",
+			"1": "Mother",
+			"2": "Amma",
 			"3": "Mother Name"
 		},
 		"FatherName": {
-			"1": "Father Name",
-			"2": "Father Name",
+			"1": "Father",
+			"2": "Appa",
 			"3": "Father Name"
 		},
+        "GuardianName": {
+			"1": "Guardian",
+			"2": "Guard",
+			"3": "Guard1"
+		},
+		
 		"MomMobileNo": {
 			"1": "Mother Mobile No",
 			"2": "Mother Mobile No",
