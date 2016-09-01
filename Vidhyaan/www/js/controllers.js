@@ -57,7 +57,10 @@ AssignmentsCtrl
 }).controller('CalendarCtrl', function($scope) {
     console.log("in CalendarCtrl");
 }).controller('MessagesCtrl', function($scope) {
+
     console.log("in MessagesCtrl");
+
+
 }).controller('GalleryCtrl', function($scope) {
     console.log("in GalleryCtrl");
 }).controller('CardCtrl', function($scope, TDCardDelegate) {
@@ -766,6 +769,7 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
 
 
 })*/
+
 .controller('TimeLineCtrl', function($scope, timelinefactory, $rootScope, $state) {
     //window.localStorage.removeItem("TimeLine");
     $scope.timeline = [];
@@ -829,7 +833,8 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
         type: "text"
     }]
-}).controller('SettingsCtrl', function($scope, $window, $rootScope) {
+})
+.controller('SettingsCtrl', function($scope, $window, $rootScope) {
     $scope.choice = {
         langchoice: 1,
         notichoice: 0
