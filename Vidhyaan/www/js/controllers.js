@@ -1,4 +1,4 @@
-angular.module('Vidhyaan.controllers', [])/*
+angular.module('Vidhyaan.controllers', ['angularMoment'])/*
 ProfileCtrl
 RadioCtrl
 DiaryCtrl
@@ -207,23 +207,7 @@ AssignmentsCtrl
     var lang = $rootScope.Language.toString();
     var k = 0;
     var SubChannels = Sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
-    //load commonly used information onto AppUserInformation;;
-    $rootScope.AppUserInformation.PrivLevels = priv;
-    $rootScope.AppUserInformation.SubId = Sub.DocumentBody.ApplicationSpecificData.SubscriberID;
-    $rootScope.AppUserInformation.OrgId = Sub.DocumentHeader.OrganizationId;
-    $rootScope.AppUserInformation.OrgName = Sub.DocumentHeader.OrganizationName;
-    $rootScope.AppUserInformation.Class = Sub.DocumentBody.Document_Details.profile.Division;
-    $rootScope.AppUserInformation.UserAvatar = Sub.DocumentBody.Document_Details.profile.Avatar;
-    var titled = Sub.DocumentBody.Document_Details.profile.Titled;
-    $rootScope.AppUserInformation.UserTag = titled[lang] == undefined ? titled["1"] : titled[lang];
-    var fname = Sub.DocumentBody.Document_Details.profile.FirstName;
-    var lname = Sub.DocumentBody.Document_Details.profile.LastName;
-    var fname1 = fname[lang] == undefined ? fname["1"] : fname[lang];
-    var lname1 = lname[lang] == undefined ? lname["1"] : lname[lang];
-    $rootScope.AppUserInformation.UserName = fname1 + " " + lname1;
-    console.log("App Information");
-    console.log($rootScope.AppUserInformation);
-    //end of AppUserInformation
+  
     for (var i = 0; i < items.length; i++) {
         if (priv[items[i].mId] == undefined)
             continue;//console.log(items[i].mId);
@@ -298,7 +282,8 @@ AssignmentsCtrl
     var obj = sub.DocumentBody.Document_Details.profile;
     console.log(language);
     $scope.profile = {
-        mName: obj.FirstName[language] == undefined ? obj.FirstName["0"] : obj.FirstName[language],
+        mFirstName: obj.FirstName[language] == undefined ? obj.FirstName["0"] : obj.FirstName[language],
+        mLastName: obj.LastName[language] == undefined ? obj.LastName["0"] : obj.LastName[language],
         mGender: obj.Gender[language] == undefined ? obj.Gender["0"] : obj.Gender[language],
         mDOB: obj.DOB,
         mBloodGroup: obj.BloodGroup,
@@ -338,6 +323,7 @@ AssignmentsCtrl
             ClassTeacher: data.ProfilePage.ClassTeacher[language] == undefined ? data.ProfilePage.ClassTeacher["1"] : data.ProfilePage.ClassTeacher[language],
             MomName: data.ProfilePage.MomName[language] == undefined ? data.ProfilePage.MomName["1"] : data.ProfilePage.MomName[language],
             FatherName: data.ProfilePage.FatherName[language] == undefined ? data.ProfilePage.FatherName["1"] : data.ProfilePage.FatherName[language],
+            GuardianName:data.ProfilePage.GuardianName[language] == undefined ? data.ProfilePage.GuardianName["1"] : data.ProfilePage.GuardianName[language],
             MomMobileNo: data.ProfilePage.MomMobileNo[language] == undefined ? data.ProfilePage.MomMobileNo["1"] : data.ProfilePage.MomMobileNo[language],
             FatherMobileNo: data.ProfilePage.FatherMobileNo[language] == undefined ? data.ProfilePage.FatherMobileNo["1"] : data.ProfilePage.FatherMobileNo[language],
             HomeAddress: data.ProfilePage.HomeAddress[language] == undefined ? data.ProfilePage.HomeAddress["1"] : data.ProfilePage.HomeAddress[language],
@@ -570,7 +556,9 @@ AssignmentsCtrl
                 $rootScope.GetAllTags();
                 console.log($rootScope.AvailableChannels);
                 console.log("before push registration");
+                if (window.cordova) {
                 $rootScope.InitPush();
+                }
                 $state.go('app.home', {}, {
                     reload: true
                 });
