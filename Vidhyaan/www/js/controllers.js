@@ -63,6 +63,39 @@ AssignmentsCtrl
 
 }).controller('GalleryCtrl', function($scope) {
     console.log("in GalleryCtrl");
+    $scope.items = [
+  {
+    src:'http://www.wired.com/images_blogs/rawfile/2013/11/offset_WaterHouseMarineImages_62652-2-660x440.jpg',
+    sub: 'Shreyamsa eating fish <b>subtitle</b>'
+  },
+  {
+    src:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg',
+    sub: '' /* Not showed */
+  },
+  {
+    src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg',
+    thumb:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg'
+  }
+];
+    $scope.items1 = [
+  
+    {
+    src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg',
+    thumb:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg'
+  },
+  {
+    src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg',
+    thumb:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg'
+  },
+   { src:'http://www.wired.com/images_blogs/rawfile/2013/11/offset_WaterHouseMarineImages_62652-2-660x440.jpg',
+    sub: 'Shreyamsa eating fish <b>subtitle</b>'
+  },
+  {
+    src:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg',
+    sub: '' /* Not showed */
+  }
+  
+]
 }).controller('CardCtrl', function($scope, TDCardDelegate) {
     console.log("in CardCtrl");
 }).controller('CardsCtrl', function($scope, TDCardDelegate, $timeout) {
@@ -122,6 +155,8 @@ AssignmentsCtrl
     ;
 }).controller('TimetableCtrl', function($scope) {
     console.log("in TimetableCtrl");
+
+    
 }).controller('DiaryCtrl', function($scope) {
     console.log("in DiaryCtrl");
 }).controller('RadioCtrl', function($scope) {
@@ -556,14 +591,22 @@ AssignmentsCtrl
                 //force login next time;;
                 //window.localStorage.removeItem("username"); //uncomment these lines later;;
                 //window.localStorage.removeItem("password");
+
                 alert("Please check Internet Connection1");
                 $ionicLoading.hide();
+
+                console.log("Please check Internet Connection1");
+
                 return;
             });
         })//login promise;;
         .catch(function(err) {
+
             alert("Please check Internet Connection2");
             $ionicLoading.hide();
+
+          console.log("Please check Internet Connection2");
+
             return;
         });
         //login to server here, if success redirect to home page;;
@@ -662,7 +705,7 @@ AssignmentsCtrl
         //force login next time;;
         //window.localStorage.removeItem("username"); //uncomment these lines later;;
         //window.localStorage.removeItem("password");
-        alert("Error getting message");
+        console.log("Error getting message");
         return;
     });
     //$scope.messages = JSON.parse(localStorage.getItem('recievedMessage'));
@@ -798,7 +841,7 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
             //force login next time;;
             //window.localStorage.removeItem("username"); //uncomment these lines later;;
             //window.localStorage.removeItem("password");
-            alert("Error getting timeline");
+            console.log("Error getting timeline");
             return;
         });
     }
