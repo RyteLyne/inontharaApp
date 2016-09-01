@@ -238,7 +238,7 @@ a.autolinker {
 
 .fullScreenImagesView .slider {
     width: 100%;
-    height: 100%;
+    height: 100;
 }
 
 .fullScreenImagesView .ionic-scroll .scroll{

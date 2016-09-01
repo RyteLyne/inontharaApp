@@ -126,12 +126,17 @@
 </div>
   
    <div ng-if="AppUserInformation.SelProgram=='55-npsbsk'" >
-  <div ng-controller=GalleryCtrl>
-
-  bye
+  <div ng-controller=GalleryCtrl style="height:100vh;">
+  <h4 style:"color:solid black; text-align:center;"> School annual Day, 12-12-1980 <h4>
+  <ion-gallery ion-gallery-items="items"></ion-gallery>
+  <h4 style:"color:solid black; text-align:center;"> School annual Day, 12-12-1981 <h4>
+  <ion-gallery ion-gallery-items="items1"></ion-gallery>
   </div>
   </div>
-
+   <fab-button target-id="scrollFabButtonTarget">
+        <a class="icon ion-plus-round" style="text-align:center;"  href="#/app/newsPostEditor" ></a> 
+  <!--    <i class="icon ion ion-android-create"></i>
+  -->  </fab-button>
   </div>
   
    <div ng-if="AppUserInformation.SelProgram=='56-npsbsk'" >
