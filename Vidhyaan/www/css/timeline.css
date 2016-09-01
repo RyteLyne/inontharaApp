@@ -151,6 +151,7 @@ Main components
   padding: 10px;
 }
 
+
 .cd-timeline-content:after {
   content: "";
   display: table;

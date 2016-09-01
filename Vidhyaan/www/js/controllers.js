@@ -191,6 +191,18 @@ AssignmentsCtrl
         console.log(id);
         $rootScope.AppUserInformation.SelProgram = id;
         $rootScope.AppUserInformation.SelProgName = name;
+        if(priv[id].indexOf("w")>=0) 
+        $rootScope.AppUserInformation.WritePriv = true;
+        else
+        $rootScope.AppUserInformation.WritePriv = false;
+
+        if(priv[id].indexOf("x")>=0) 
+        $rootScope.AppUserInformation.XPriv = true;
+        else
+        $rootScope.AppUserInformation.XPriv = false;
+        
+
+
         console.log("clicked Id : ", $rootScope.AppUserInformation.SelProgram);
         $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson, SubChannels);
         console.log("runs on", $rootScope.AppUserInformation.runson);
@@ -444,6 +456,17 @@ AssignmentsCtrl
         $rootScope.AppUserInformation.SelProgram = id;
         $rootScope.AppUserInformation.SelProgName = name;
         console.log("clicked Id : ", $rootScope.AppUserInformation.SelProgram);
+
+        if(priv[id].indexOf("w")>=0) 
+        $rootScope.AppUserInformation.WritePriv = true;
+        else
+        $rootScope.AppUserInformation.WritePriv = false;
+
+        if(priv[id].indexOf("x")>=0) 
+        $rootScope.AppUserInformation.XPriv = true;
+        else
+        $rootScope.AppUserInformation.XPriv = false;
+        
         $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson, SubChannels);
         console.log("runs on", $rootScope.AppUserInformation.runson);
         console.log($rootScope.AppUserInformation.SelProgName);
@@ -477,29 +500,27 @@ AssignmentsCtrl
         $state.go('login', {}, {
             reload: true
         });
-}).controller('AppCtrl', function($scope, $ionicPopover) {}).controller('LogInCtrl', function($scope, $rootScope, $state, $ionicScrollDelegate, datafactory, loginfactory) {
+})
+
+.controller('AppCtrl', function($scope, $ionicPopover) {})
+
+
+.controller('LogInCtrl', function($scope, $rootScope, $state, $ionicScrollDelegate, datafactory, loginfactory,$ionicLoading)      {
     $scope.Credentials = {
         username: "",
         password: ""
     }
-    //var dt = new Date("1471935995019");
-    //console.log("Hellotesting");
-    //console.log(dt);
-    /*$rootScope.LoadNotificationCounts();
-
-  $rootScope.IncNotificationCounts("hello");
-  $rootScope.IncNotificationCounts("hello1");
-  $rootScope.IncNotificationCounts("hello2");
-
-   $rootScope.IncNotificationCounts("hello");
-  $rootScope.IncNotificationCounts("hello1");
-  $rootScope.IncNotificationCounts("hello2");*/
+   
     jQuery.getJSON('json/settings.json', function(data) {
         $scope.loginImages = data.loginScreen;
     });
     $scope.Credentials.username = "1234-npsbsk";
     $scope.Credentials.password = "1234";
     $scope.login = function Login() {
+        $ionicLoading.show({
+      template: 'Logging In...'
+       });
+
         $scope.scrollSmallToTop();
         console.log("UserName: ", $scope.Credentials.username, "Password: ", $scope.Credentials.password);
         Promise.all([loginfactory.getdata($scope.Credentials.username, $scope.Credentials.password)]).then(function(data) {
@@ -507,9 +528,10 @@ AssignmentsCtrl
             if (data == "false") {
                 console.log("Unable to Login");
                 alert("Unable to Login");
+                $ionicLoading.hide();
                 return;
             }
-            // console.log("Mob Service client");
+            // console.log("Mob Service client
             //console.log($rootScope.mobileServiceClient);
             console.log("new log in");
             window.localStorage.setItem("username", $scope.Credentials.username);
@@ -524,6 +546,7 @@ AssignmentsCtrl
                 if (window.cordova) {
                 $rootScope.InitPush();
                 }
+                $ionicLoading.hide();
                 $state.go('app.home', {}, {
                     reload: true
                 });
@@ -534,11 +557,13 @@ AssignmentsCtrl
                 //window.localStorage.removeItem("username"); //uncomment these lines later;;
                 //window.localStorage.removeItem("password");
                 alert("Please check Internet Connection1");
+                $ionicLoading.hide();
                 return;
             });
         })//login promise;;
         .catch(function(err) {
             alert("Please check Internet Connection2");
+            $ionicLoading.hide();
             return;
         });
         //login to server here, if success redirect to home page;;
@@ -767,7 +792,7 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
             console.log("DataLoaded");
             console.log(ret);
             console.log($scope.timeline[0].Heading);
-            console.log($scope.timeline[0].DateTime);
+            console.log($scope.timeline[0].DateTime);    
         })//getdata promise;;
         .catch(function(err) {
             //force login next time;;
@@ -778,10 +803,13 @@ $cordovaFile.writeFile("files", filename,JSON.stringify(DocBody.Document_Details
         });
     }
     $scope.LoadTimeLine();
-    $scope.itemclick = function(docId) {
+    $scope.itemclick = function(docId,ProgId) {
         console.log("clicked");
         console.log(docId);
+        $rootScope.MarkAsRead(docId);
         $rootScope.AppUserInformation.DocId = docId;
+        $rootScope.DecNotificationCounts(ProgId);
+        //handle different views for different items here;;
         $state.go('app.readView', {}, {
             reload: true
         });

@@ -112,7 +112,8 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
         var items = pro.DocumentBody.ApplicationsSpecificData.appPrograms;
         for (var k = 0; k < items.length; k++) {
             if (priv[items[k].mId] == undefined)
-                continue;$rootScope.AddToTag(items[k].mRunsOn, subscribedchannels, items[k].mId, orid);
+                continue;
+                $rootScope.AddToTag(items[k].mRunsOn, subscribedchannels, items[k].mId, orid);
         }
         //console.log("final 1 Tags");
         //console.log($rootScope.AvailableChannels);
@@ -473,7 +474,7 @@ console.log("registering push notification");*/
         addtline = "1";
         //has to be string;;
         console.log("in Timeline factory");
-        $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview FROM feedmsgs where addtline = ? ORDER BY posttime DESC LIMIT 25', [addtline]).then(function(results) {
+        $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview, unread FROM feedmsgs where addtline = ? ORDER BY posttime DESC LIMIT 25', [addtline]).then(function(results) {
             console.log(results);
             console.log(results.rows.length);
             for (var i = 0; i < results.rows.length; i++) {

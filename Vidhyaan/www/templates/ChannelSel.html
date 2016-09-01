@@ -1,19 +1,22 @@
-<ion-view view-title="Channel Selection" >
+<ion-modal-view view-title="Channel Selection" >
+<ion-header-bar class="bar bar-header bar-positive">
+         <h1 class = "title">Select Channels</h1>
+ </ion-header-bar>
+
     <ion-content padding="true" overflow-scroll="false">
 
  <ion-checkbox ng-model="AllChannels.checked" ng-change = "OnAllClick()">All</ion-checkbox>
 
+ <div style = "border-style: solid; border-width: 2px;color:grey;">
   <div ng-repeat="item in Channels">
     <ion-checkbox ng-model="item.ischecked">{{item.Title}}</ion-checkbox> 
   </div>
 
- <button class="button button-positive button-outline" ng-click = "OnOkChannelSel()">
-  Done
-</button>
+    <div style= "text-align:center;">
+<i class="icon ion-checkmark-circled" style="font-size:56px; color:green; position:relative;" ng-click="OnOkChannelSel()"> </i>
+<i class="icon ion-close-circled" style="font-size:56px; color:red; position:relative;" ng-click="OnCancelChannelSel()"> </i>
+ </div>
 
-<button class="button button-positive button-outline" ng-click = "OnCancelChannelSel()">
-  Cancel
-</button>
-
+</div>
     </ion-content>
-     </ion-view>
+     </ion-modal-view>

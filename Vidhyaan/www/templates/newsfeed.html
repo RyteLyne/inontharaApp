@@ -14,7 +14,9 @@
    <div class="card" ng-click = itemclick(data.MsgId)>
    <div class="item item-avatar">
     <img image = "{{rootAvatarPath + data.Avatar}}" image-holder="img/avatar.svg"></img>
-      <h2> {{data.Heading}} {{SelChannel}}<h2>
+      <h2> {{data.Heading}} <h2>
+       <p ng-if = "data.Unread == 0"> read </p>
+       <p ng-if = "data.Unread == 1"> unread </p>      
       <h3>{{data.Author}}</h3>
         <h4>{{data.DateTime}}</h4>
    </div>
@@ -52,11 +54,12 @@
 
 
   </ion-content>
-  
+  <div ng-if = "AppUserInformation.WritePriv == true">
        <fab-button target-id="scrollFabButtonTarget">
         <a class="icon ion-plus-round" style="text-align:center;"  href="#/app/newsPostEditor" ></a> 
   <!--    <i class="icon ion ion-android-create"></i>
   -->  </fab-button>
+  </div>
      
 </ion-view>
    

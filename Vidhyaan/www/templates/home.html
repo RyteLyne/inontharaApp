@@ -46,20 +46,26 @@
 
       <section id="cd-timeline" class="cd-container" ng-controller='TimeLineCtrl'>
           <div  ng-repeat="activity in timeline">
-            <div class="cd-timeline-block" ng-click = itemclick(activity.MsgId)>
+            <div class="cd-timeline-block" ng-click = itemclick(activity.MsgId,activity.ProgId)>
               <div class="cd-timeline-picture dark">
                 <img image = "{{rootAvatarPath + activity.Avatar}}" image-holder="img/avatar.svg"></img>
               </div>
+              
               <!-- cd-timeline-img -->
               <div class="cd-timeline-content dark">
                 <h5 class="marginBottom0 marginTop0">{{activity.Heading}}</h5>
+                <p ng-if = "activity.Unread == 0"> read </p>
+                <p ng-if = "activity.Unread == 1"> unread </p>      
                 <p class="marginTop5 cd-author">by {{activity.Author}}, </p>
                 <span am-time-ago = activity.DateTime> </span>
                  <div ng-if="activity.Image!=''">
-              <img  image = "{{rootFeedImagePath + activity.Image}}" style="max-width:100%"></img> </div>
+              <img  image = "{{rootFeedImagePath + activity.Image}}" style="max-width:100%"></img> 
+              </div>
                 <p class="timelineText">{{activity.TextPreview}}</p>
               </div>
-            </div> = 
+             </div>
+
+            </div> 
           </div>
         </section>
      </div>    
