@@ -230,7 +230,7 @@ AssignmentsCtrl
     }
     console.log($scope.profile.mName);
     // var prop = data.ProfilePage;
-    jQuery.getJSON('json/uiLanguage.json', function(data) {
+    jQuery.getJSON('json/UiLanguage.json', function(data) {
         $scope.UiLanguageProfile = {
             Title: data.ProfilePage.Title[language] == undefined ? data.ProfilePage.Title["1"] : data.ProfilePage.Title[language],
             Name: data.ProfilePage.Name[language] == undefined ? data.ProfilePage.Name["1"] : data.ProfilePage.Name[language],
@@ -532,7 +532,7 @@ AssignmentsCtrl
 .controller('SettingsCtrl', function($scope, $window, $rootScope) {
     $scope.choice = {
         langchoice: 1,
-        notichoice: 0
+        
     };
     console.log("Language : ", $rootScope.Language);
     //window.localStorage.removeItem("setting");
@@ -543,15 +543,15 @@ AssignmentsCtrl
     {
         window.localStorage.setItem("setting", "1");
         window.localStorage.setItem("language", 1);
-        window.localStorage.setItem("notichoice", 0);
+        
         console.log("Setting First Time");
     } else {
         $scope.choice.langchoice = window.localStorage.getItem("language");
-        $scope.choice.notichoice = window.localStorage.getItem("notichoice");
-        console.log("Noti choice", $scope.choice.notichoice);
+        
+        
     }
     $scope.notificationstatus = "";
-    jQuery.getJSON('json/uiLanguage.json', function(data) {
+    jQuery.getJSON('json/UiLanguage.json', function(data) {
         var lang = $rootScope.Language.toString();
         $scope.UiLanguageSettings = {
             Title: data.SettingsPage.Title[lang] == undefined ? data.SettingsPage.Title["1"] : data.SettingsPage.Title[lang],
@@ -568,27 +568,12 @@ AssignmentsCtrl
         $scope.LanguageOptions = data.LanguageOptions;
         console.log($scope.LanguageOptions);
         //console.log("title", UiLanguageProfile.Title);
-        if ($scope.choice.notichoice == true)
-            $scope.notificationstatus = $scope.UiLanguageSettings.NotificationOn;
-        else
-            $scope.notificationstatus = $scope.UiLanguageSettings.NotificationOff;
+       
     });
     $scope.languageChange = function(item) {
         window.localStorage.setItem("language", $scope.choice.langchoice);
         console.log("Selected value, text:", item);
         $window.location.reload(true);
     }
-    ;
-    $scope.NotificationChange = function() {
-        console.log("Notification Changed");
-        console.log($scope.choice.notichoice);
-        if ($scope.choice.notichoice == true) {
-            $scope.notificationstatus = $scope.UiLanguageSettings.NotificationOn;
-            window.localStorage.setItem("notichoice", 1);
-        } else {
-            $scope.notificationstatus = $scope.UiLanguageSettings.NotificationOff;
-            window.localStorage.setItem("notichoice", 0);
-        }
-    }
-    ;
+   
 });
