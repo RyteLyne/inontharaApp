@@ -1,4 +1,16 @@
 /* Background */
+.header-badge{
+  top: -32px !important;
+  left: 16px !important;
+  width: 12px;
+  height: 12px;
+  min-width: 8px;
+  min-height: 8px;
+  padding: 2px 2px;
+  
+
+}
+
 .background-grey {
  /* background-color: #455A64;*/
 /* background-image : url("/img/menu_background.jpg");*/
