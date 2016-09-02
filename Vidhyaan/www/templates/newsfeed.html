@@ -55,10 +55,9 @@
 
   </ion-content>
   <div ng-if = "AppUserInformation.WritePriv == true">
-       <fab-button target-id="scrollFabButtonTarget">
-        <a class="icon ion-plus-round" style="text-align:center;"  href="#/app/newsPostEditor" ></a> 
-  <!--    <i class="icon ion ion-android-create"></i>
-  -->  </fab-button>
+  <ion-floating-button click="OnComposeClick()" has-footer="false" button-color="#2AC9AA" icon="ion-edit" icon-color="#fff">
+ 
+  </ion-floating-button>
   </div>
      
 </ion-view>

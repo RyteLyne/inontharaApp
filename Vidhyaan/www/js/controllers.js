@@ -401,6 +401,19 @@ AssignmentsCtrl
             reload: true
         });
     }
+
+    $scope.OnComposeClick = function()
+     {
+
+       $state.go('app.newsPostEditor', {}, {
+            reload: true
+        });
+
+     }
+
+
+     
+
     $scope.SliceData = function(datatoslice) {
         if (datatoslice.length > 100)
             return ( datatoslice.slice(0, 100)) ;
@@ -429,27 +442,7 @@ AssignmentsCtrl
     //$scope.readFunc();
     Promise.all([feeddetailsfactory.getdata($rootScope.AppUserInformation.DocId)]).then(function(ret) {
         $scope.messages = ret[0];
-        //var msg = ret[0];
-        /* for(var i=0;i<msg.length;i++)
-     {
-        var htm = {};
-       if(msg[i].type == "h1") //heading
-        htm.txt = "<h1>" + msg[i].msg + "</h1>";
-       else if(msg[i].type == "p")
-       {
-        htm.txt = "<p>" + msg[i].msg + "</p>";
-        console.log("P selected");
-       }
-        else if(msg[i].type == "img")
-        htm.txt= "<img image = '" + msg[i].msg + "'/>" 
-        else
-        htm.txt = "<p> No Message </p>";
-
-        console.log("htm", htm);
-
-       $scope.messages.push(angular.extend({}, htm));
-
-     }*/
+     
         console.log("DataLoaded");
         console.log($scope.messages);
     })//getdata promise;;

@@ -115,12 +115,12 @@ return(newFileName);
       },
       buttonClicked: function(index) {
         console.log('BUTTON CLICKED', index);
-        if(index==0)
+        /*if(index==0)
         $scope.addImage();
         if(index==2)
         $scope.addHeading();
         if(index==3)
-        $scope.addText();
+        $scope.addText();*/
         return true;
       },
      /* destructiveButtonClicked: function() {
@@ -132,22 +132,41 @@ return(newFileName);
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$scope.addCamera = function() {
+
+console.log("Add from Camera");
+
+}
+
+$scope.addVideo = function() {
+
+console.log("Add Video");
+
+}
 
 
-$scope.addImage = function() {
 
+$scope.addImage = function(srctype) {
+
+ 
  var options = {
  destinationType : navigator.camera.DestinationType.FILE_URI,
- sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY, // Camera.PictureSourceType.PHOTOLIBRARY
+ sourceType : srctype== 0?navigator.camera.PictureSourceType.PHOTOLIBRARY:navigator.camera.PictureSourceType.CAMERA , // Camera.PictureSourceType.PHOTOLIBRARY
  allowEdit : false,
  encodingType: navigator.camera.EncodingType.JPEG,
  popoverOptions: CameraPopoverOptions,
- };
+ 
+
+ }
+
+ //console.log(options.sourceType);
 
  navigator.camera.getPicture(onSuccess, onFail, options);
  function onFail(ErrMessage){
    console.log(ErrMessage)
  }
+
+
 
 function onSuccess(ImageData){
 //from here copy new file starts
