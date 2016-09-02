@@ -141,8 +141,6 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'Menus.controllers'
   })
 
 
-
-
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/splash');
    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|content):|data:image\//);
