@@ -10,6 +10,10 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
     $rootScope.rootFeedImagePath = cordova.file.dataDirectory;
     $rootScope.rootAvatarPath = cordova.file.dataDirectory;
     }
+
+    $rootScope.feedNotificationBadge="false";
+    $rootScope.appNotificationBadge="false";
+    
     $rootScope.AppUserInformation = {
         SelChannel: "0",
         SelProgram: "0",

@@ -1,4 +1,4 @@
-var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'ion-fab-button','Menus.controllers', 'Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards', 'elastichat', 'monospaced.elastic','angularMoment', 'ion-gallery', 'ion-floating-menu'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'Menus.controllers', 'Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards', 'elastichat', 'monospaced.elastic','angularMoment', 'ion-gallery', 'ion-floating-menu'])
 
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("this is the grand begin");
