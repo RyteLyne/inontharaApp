@@ -52,14 +52,20 @@
               </div>
               
               <!-- cd-timeline-img -->
-              <div class="cd-timeline-content dark">
+              <div class="cd-timeline-content dark" style="position:absolute;">
                 <h5 class="marginBottom0 marginTop0">{{activity.Heading}}</h5>
-                <p ng-if = "activity.Unread == 0"> read </p>
-                <p ng-if = "activity.Unread == 1"> unread </p>      
+                <div style="position:relative;top:6;right:10">
+                <div ng-if = "activity.Unread == 0"><span am-time-ago = activity.DateTime></span>  read</div>
+                <div ng-if = "activity.Unread == 1"><span am-time-ago = activity.DateTime></span>  unread</div>
+                
+                    
+                </div> 
                 <p class="marginTop5 cd-author">by {{activity.Author}}, </p>
-                <span am-time-ago = activity.DateTime> </span>
-                 <div ng-if="activity.Image!=''">
-              <img  image = "{{rootFeedImagePath + activity.Image}}" style="max-width:100%;"></img> 
+
+               
+                 <div class='cardImage' ng-if="activity.Image!=''">
+              <img  image = "{{rootFeedImagePath + activity.Image}}"  style:"height:280px;" ></img> 
+
               </div>
                 <p class="timelineText">{{activity.TextPreview}}</p>
               </div>
