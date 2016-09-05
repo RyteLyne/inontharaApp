@@ -91,28 +91,6 @@ $cordovaFile.writeFile(pathToStore, fileToRecieve.fileName, this.response, true)
                console.log("error storing file");
 
             });
-  
-  /*   window.resolveLocalFileSystemURL(localFileSytemUrl, function (fileEntry) {
-
-       console.log("inside relsolve local filesystem");
-        fileEntry.file(function (file) {
-          console.log("can you see this message");
-            // We need a FileReader to read the captured file.
-            var writer = new FileWriter();
-            reader.onloadend = function(e)
-            {
-
-            };
-            reader.onerror = function(e){
-                
-            };
-
-            // Read the captured file into a byte array.
-            // This function is not currently supported on Windows Phone.
-            writer.writeAsArrayBuffer(file);
-        }, fileEntryfail);
-        
-    },failLocalResolve);*/
     
   }
 };

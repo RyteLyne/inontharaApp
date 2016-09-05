@@ -139,22 +139,23 @@ angular.module('Menus.controllers', ['ngCordova'])
     $scope.slideUp = function(element, ratio) {
         element.style.transform = element.style.webkitTransform = 'translateY(' + transitionFromTo(ratio, 100, 0) + '%' + ')';
     }
-    $scope.itemclick = function(id, runson, name) {
-        $rootScope.AppUserInformation.SelProgram = id;
-        $rootScope.AppUserInformation.SelProgName = name;
+    $scope.itemclick = function(selItem) {
+        $rootScope.LoadEditorControls("default");
+        $rootScope.AppUserInformation.SelProgram = selItem.id;
+        $rootScope.AppUserInformation.SelProgName = selItem.name;
         console.log("clicked Id : ", $rootScope.AppUserInformation.SelProgram);
 
-        if(priv[id].indexOf("w")>=0) 
+        if(priv[selItem.id].indexOf("w")>=0) 
         $rootScope.AppUserInformation.WritePriv = true;
         else
         $rootScope.AppUserInformation.WritePriv = false;
 
-        if(priv[id].indexOf("x")>=0) 
+        if(priv[selItem.id].indexOf("x")>=0) 
         $rootScope.AppUserInformation.XPriv = true;
         else
         $rootScope.AppUserInformation.XPriv = false;
         
-        $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson, SubChannels);
+        $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(selItem.runson, selItem.SubChannels);
         console.log("runs on", $rootScope.AppUserInformation.runson);
         console.log($rootScope.AppUserInformation.SelProgName);
         $rootScope.$broadcast('FeedProgramEvent', []);
@@ -168,7 +169,7 @@ angular.module('Menus.controllers', ['ngCordova'])
     $scope.menulist = {};
     var Sub = $rootScope.GetDocument("SubscriberInfo");
     console.log("Subscriber : ", Sub);
-    priv = Sub.DocumentBody.ApplicationSpecificData.previlageLevels;
+    priv = Sub.DocumentBody.ApplicationSpecificData.previlageLevels
     /*
   jQuery.getJSON('json/subscriberInfo.json', function(data) {
 
@@ -197,31 +198,33 @@ angular.module('Menus.controllers', ['ngCordova'])
             text: items[i].mText[lang] == undefined ? items[i].mText["1"] : items[i].mText[lang],
             id: items[i].mId,
             runson: items[i].mRunsOn,
+            type:items[i].mType,
             cnt: $rootScope.NotificationCounts["Nc_" + items[i].mId] == undefined ? "" : $rootScope.NotificationCounts["Nc_" + items[i].mId]
         };
         $scope.menulist[items[i].mId] = $scope.rightItems[k];
         k++;
     }
-    $scope.itemclick = function(id, runson, name) {
-        console.log(id);
-        $rootScope.AppUserInformation.SelProgram = id;
-        $rootScope.AppUserInformation.SelProgName = name;
-        if(priv[id].indexOf("w")>=0) 
+    $scope.itemclick = function(selItem) {
+        console.log(selItem.id);
+        $rootScope.LoadEditorControls(selItem.type);
+        $rootScope.AppUserInformation.ProgramType = selItem.type;
+        $rootScope.AppUserInformation.SelProgram = selItem.id;
+        $rootScope.AppUserInformation.SelProgName = selItem.name;
+        if(priv[selItem.id].indexOf("w")>=0) 
         $rootScope.AppUserInformation.WritePriv = true;
         else
         $rootScope.AppUserInformation.WritePriv = false;
 
-        if(priv[id].indexOf("x")>=0) 
+        if(priv[selItem.id].indexOf("x")>=0) 
         $rootScope.AppUserInformation.XPriv = true;
         else
         $rootScope.AppUserInformation.XPriv = false;
         
-
-
         console.log("clicked Id : ", $rootScope.AppUserInformation.SelProgram);
-        $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(runson, SubChannels);
+        $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(selItem.runson, selItem.SubChannels);
         console.log("runs on", $rootScope.AppUserInformation.runson);
         console.log($rootScope.AppUserInformation.SelProgName);
+
         //$rootScope.IncNotificationCounts("2-npsbsk");
         //$rootScope.MarkAsRead("2-npsbsk");
     }

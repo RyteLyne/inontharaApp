@@ -10,6 +10,7 @@ $scope.typedData.data = "";
 //$scope.firstImage = "";
 
 
+
 //console.log("data dir:",cordova.file.dataDirectory);
 
 
@@ -18,12 +19,13 @@ if(window.cordova)
 console.log("data dir:",cordova.file.dataDirectory);
 }
 
-function AddMessageToServer(type, msg)
+function AddMessageToServer(type, msg,extra)
 {
 var obj = 
 {
  "type" : type,
- "msg" : msg
+ "msg" : msg,
+ "extra" : extra
 };
 
 $scope.serverMessage.push(angular.extend({}, obj));
@@ -43,7 +45,7 @@ console.log($scope.typedData.data);
   console.log("add text");
   console.log($scope.typedData.data);
   //$scope.add();
-  AddMessageToServer($scope.tag,$scope.typedData.data);
+  AddMessageToServer($scope.tag,$scope.typedData.data,"");
   $scope.myInput="";
   $ionicScrollDelegate.scrollBottom();
       }
@@ -70,10 +72,10 @@ $ionicModal.fromTemplateUrl('templates/feedinput.html', {
 
 }
 
-function GetFileName()
+function GetFileName(ext)
 {
 var d = (new Date).getTime();
-var newFileName = $rootScope.AppUserInformation.SubId+'_' + d.toString()+'.jpg';
+var newFileName = $rootScope.AppUserInformation.SubId+'_' + d.toString()+ "." +ext;
 console.log(newFileName);
 return(newFileName);
 }
@@ -98,43 +100,123 @@ return(newFileName);
 
 
 
-    $scope.showActionsheet = function() {
-      
-    $ionicActionSheet.show({
-      titleText: 'Add/remove content to Newsfeed',
-      buttons: [
-        { text: '<i class="icon ion-image"></i> Add Image' },
-          { text: '<i class="icon ion-android-film"></i> Add Video' },
-        { text: '<i class="icon ion-edit"></i> Add Heading' },
-         { text: '<i class="icon ion-edit"></i> Add Text' },
-      ],
-      destructiveText: 'Delete Last Modification',
-      cancelText: 'Cancel',
-      cancel: function() {
-        console.log('CANCELLED');
-      },
-      buttonClicked: function(index) {
-        console.log('BUTTON CLICKED', index);
-        /*if(index==0)
-        $scope.addImage();
-        if(index==2)
-        $scope.addHeading();
-        if(index==3)
-        $scope.addText();*/
-        return true;
-      },
-     /* destructiveButtonClicked: function() {
-        console.log('DESTRUCT');
-        $scope.messages.pop();
-        return true;
-      }*/
-    });
-  };
+$scope.OnFileClick = function(selItem)
+{
+
+  console.log ("trying to open");
+  
+  var fileToOpen = $rootScope.rootDocPath + selItem.extra;
+  cordova.plugins.fileOpener2.open(
+    fileToOpen, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
+    'application/pdf', 
+    { 
+        error : function(e) { 
+            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+        },
+        success : function () {
+            console.log('file opened successfully');                
+        }
+    }
+);
+
+}
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$scope.addCamera = function() {
+$scope.addfile = function() {
 
-console.log("Add from Camera");
+console.log("Add file");
+
+
+function onCopyNormalSuccess(entry)
+{
+console.log("copy successful ",entry.nativeURL);
+
+
+Promise.all([imageUpload.getdata(entry)]).then(function(ret)
+      {
+     
+     var fName = entry.fullPath.substr(entry.fullPath.lastIndexOf('/') + 1);
+       $ionicLoading.show({
+      template: 'Updating...'
+       });
+
+       AddMessageToServer("file","img/pdficon.jpg",fName);
+       
+       $ionicLoading.hide();
+       $ionicScrollDelegate.scrollBottom();
+      
+
+        })//getdata promise;;
+       .catch(function(err)
+       {
+      $ionicLoading.hide();
+      console.log("Error uploading Image");
+      alert("unable to Upload Image");
+      return;
+       });
+
+
+}
+
+
+
+function OnNormalFileError(filepath)
+{
+console.log("Error:", filepath);
+}
+
+
+function StartCopyNormalfile(fileEntry)
+{
+  
+//console.log(fileEntry);
+
+var newName = GetFileName($scope.ext);
+console.log("new name", newName);
+
+window.resolveLocalFileSystemURL($rootScope.rootDocPath, function(fileSystem2) {
+
+				fileEntry.copyTo(
+					fileSystem2,
+					newName,
+					onCopyNormalSuccess,
+					function fail(error){console.log("Failed to copy file");});
+
+			},
+			function(){ console.log("failed to resolve file")});
+
+}
+
+
+function OnChooseFileOk(uri)
+{
+window.FilePath.resolveNativePath(uri,function(actualpath){
+
+ var fileName = actualpath.substr(actualpath.lastIndexOf('/') + 1);
+
+  $scope.ext = fileName.substr(fileName.lastIndexOf('.') + 1);
+  console.log("Found Ext:", $scope.ext);
+
+  if($scope.ext != "pdf")
+   {
+    OnNormalFileError("Wrong Extension");
+    return;
+   }
+
+window.resolveLocalFileSystemURL(uri, StartCopyNormalfile, OnNormalFileError);
+
+},OnNormalFileError);
+
+}
+
+
+
+fileChooser.open(OnChooseFileOk,
+            function (error) {
+              //chooseFileError(deferred, 'fileChooser');
+              console.log("Error");
+            }
+          );
 
 }
 
@@ -167,14 +249,13 @@ $scope.addImage = function(srctype) {
  }
 
 
-
 function onSuccess(ImageData){
 //from here copy new file starts
 console.log("On Success Image");
 console.log(ImageData);
 window.resolveLocalFileSystemURL(ImageData, copyfile, function(error){console.log("unable to resolve 1");});
 function copyfile (fileEntry) {
-var newName = GetFileName();
+var newName = GetFileName('jpg');
 window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
 
 				fileEntry.copyTo(
@@ -197,17 +278,12 @@ console.log("copy successful ",entry.nativeURL);
  Promise.all([imageUpload.getdata(entry)]).then(function(ret)
       {
       var fName = entry.fullPath.substr(entry.fullPath.lastIndexOf('/') + 1);
-      //var nextMessage ={};
-       //nextMessage.content = "<img src = '" + entry.nativeURL + "' />"
-       //console.log(nextMessage.content);
-       //$scope.messages.push( angular.extend({}, nextMessage));
-       //$scope.tempfilename = $rootScope.FeedImagePath + fName;
-       //console.log("temp file Name: ", $scope.tempfilename);
+   
        $ionicLoading.show({
       template: 'Updating...'
        });
 
-       AddMessageToServer("img",fName);
+       AddMessageToServer("img",fName,"");
        
        $ionicLoading.hide();
        $ionicScrollDelegate.scrollBottom();
@@ -565,7 +641,7 @@ console.log("FileName", fileName);
 }
           $http(req).
         success(function(data, status, headers, config) { 
-        console.log(data);
+        console.log("upload data:",data);
         sasUrl = data.sasUrl;
        
          console.log("Reading Image to Memory");

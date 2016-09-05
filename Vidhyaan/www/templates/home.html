@@ -1,11 +1,10 @@
-<ion-view   ng-controller='slideCtrl' cache-view="false" view-title="<i class='icon ion-chatbubble user-messages-top-icon'></i> <div class='msg-header-username'>{{toUser.username}}</div>">
+<ion-view   ng-controller='slideCtrl' cache-view="false" view-title="<img src='img/vidhyaanlogo.svg' style='height:36px;position:relative;top:4px;'></img> <div class='msg-header-username'>{{AppUserInformation.SelProgName}}</div>">
   
   <ion-content>
    <!--   <button class="button-circle rotate-15">
         <i class="ion-arrow-up-c"></i>
       </button> -->
     <!--  <h3>Dynamic Meditation</h3> -->
-  
   <div class = "slider">
       <ion-slide-box  
             does-continue="true"  disable-scroll="false"
@@ -14,10 +13,8 @@
             auto-play="true"on-slide-changed="slideChanged(index)">
           <ion-slide ng-repeat="slide in slides">
            <img ng-src="{{'img/'+slide.name}}" </img>
-            <p> {{slide.msg}} </p>
-            
+            <!--<p> {{slide.msg}} </p>-->
           </ion-slide>
-     
           </div>
       <div class="item-avatar">
    <!--   <img ng-src="{{('assets/img/networkicons/'+network.actual+'.png')}}" onerror="this.src='assets/img/networkicons/default.png'" /> -->
@@ -61,8 +58,11 @@
                     
                 </div> 
                 <p class="marginTop5 cd-author">by {{activity.Author}}, </p>
+
+               
                  <div class='cardImage' ng-if="activity.Image!=''">
               <img  image = "{{rootFeedImagePath + activity.Image}}"  style:"height:280px;" ></img> 
+
               </div>
                 <p class="timelineText">{{activity.TextPreview}}</p>
               </div>
