@@ -16,13 +16,13 @@
     </ion-side-menu-content>
     <ion-side-menu side="right" ng-controller="RightMenuCtrl" width="{{menuWidth}}">
         <ion-pane class="background-grey">
-            <ion-content scroll=true style=" background-image : url('img/menu_background.jpg');">
+            <ion-content scroll=true style=" background-image : url('img/menuBackground.jpg');background-size: cover;">
                 <!--<div class="row menu-top">
         <div class="col col-center">
           <img class="profile-image" ng-src="img/cooper.jpg" animate-ratio="fadeIn"/>
         </div>
       </div> -->
-                <p style="font-size:13px;color:white;position:relative;top:30px;text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);text-align:center;">
+                <p style="font-size:13px;color:white;position:relative;top:30px;text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.8);text-align:center;">
                     Siddant's Dashboard
 <br>
                     @ <br>National Public School
@@ -32,29 +32,29 @@
                         <div ng-repeat="items in rightItems">
                             <div class="row" ng-if="$index%3==0">
                                 <div style="position:relative;" class="col col-33 col-center">
-                                    <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if="rightItems[$index]!=undefined" ng-click="itemclick(rightItems[$index].id,rightItems[$index].runson,rightItems[$index].text)">
-                                        <button class="button-circle" animate-ratio="fadeIn" menu-close>
+                                    <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if="rightItems[$index]!=undefined" ng-click="itemclick(rightItems[$index].id,rightItems[$index].runson,rightItems[$index].text)" menu-close>
+                                        <button style="box-shadow:2px 2px 4px rgba(0, 0, 0, 0.4);" class="button-circle" animate-ratio="fadeIn">
                                             <i class="{{rightItems[$index].icon}}"></i>
                                         </button>
-                                        <div class="icon_text">{{rightItems[$index].text}} </div>
+                                        <div style="text-shadow:3px 3px 4px rgba(0, 0, 0, 0.8);"class="icon_text">{{rightItems[$index].text}} </div>
                                         <span class="badge badge-dark badge-shadow" style="position:absolute;right:12px;top:-2px">{{rightItems[$index].cnt==0?"":rightItems[$index].cnt}}</span>
                                     </a>
                                 </div>
                                 <div style="position:relative;" class="col col-30 col-center">
-                                    <a class="element" ng-href="{{rightItems[$index+1].ref}}" ng-if="rightItems[$index+1]!=undefined" ng-click="itemclick(rightItems[$index+1].id,rightItems[$index+1].runson,rightItems[$index+1].text)">
-                                        <button class="button-circle" animate-ratio="fadeIn" menu-close>
+                                    <a class="element" ng-href="{{rightItems[$index+1].ref}}" ng-if="rightItems[$index+1]!=undefined" ng-click="itemclick(rightItems[$index+1].id,rightItems[$index+1].runson,rightItems[$index+1].text)"menu-close>
+                                        <button style="box-shadow:2px 2px 4px rgba(0, 0, 0, 0.4);" class="button-circle" animate-ratio="fadeIn" >
                                             <i class="{{rightItems[$index+1].icon}}"></i>
                                         </button>
-                                        <div class="icon_text">{{rightItems[$index+1].text}} </div>
+                                        <div "text-shadow:3px 3px 4px rgba(0, 0, 0, 0.8);" class="icon_text">{{rightItems[$index+1].text}} </div>
                                         <span class="badge badge-dark badge-shadow" style="position:absolute;right:12px;top:-2px">{{rightItems[$index+1].cnt==0?"":rightItems[$index+1].cnt}}</span>
                                     </a>
                                 </div>
                                 <div style="position:relative;" class="col col-30 col-center">
-                                    <a class="element" ng-href="{{rightItems[$index+2].ref}}" ng-if="rightItems[$index+2]!=undefined" ng-click="itemclick(rightItems[$index+2].id,rightItems[$index+2].runson,rightItems[$index+2].text)">
-                                        <button class="button-circle" animate-ratio="fadeIn" menu-close>
+                                    <a class="element" ng-href="{{rightItems[$index+2].ref}}" ng-if="rightItems[$index+2]!=undefined" ng-click="itemclick(rightItems[$index+2].id,rightItems[$index+2].runson,rightItems[$index+2].text)"  menu-close>
+                                        <button style="box-shadow:2px 2px 4px rgba(0, 0, 0, 0.4);" class="button-circle" animate-ratio="fadeIn">
                                             <i class="{{rightItems[$index+2].icon}}"></i>
                                         </button>
-                                        <div class="icon_text">{{rightItems[$index+2].text}} </div>
+                                        <div "text-shadow:3px 3px 4px rgba(0, 0, 0, 0.8);" class="icon_text">{{rightItems[$index+2].text}} </div>
                                         <span class="badge badge-dark badge-shadow" style="position:absolute;right:12px;top:-2px">{{rightItems[$index+2].cnt==0?"":rightItems[$index+2].cnt}}</span>
                                     </a>
                                 </div>
@@ -131,7 +131,7 @@
           <button class="button-circle">
             <i class="ion-erlenmeyer-flask"></i>
         </div>-->
-            <ion-content scrollbar-x="false" scrollbar-y="false" class="background-leftmenu" style="background-image : url(img/menu_background.jpg);">
+            <ion-content scrollbar-x="false" scrollbar-y="false" class="background-leftmenu" style="background-image : url(img/menuPic.png);background-size: cover;">
                 <div class="item-avatar">
                     <img ng-src="img/g74.png" style="height:15vh; width:15vh; max-width:150px;max-height:150px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;left:30vw;top:6vh;"></img>
                 </div>
