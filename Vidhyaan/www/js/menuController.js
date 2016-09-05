@@ -23,6 +23,7 @@ angular.module('Menus.controllers', ['ngCordova'])
     $scope.groups = [];
     console.log("groups:", groups);
     $scope.menulist = {};
+    $scope.TotNotiCount = 0;
     var k = 0;
     var language = $rootScope.Language.toString();
     var SubChannels = sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
@@ -77,7 +78,23 @@ angular.module('Menus.controllers', ['ngCordova'])
         //$scope.$digest();
         //$scope.groups[0].cnt =10;
         if ($scope.menulist[data[0]] != undefined)
+          {
             $scope.menulist[data[0]].cnt = data[1];
+            if(data[2] == true) //increment
+            $scope.TotNotiCount = $scope.TotNotiCount + 1;
+            else
+            $scope.TotNotiCount = $scope.TotNotiCount - 1;
+
+            if($scope.TotNotiCount <0 ) $scope.TotNotiCount = 1;
+
+            if($scope.TotNotiCount > 0) 
+            $rootScope.feedNotificationBadge ="true";
+            else
+            $rootScope.feedNotificationBadge ="false";
+          }
+
+
+
     });
     $scope.$on('NotificationsReady', function(event, data) {
         console.log("Notification Ready Fired");
@@ -86,9 +103,24 @@ angular.module('Menus.controllers', ['ngCordova'])
         for (var i = 0; i < tg.length; i++) {
             var tag = "Nc_" + tg[i];
             if ($scope.menulist[tg[i]] != undefined)
+            {
                 $scope.menulist[tg[i]].cnt = $rootScope.NotificationCounts[tag];
-            console.log($rootScope.NotificationCounts[tg[i]]);
+                $scope.TotNotiCount = $scope.TotNotiCount + $scope.menulist[tg[i]].cnt;
+            }
+
+            
         }
+
+        console.log("TotNotiCounts: " , $scope.TotNotiCount);
+
+        if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+
+           if($scope.TotNotiCount > 0) 
+            $rootScope.feedNotificationBadge ="true";
+            else
+            $rootScope.feedNotificationBadge ="false";
+
+
     });
     $scope.toggleGroup = function(group) {
         //console.log("toggle toggle");
@@ -155,7 +187,7 @@ angular.module('Menus.controllers', ['ngCordova'])
         else
         $rootScope.AppUserInformation.XPriv = false;
         
-        $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(selItem.runson, selItem.SubChannels);
+        $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(selItem.runson, SubChannels);
         console.log("runs on", $rootScope.AppUserInformation.runson);
         console.log($rootScope.AppUserInformation.SelProgName);
         $rootScope.$broadcast('FeedProgramEvent', []);
@@ -167,6 +199,7 @@ angular.module('Menus.controllers', ['ngCordova'])
     console.log("inJquery start");
     var priv = {};
     $scope.menulist = {};
+    $scope.TotNotiCount = 0;
     var Sub = $rootScope.GetDocument("SubscriberInfo");
     console.log("Subscriber : ", Sub);
     priv = Sub.DocumentBody.ApplicationSpecificData.previlageLevels
@@ -221,7 +254,7 @@ angular.module('Menus.controllers', ['ngCordova'])
         $rootScope.AppUserInformation.XPriv = false;
         
         console.log("clicked Id : ", $rootScope.AppUserInformation.SelProgram);
-        $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(selItem.runson, selItem.SubChannels);
+        $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(selItem.runson, SubChannels);
         console.log("runs on", $rootScope.AppUserInformation.runson);
         console.log($rootScope.AppUserInformation.SelProgName);
 
@@ -235,8 +268,24 @@ angular.module('Menus.controllers', ['ngCordova'])
         console.log(data[1]);
         //notification count;;
         if ($scope.menulist[data[0]] != undefined)
+        {
             $scope.menulist[data[0]].cnt = data[1];
+
+            if(data[2] == true) //increment
+            $scope.TotNotiCount = $scope.TotNotiCount + 1;
+            else
+            $scope.TotNotiCount = $scope.TotNotiCount - 1;
+
+            if($scope.TotNotiCount <0 ) $scope.TotNotiCount = 1;
+
+            if($scope.TotNotiCount > 0) 
+            $rootScope.appNotificationBadge ="true";
+            else
+            $rootScope.appNotificationBadge ="false";
+
+        }
     });
+
     $scope.$on('NotificationsReady', function(event, data) {
         console.log("Notification Ready Fired Right");
         console.log(data[0]);
@@ -244,9 +293,23 @@ angular.module('Menus.controllers', ['ngCordova'])
         for (var i = 0; i < tg.length; i++) {
             var tag = "Nc_" + tg[i];
             if ($scope.menulist[tg[i]] != undefined)
+             {
                 $scope.menulist[tg[i]].cnt = $rootScope.NotificationCounts[tag];
-            console.log($rootScope.NotificationCounts[tg[i]]);
+
+                 $scope.TotNotiCount = $scope.TotNotiCount + $scope.menulist[tg[i]].cnt;
+             }
+
+
+
+           // console.log($rootScope.NotificationCounts[tg[i]]);
         }
+
+         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+
+           if($scope.TotNotiCount > 0) 
+            $rootScope.appNotificationBadge ="true";
+            else
+            $rootScope.appNotificationBadge ="false";
     })
 
 })

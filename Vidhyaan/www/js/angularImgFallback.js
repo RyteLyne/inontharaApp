@@ -26,8 +26,7 @@ angular.module('angularImgFallback', [])
 
     	      	
     	      		 console.log("the image failed load was.....", scope.image);
-    	      	// fileToRecieve=scope.image;
-    	      //	 fileToRecieve = { 
+    	      	
 var fileToRecieve = {"fileName": scope.image.substring(scope.image.lastIndexOf('/')+1)};
 var pathToStore = scope.image.substring(0,scope.image.lastIndexOf('/')+1);
  console.log("fileToRecieve" , fileToRecieve);

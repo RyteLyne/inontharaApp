@@ -1,4 +1,4 @@
-angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', function($rootScope, $http, $cordovaSQLite) {
+angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', function($rootScope, $http, $cordovaSQLite,$cordovaToast) {
     //window.localStorage.removeItem("subscriberInfo");
     $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient('https://edum.azure-mobile.net','yVQPRKXxocEazjPjDXGSnmIpyCBTYc97');
     console.log($rootScope.mobileServiceClient);
@@ -12,13 +12,16 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
     $rootScope.rootDocPath = cordova.file.externalDataDirectory;
     }
 
-    $rootScope.feedNotificationBadge="false";
-    $rootScope.appNotificationBadge="false";
+    $rootScope.feedNotificationBadge="true";
+    $rootScope.appNotificationBadge="true";
     
     $rootScope.AppUserInformation = {
         SelChannel: "0",
         SelProgram: "0",
-        SelProgName: "Timeline",
+
+   
+        SelProgName: "TimeLine",
+
         WritePriv: false,
         XPriv: false,
         runson: [],
@@ -55,6 +58,33 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
     //$rootScope.pushNotification;
 
 
+$rootScope.ShowToast = function(message,longx)
+{
+    if(longx == true)
+    {
+ $cordovaToast.showLongCenter(message).then(function(success) {
+    // success
+    console.log("Toast Success");
+  }, function (error) {
+    // error
+    console.log("Toast Failed");
+  });   
+    }
+
+else
+{
+$cordovaToast.showShortCenter(message).then(function(success) {
+    // success
+    console.log("Toast Success");
+  }, function (error) {
+    // error
+    console.log("Toast Failed");
+  });   
+
+}
+
+}
+
 $rootScope.LoadEditorControls = function(mType)
 {
 
@@ -77,7 +107,7 @@ $rootScope.AppUserInformation.EditorControls.isFileEnabled = false;
 }
 
 
-    
+
  
  $rootScope.StoreDocument = function(docname,obj)
  { //migrate to sqlite later;;
@@ -247,7 +277,7 @@ $rootScope.LoadNotificationCounts = function()
         console.log($rootScope.NotificationCounts[tag]);
         console.log(tag);
         console.log("Done");
-        $rootScope.$broadcast('NotificationEvent', [ProgramId, $rootScope.NotificationCounts[tag]]);
+        $rootScope.$broadcast('NotificationEvent', [ProgramId, $rootScope.NotificationCounts[tag],true]);
         return;
     }
     $rootScope.DecNotificationCounts = function(ProgramId) {
@@ -260,7 +290,7 @@ $rootScope.LoadNotificationCounts = function()
             $rootScope.NotificationCounts[tag] = 0;
         else
             $rootScope.NotificationCounts[tag] = $rootScope.NotificationCounts[tag] - 1;
-        $rootScope.$broadcast('NotificationEvent', [ProgramId, $rootScope.NotificationCounts[tag]]);
+        $rootScope.$broadcast('NotificationEvent', [ProgramId, $rootScope.NotificationCounts[tag],false]);
         return;
     }
     $rootScope.MarkAsRead = function(docid) {
@@ -334,7 +364,7 @@ $rootScope.LoadNotificationCounts = function()
         pushNotification.on('notification', function(data) {
             // Display the alert message in an alert.
             console.log(data);
-            alert(data.message);
+            $rootScope.ShowToast(data.message,false);
             console.log(data.additionalData.docID);
             var doc2req = {};
             doc2req.docID = data.additionalData.docID;
@@ -400,10 +430,11 @@ console.log("registering push notification");*/
             }
         });
         var registrationSuccess = function() {
-            alert('Registered with Azure!');
+            $rootScope.ShowToast("Registered with Server!",false);
         }
         var registrationFailure = function(error) {
-            alert('Failed registering with Azure: ' + error);
+            $rootScope.ShowToast("Failed registering with Server", false);
+            console.log('Failed registering with Server: ' + error);
         }
     }
     ;

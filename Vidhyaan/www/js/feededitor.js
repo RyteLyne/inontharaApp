@@ -151,7 +151,7 @@ Promise.all([imageUpload.getdata(entry)]).then(function(ret)
        {
       $ionicLoading.hide();
       console.log("Error uploading Image");
-      alert("unable to Upload Image");
+      $rootScope.ShowToast("unable to Upload Image",false);
       return;
        });
 
@@ -293,7 +293,7 @@ console.log("copy successful ",entry.nativeURL);
        {
 
       console.log("Error uploading Image");
-      alert("unable to Upload Image");
+      $rootScope.ShowToast("unable to Upload Image",false);
       return;
        });
 
@@ -523,14 +523,14 @@ console.log(req.data);
         success(function(data, status, headers, config) {
             // alter data if needed
           console.log(data);
-          alert("Message Sent");
+          $rootScope.ShowToast("Message Sent",false);
           $ionicLoading.hide();
           //close the view here;;
 
         }).
         error(function(data, status, headers, config) {
           console.log(data);
-          alert("Message Sending Failed");
+          $rootScope.ShowToast("Message Sending Failed",true);
           $ionicLoading.hide();
         });
 
