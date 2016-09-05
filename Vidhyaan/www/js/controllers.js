@@ -341,7 +341,7 @@ console.log("OK came here");
           if($rootScope.AppUserInformation.firstLogIn== false)
           {
                 initApp();
-                $ionicLoading.hide();
+                $ionicLoading.hide(); 
                 $state.go('app.home', {}, {
                     reload: true
                 });
@@ -350,13 +350,12 @@ console.log("OK came here");
    //get documents from server here;;
 
   
-
    Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"), datafactory.getdata( userId, ordId, "ChannelInfo")]).then(function() {
                
                 
                 initApp();
                 $ionicLoading.hide();
-                firstLogIn = false;
+                $rootScope.AppUserInformation.firstLogIn== false;
                 $state.go('app.home', {}, {
                     reload: true
                 });
@@ -364,10 +363,10 @@ console.log("OK came here");
             })//getdata promise;;
             .catch(function(err) {
                 
-                alert("Please check Internet Connection1");
+                alert("Unable to Query Server");
                 $ionicLoading.hide();
 
-                console.log("Please check Internet Connection1");
+                console.log("Unable to Query Server");
 
                 return;
             });
@@ -541,7 +540,7 @@ console.log("OK came here");
     { 
         error : function(e) { 
             console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
-            alert("Unable to Open File");
+            $rootScope.ShowToast("Unable to Open File",false);
         },
         success : function () {
             console.log('file opened successfully');                
@@ -568,7 +567,7 @@ console.log("OK came here");
        })
        .catch(function(err)
        {
-           alert("Unable to get Document");
+           $rootScope.ShowToast("Unable to get Document",false);
            console.log("Error getting or Storing doc");
 
        });
@@ -580,7 +579,7 @@ console.log("OK came here");
       {
 
           console.log(msg);
-          alert("Failed to Open File");
+          $rootScope.ShowToast("Failed to Open File",false);
       }
 
       Promise.all([$cordovaFile.checkFile($rootScope.rootDocPath,selItem.extra)]).then(function(result) {OpenDocFile($rootScope.rootDocPath + selItem.extra);}).catch(function(message){downLoadFile(message);});
