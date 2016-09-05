@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="510.46335"
+   height="510.46335"
+   id="svg7219"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="vidhyaanlogo.svg"
+   inkscape:export-filename="C:\Users\Shreyamsa\Desktop\vdyaanlogo.png"
+   inkscape:export-xdpi="118.90494"
+   inkscape:export-ydpi="118.90494">
+  <defs
+     id="defs7221">
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter7171">
+      <feFlood
+         flood-opacity="0.603"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood7173" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite7175" />
+      <feGaussianBlur
+         stdDeviation="2.7"
+         result="blur"
+         id="feGaussianBlur7177" />
+      <feOffset
+         dx="5.3"
+         dy="0.5"
+         result="offset"
+         id="feOffset7179" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite7181" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="519.52092"
+     inkscape:cy="524.74914"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="897"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata7224">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-138.37859,-237.8441)">
+    <path
+       id="rect6241"
+       transform="matrix(12.443931,0.11568398,-0.0837519,10.644912,1044.7048,1426.3574)"
+       style="color:#000000;fill:#00d4cd;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter7171);enable-background:accumulate;fill-opacity:1"
+       d="m -10.668289,-85.26046 c 1.0553988,0 1.9050518,1.019584 1.9050518,2.286062 0,1.266478 -0.849653,2.286062 -1.9050518,2.286062 -1.055398,0 -1.905051,-1.019584 -1.905051,-2.286062 0,-1.266478 0.849653,-2.286062 1.905051,-2.286062 z m -34.476467,-25.00379 c 0.426412,2.31092 0.462477,4.68737 0.112175,7.01107 -5.576413,0.23498 -11.133553,0.2754 -16.714373,0.22435 -0.426719,-2.31044 -0.462396,-4.68729 -0.112175,-7.01107 5.576724,-0.23516 11.133231,-0.2762 16.714375,-0.22435 z m 0.224352,9.47895 c 0.123113,7.476729 0.776285,11.656729 1.626565,15.704791 0.143773,0.683725 0.04827,1.347225 -0.280442,1.9631 -3.545267,6.645613 -5.929301,12.222363 -7.347586,15.87305 0.384305,0.323625 0.664132,0.804263 0.67306,1.346125 0.0162,0.9938 -0.80104,1.77855 -1.794839,1.794838 l 0,-0.112125 -0.05599,-3.477488 -0.28044,-17.780075 c 0.801375,-0.298925 1.324225,-1.140162 1.121768,-2.075262 -0.148608,-0.6849 -0.713942,-1.27075 -1.402208,-1.402213 -1.166876,-0.223912 -2.149883,0.674375 -2.131366,1.794838 0.002,0.101 0.03821,0.184412 0.05599,0.280437 0.0049,0.029 -0.0069,0.0835 0,0.112125 0.07771,0.330875 0.21727,0.609688 0.44871,0.841325 0.0069,0.0063 0.04829,0.04863 0.05599,0.05613 0.188185,0.17725 0.423064,0.30835 0.673059,0.392625 l 0.28045,17.780063 0.05599,3.477487 0,0.168263 c -0.01075,8.12e-4 -0.04414,1.25e-4 -0.05599,0 -0.977438,-0.0025 -1.778684,-0.813163 -1.794839,-1.794838 -0.0089,-0.542475 0.24327,-1.010387 0.61698,-1.346125 -1.537655,-3.602025 -4.090755,-9.06765 -7.852395,-15.5926 -0.348775,-0.604787 -0.45731,-1.3315 -0.33653,-2.019187 0.71653,-4.0744 1.244495,-8.228525 1.12177,-15.704794 3.533971,-0.0586 8.301104,-0.16826 8.301104,-0.16826 0,0 4.76712,-0.0536 8.30109,-0.11213 z"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\Shreyamsa\Desktop\rect3048-7.png"
+       inkscape:export-xdpi="118.90494"
+       inkscape:export-ydpi="118.90494" />
+  </g>
+</svg>
