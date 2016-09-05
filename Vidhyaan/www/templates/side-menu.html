@@ -32,7 +32,7 @@
                         <div ng-repeat="items in rightItems">
                             <div class="row" ng-if="$index%3==0">
                                 <div style="position:relative;" class="col col-33 col-center">
-                                    <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if="rightItems[$index]!=undefined" ng-click="itemclick(rightItems[$index].id,rightItems[$index].runson,rightItems[$index].text)">
+                                    <a class="element" ng-href="{{rightItems[$index].ref}}" ng-if="rightItems[$index]!=undefined" ng-click="itemclick(rightItems[$index])">
                                         <button class="button-circle" animate-ratio="fadeIn" menu-close>
                                             <i class="{{rightItems[$index].icon}}"></i>
                                         </button>
@@ -41,7 +41,7 @@
                                     </a>
                                 </div>
                                 <div style="position:relative;" class="col col-30 col-center">
-                                    <a class="element" ng-href="{{rightItems[$index+1].ref}}" ng-if="rightItems[$index+1]!=undefined" ng-click="itemclick(rightItems[$index+1].id,rightItems[$index+1].runson,rightItems[$index+1].text)">
+                                    <a class="element" ng-href="{{rightItems[$index+1].ref}}" ng-if="rightItems[$index+1]!=undefined" ng-click="itemclick(rightItems[$index+1])">
                                         <button class="button-circle" animate-ratio="fadeIn" menu-close>
                                             <i class="{{rightItems[$index+1].icon}}"></i>
                                         </button>
@@ -50,7 +50,7 @@
                                     </a>
                                 </div>
                                 <div style="position:relative;" class="col col-30 col-center">
-                                    <a class="element" ng-href="{{rightItems[$index+2].ref}}" ng-if="rightItems[$index+2]!=undefined" ng-click="itemclick(rightItems[$index+2].id,rightItems[$index+2].runson,rightItems[$index+2].text)">
+                                    <a class="element" ng-href="{{rightItems[$index+2].ref}}" ng-if="rightItems[$index+2]!=undefined" ng-click="itemclick(rightItems[$index+2])">
                                         <button class="button-circle" animate-ratio="fadeIn" menu-close>
                                             <i class="{{rightItems[$index+2].icon}}"></i>
                                         </button>
@@ -143,11 +143,11 @@
                                 &nbsp {{group.name}} <span class="badge badge-dark badge-shadow">{{group.cnt==0?"":group.cnt}}</span>
                                 <i style="position:absolute;right:90px;" class="icon" right:"5px" ng-class="isGroupShown(group) ? 'ion-ios-arrow-down' : 'ion-ios-arrow-right'"></i>
                             </ion-item>
-                            <ion-item id="mainmenu" ng-if="group.ref!=''" ng-href="{{group.ref}}" ng-click="itemclick(group.id,group.runson,group.name)" menu-close>
+                            <ion-item id="mainmenu" ng-if="group.ref!=''" ng-href="{{group.ref}}" ng-click="itemclick(group)" menu-close>
                                 <i style="font-size:24px;" class="icon {{group.icon}}"></i>
                                 &nbsp {{group.name}}<span class="badge badge-dark  badge-shadow">{{group.cnt==0?"":group.cnt}}</span>
                             </ion-item>
-                            <ion-item id="submenu" ng-repeat="item in group.items" ng-show="isGroupShown(group)" ng-href={{item.ref}} ng-click="itemclick(item.id,item.runson,item.name)" menu-close>
+                            <ion-item id="submenu" ng-repeat="item in group.items" ng-show="isGroupShown(group)" ng-href={{item.ref}} ng-click="itemclick(item)" menu-close>
                                 <i style="font-size:24px;" class="icon {{item.icon}}"></i>
                                 &nbsp {{item.name}}<span class="badge badge-shadow badge-dark">{{item.cnt==0?"":item.cnt}}</span>
                             </ion-item>

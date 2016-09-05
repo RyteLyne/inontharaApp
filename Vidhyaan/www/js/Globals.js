@@ -9,6 +9,7 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
     if (window.cordova) {
     $rootScope.rootFeedImagePath = cordova.file.dataDirectory;
     $rootScope.rootAvatarPath = cordova.file.dataDirectory;
+    $rootScope.rootDocPath = cordova.file.externalDataDirectory;
     }
 
     $rootScope.feedNotificationBadge="false";
@@ -31,8 +32,18 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
         Class: "",
         UserAvatar: "",
         DocId: "",
+        firstLogIn: false,
+        ProgramType : "",
         //used to traverse from timeline;;
-        PrivLevels: {}
+        PrivLevels: {},
+        EditorControls : {
+        isGalleryEnabled : true,
+        isVideoEnabled : true,
+        isCameraEnabled : true,
+        isTextEnabled : true,
+        isHeadingEnabled : true,
+        isFileEnabled : true
+        }
     }
     $rootScope.BuildTag = function(channel, progid, orgid) {
         tag = channel + "_" + progid + "_" + orgid;
@@ -42,6 +53,50 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
     $rootScope.NotificationCounts = {};
     //$rootScope.ServerStatus=0;
     //$rootScope.pushNotification;
+
+
+$rootScope.LoadEditorControls = function(mType)
+{
+
+$rootScope.AppUserInformation.EditorControls.isGalleryEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isVideoEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isCameraEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isTextEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isHeadingEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isFileEnabled = true;
+
+if(mType == "Notes")
+{
+  $rootScope.AppUserInformation.EditorControls.isVideoEnabled = false;
+}
+else
+{
+$rootScope.AppUserInformation.EditorControls.isFileEnabled = false;
+}
+
+}
+
+
+    
+ 
+ $rootScope.StoreDocument = function(docname,obj)
+ { //migrate to sqlite later;;
+
+window.localStorage.setItem(docname, JSON.stringify(obj));
+
+ }
+
+ /*$rootScope.GetChannelNames = function(channelIds)
+ {
+   var Channels = $rootScope.GetDocument("ChannelInfo");
+   var ChannelNames = [];
+   for(var i = 0; i< channelIds.length;i++)
+   {
+
+
+   }
+ }*/
+ 
     $rootScope.GetProgramChannels = function(runson, subscribedchannels) {
         var userchannels = [];
         for (var i = 0; i < subscribedchannels.length; i++) {
@@ -237,6 +292,8 @@ $rootScope.LoadNotificationCounts = function()
             console.log("read noti failed");
         })
     }
+
+
     $rootScope.GetDocument = function(docname) {
         var ret = {};
         if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
@@ -246,6 +303,8 @@ $rootScope.LoadNotificationCounts = function()
         }
         return ( ret) ;
     }
+
+
     $rootScope.GetChannelTag = function(channelId, ProgramId) {
         return ( channelId + "-" + ProgramId) ;
     }
@@ -386,18 +445,23 @@ console.log("registering push notification");*/
             console.log('Error occurred while insert');
         })
     }
-}).factory('datafactory', function($http, $q) {
+})
+
+
+
+.factory('datafactory', function($http, $q) {
     var factory = {};
     factory.getdata = function(subid, orgid, docname) {
         var defer = $q.defer();
         if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
             return;
         //temp line;;
-        window.localStorage.removeItem(docname);
-        if (window.localStorage.getItem(docname) != undefined) {
+       // window.localStorage.removeItem(docname);
+       /* if (window.localStorage.getItem(docname) != undefined) {
             console.log("found in local storage");
             defer.resolve("");
-        }
+        }*/
+
         var details = {
             "SubId": subid,
             //subscriberId
@@ -420,6 +484,7 @@ console.log("registering push notification");*/
             console.log(data);
             console.log("server success");
             window.localStorage.setItem(docname, JSON.stringify(data.Data));
+            //$rootScope.StoreDocument(docname,data.Data);
             defer.resolve(data.Data);
         }).error(function(data, status, headers, config) {
             console.log(data);
@@ -430,7 +495,11 @@ console.log("registering push notification");*/
         return defer.promise;
     }
     return factory;
-}).factory('feedlistfactory', function($q, $cordovaSQLite, $rootScope) {
+})
+
+
+
+.factory('feedlistfactory', function($q, $cordovaSQLite, $rootScope) {
     var factory = {};
     factory.getdata = function(progid) {
         var defer = $q.defer();
@@ -559,7 +628,7 @@ console.log("registering push notification");*/
             // alter data if needed
             console.log(data);
             console.log("server success login");
-            defer.resolve(data.Data);
+            defer.resolve(data);
         }).error(function(data, status, headers, config) {
             console.log(data);
             //  defer.reject();
@@ -569,4 +638,83 @@ console.log("registering push notification");*/
         return defer.promise;
     }
     return factory;
-});
+})
+
+
+
+.factory('blobDownloadFactory', function($http, $q,$cordovaFile) {
+    var factory = {};
+   factory.getdata = function(blobName, localPath) {
+ var defer = $q.defer();
+var fileToRecieve = {"fileName": blobName};
+var pathToStore = localPath;
+ console.log("fileToRecieve" , fileToRecieve);
+ console.log("pathToStore" , pathToStore);
+
+ var req = 
+{
+    method: 'POST',
+    url: "http://chungling.azurewebsites.net/getblob/",
+    data: jQuery.param(fileToRecieve),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}
+          $http(req).
+        success(function(data, status, headers, config) { 
+          console.log("downoad data:", data);
+             var uriWithAccess = data.sasUrl;
+    var xhr = new XMLHttpRequest();
+        xhr.onerror =  function(e) {
+            console.log('some thing went wrong in image fallback xhr');
+             defer.reject();
+        }
+  //      xhr.onloadend = uploadCompleted;
+        xhr.open("GET", uriWithAccess, true);
+        xhr.setRequestHeader('x-ms-blob-type', 'BlockBlob');
+        xhr.setRequestHeader('x-ms-blob-content-type', 'image/jpeg');
+
+      //  var progressBar = document.querySelector('progress');
+       
+  xhr.onprogress = function(e) {
+    if (e.lengthComputable) {
+        console.log((e.loaded / e.total) * 100);
+    //  progressBar.value = (e.loaded / e.total) * 100;
+  //    progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
+   //console.log(progressBar.value);
+  // $scope.$apply();
+    }
+  };
+
+  xhr.responseType = 'arraybuffer';
+
+xhr.onload = function(e) {
+  if (this.status == 200) {
+$cordovaFile.writeFile(pathToStore, fileToRecieve.fileName, this.response, true)
+            .then(function(success) {
+              console.log("stored File");
+              defer.resolve();
+                //success
+            }, function(error) {
+
+               console.log("error storing file");
+                defer.reject();
+
+            });
+    
+  }
+};
+
+        xhr.send();
+
+        }).
+        error(function(data, status, headers, config) {
+          console.log(data);
+          defer.reject();
+         
+        });
+
+         return defer.promise;
+    }//end of get data
+
+    return factory;
+
+}); //end of factory

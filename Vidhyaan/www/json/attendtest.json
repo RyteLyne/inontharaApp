@@ -1,0 +1,50 @@
+{
+"DocumentHeader": {
+    "DocumentType": "SubsciberList",
+    "Author": "shrey/gautham",
+    "OrganizationId": "npsbsk",
+    "OrganizationName": "National Public School BSK",
+    "Datetime": "782345234543213",
+    "DocumentId": "100001",
+    "version": "1.0",
+    "tags": "default"
+  },
+  "DocumentSubHeader": {
+    "ChannelId": "1A-npsbsk",
+    "ProgramId": "default",
+    "ModeratorId": "default"
+  },
+  "DocumentBody": {
+    "ApplicationSpecificData": {
+	"subcribers": [{
+			"subId": "1234-npsbsk",
+			"name": "siddhant",
+			"avatar": "1234_npsbsk_avatar.jpg",
+			"role": "student"
+		}, {
+			"subId": "1235-npsbsk",
+			"name": "samrudh",
+			"avatar": "1235-npsbsk_Avatar.jpg",
+			"role": "student"
+		}, {
+			"subId": "1236-npsbsk",
+			"name": "namish",
+			"avatar": "1234-npsbsk_Avatar.jpg",
+			"role": "student"
+		}, {
+			"subId": "1237-npsbsk",
+			"name": "gautham",
+			"avatar": "1237-npsbsk_Avatar.jpg",
+			"role": "teacher"
+		}, {
+			"subId": "1238-npsbsk",
+			"name": "shreyamsa",
+			"avatar": "1238-npsbsk_Avatar.jpg",
+			"role": "principal"
+		}
+
+	]
+	}
+	}
+
+}

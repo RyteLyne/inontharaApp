@@ -14,7 +14,7 @@
             auto-play="true"on-slide-changed="slideChanged(index)">
           <ion-slide ng-repeat="slide in slides">
            <img ng-src="{{'img/'+slide.name}}" </img>
-            <p> {{slide.msg}} </p>
+            <!--<p> {{slide.msg}} </p>-->
             
           </ion-slide>
      
@@ -59,7 +59,7 @@
                 <p class="marginTop5 cd-author">by {{activity.Author}}, </p>
                 <span am-time-ago = activity.DateTime> </span>
                  <div ng-if="activity.Image!=''">
-              <img  image = "{{rootFeedImagePath + activity.Image}}" style="max-width:100%"></img> 
+              <img  image = "{{rootFeedImagePath + activity.Image}}" style="max-width:100%;"></img> 
               </div>
                 <p class="timelineText">{{activity.TextPreview}}</p>
               </div>

@@ -98,34 +98,67 @@ AssignmentsCtrl
 ]
 }).controller('CardCtrl', function($scope, TDCardDelegate) {
     console.log("in CardCtrl");
-}).controller('CardsCtrl', function($scope, TDCardDelegate, $timeout) {
+})
+
+
+.controller('CardsCtrl', function($scope, TDCardDelegate, $timeout) {
     console.log("in AttendanceCtrl");
-    var cardTypes = [{
-        image: 'http://c4.staticflickr.com/4/3924/18886530069_840bc7d2a5_n.jpg'
-    }, {
-        image: 'http://c1.staticflickr.com/1/421/19046467146_548ed09e19_n.jpg'
-    }, {
-        image: 'http://c1.staticflickr.com/1/278/18452005203_a3bd2d7938_n.jpg'
-    }, {
-        image: 'http://c1.staticflickr.com/1/297/19072713565_be3113bc67_n.jpg'
-    }, {
-        image: 'http://c1.staticflickr.com/1/536/19072713515_5961d52357_n.jpg'
-    }, {
-        image: 'http://c4.staticflickr.com/4/3937/19072713775_156a560e09_n.jpg'
-    }, {
-        image: 'http://c1.staticflickr.com/1/267/19067097362_14d8ed9389_n.jpg'
-    }];
-    $scope.cards = {
+
+/*
+   var sub = $rootScope.GetDocument("SubscriberInfo");
+
+   var subChannels = sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
+
+   var ProgramId = $rootScope.AppUserInformation.SelProgram;
+
+   var Role = sub.DocumentBody.ApplicationSpecificData.SubscriberRole;
+
+   $rootScope.AppUserInformation.runson;
+
+
+   if($rootScope.AppUserInformation.WritePriv == true) // can take attendence;;
+   {
+
+
+
+   }*/
+
+
+   
+
+
+    jQuery.getJSON('json/attendtest.json', function(data) {
+
+        var tp = data.DocumentBody.ApplicationSpecificData.subcribers;
+        var cardTypes = [];
+     
+      for(var i = 0;i<tp.length;i++)
+      {
+        if(tp[i].role=="student")
+        cardTypes.push(angular.extend({},tp[i]));
+      }
+  
+
+
+        $scope.cards = {
         master: Array.prototype.slice.call(cardTypes, 0),
         active: Array.prototype.slice.call(cardTypes, 0),
         discards: [],
         liked: [],
         disliked: []
     }
+
+    })
+
+   
+
+
+   
+
     $scope.cardDestroyed = function(index) {
         $scope.cards.active.splice(index, 1);
-    }
-    ;
+    };
+
     $scope.addCard = function() {
         var newCard = cardTypes[0];
         $scope.cards.active.push(angular.extend({}, newCard));
@@ -260,29 +293,90 @@ AssignmentsCtrl
     });
 })
 
-.controller('SplashCtrl', function($scope, $rootScope, $state) {
+.controller('SplashCtrl', function($scope, $rootScope, $state,$ionicLoading,datafactory) {
     $scope.Credentials = {
         username: "",
         password: ""
     }
-    if (window.localStorage.getItem("username") != undefined && window.localStorage.getItem("password") != undefined) //default settings;;
+
+    console.log("OK came here 1");
+
+     if (!(window.localStorage.getItem("username") != undefined && window.localStorage.getItem("password") != undefined)) //default settings;;
     {
+       $state.go('login', {}, {
+            reload: true
+        });
+
+        console.log("Going back to Login");
+
+       return;
+    }
+
+    $ionicLoading.show({
+      template: 'Initializing...'
+       });
+
+console.log("OK came here");
         $scope.Credentials.username = window.localStorage.getItem("username");
         $scope.Credentials.password = window.localStorage.getItem("password");
+
+        var sub = $rootScope.GetDocument("SubscriberInfo");
+
+        var userId = sub.DocumentBody.ApplicationSpecificData.SubscriberID;
+        var ordId = sub.DocumentHeader.OrganizationId;
+
+        var initApp=function()
+         {
+
         $rootScope.InitStorage();
         $rootScope.LoadNotificationCounts();
         $rootScope.GetAllTags();
         if (window.cordova) {
             $rootScope.InitPush();
         }
-        //login to server here, if success redirect to home page;;
-        $state.go('app.home', {}, {
-            reload: true
-        });
-    } else
-        $state.go('login', {}, {
-            reload: true
-        });
+        
+          }
+
+
+          if($rootScope.AppUserInformation.firstLogIn== false)
+          {
+                initApp();
+                $ionicLoading.hide();
+                $state.go('app.home', {}, {
+                    reload: true
+                });
+          }
+
+   //get documents from server here;;
+
+  
+
+   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"), datafactory.getdata( userId, ordId, "ChannelInfo")]).then(function() {
+               
+                
+                initApp();
+                $ionicLoading.hide();
+                firstLogIn = false;
+                $state.go('app.home', {}, {
+                    reload: true
+                });
+                console.log("promise promise");
+            })//getdata promise;;
+            .catch(function(err) {
+                
+                alert("Please check Internet Connection1");
+                $ionicLoading.hide();
+
+                console.log("Please check Internet Connection1");
+
+                return;
+            });
+
+
+
+
+
+
 })
 
 
@@ -295,8 +389,10 @@ AssignmentsCtrl
     jQuery.getJSON('json/settings.json', function(data) {
         $scope.loginImages = data.loginScreen;
     });
+
     $scope.Credentials.username = "1234-npsbsk";
     $scope.Credentials.password = "1234";
+
     $scope.login = function Login() {
         $ionicLoading.show({
       template: 'Logging In...'
@@ -305,61 +401,41 @@ AssignmentsCtrl
         $scope.scrollSmallToTop();
         console.log("UserName: ", $scope.Credentials.username, "Password: ", $scope.Credentials.password);
         Promise.all([loginfactory.getdata($scope.Credentials.username, $scope.Credentials.password)]).then(function(data) {
-            console.log(data);
-            if (data == "false") {
+            console.log("serverdata",data);
+
+
+            if (data[0].Result == "true") {
+            console.log("Log in Success");
+            window.localStorage.setItem("username", $scope.Credentials.username);
+            window.localStorage.setItem("password", $scope.Credentials.password);
+            $ionicLoading.hide(); 
+            console.log("subinfo",data[0].Data);
+            $rootScope.StoreDocument("SubscriberInfo",data[0].Data);
+            $rootScope.AppUserInformation.firstLogIn = true;
+             $state.go('splash', {}, {
+                    reload: true
+                });
+            }
+
+            else{
                 console.log("Unable to Login");
                 alert("Unable to Login");
                 $ionicLoading.hide();
                 return;
             }
-            // console.log("Mob Service client
-            //console.log($rootScope.mobileServiceClient);
-            console.log("new log in");
-            window.localStorage.setItem("username", $scope.Credentials.username);
-            window.localStorage.setItem("password", $scope.Credentials.password);
-            console.log("Getting From Server");
-            Promise.all([datafactory.getdata( $scope.Credentials.username, "npsbsk", "SubscriberInfo"), datafactory.getdata( $scope.Credentials.username, "npsbsk", "ProgramInfo"), datafactory.getdata( $scope.Credentials.username, "npsbsk", "ChannelInfo")]).then(function() {
-                $rootScope.InitStorage();
-                $rootScope.LoadNotificationCounts();
-                $rootScope.GetAllTags();
-                console.log($rootScope.AvailableChannels);
-                console.log("before push registration");
-                if (window.cordova) {
-                $rootScope.InitPush();
-                }
-                $ionicLoading.hide();
-                $state.go('app.home', {}, {
-                    reload: true
-                });
-                console.log("promise promise");
-            })//getdata promise;;
-            .catch(function(err) {
-                //force login next time;;
-                //window.localStorage.removeItem("username"); //uncomment these lines later;;
-                //window.localStorage.removeItem("password");
 
-                alert("Please check Internet Connection1");
-                $ionicLoading.hide();
 
-                console.log("Please check Internet Connection1");
-
-                return;
-            });
         })//login promise;;
         .catch(function(err) {
 
-            alert("Please check Internet Connection2");
+            alert("Error Logging In..\nPlease check Internet Connection");
+            console.log("Error Logging In..\nPlease check Internet Connection");
             $ionicLoading.hide();
-
-          console.log("Please check Internet Connection2");
-
             return;
         });
-        //login to server here, if success redirect to home page;;
-        //if($scope.Credentials.username == "1234" && $scope.Credentials.password == "1234")
-        //{
+       
     }
-    //}
+    
     $scope.scrollSmallToTop = function() {
         console.log("did i scroll");
         $ionicScrollDelegate.$getByHandle('simpleScrollAnime').scrollTop(true);
@@ -434,7 +510,7 @@ AssignmentsCtrl
     });
 })
 
-.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet, feeddetailsfactory) {
+.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet, feeddetailsfactory,blobDownloadFactory) {
     $scope.readFunc = function() {}
     $scope.goBack = function() {
         $ionicHistory.goBack();
@@ -455,6 +531,62 @@ AssignmentsCtrl
     });
     //$scope.messages = JSON.parse(localStorage.getItem('recievedMessage'));
     //console.log($scope.messages);
+
+   function OpenDocFile(path)
+   {
+
+    cordova.plugins.fileOpener2.open(
+    path, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
+    'application/pdf', 
+    { 
+        error : function(e) { 
+            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+            alert("Unable to Open File");
+        },
+        success : function () {
+            console.log('file opened successfully');                
+        }
+    }
+);
+
+   }
+
+    $scope.OnFileClick= function(selItem)
+     {
+
+      
+       
+   function downLoadFile()
+        {
+
+       //console.log("File Clicked", fileexist);
+       Promise.all([blobDownloadFactory.getdata(selItem.extra,$rootScope.rootDocPath)]).then(function(){
+
+       console.log($rootScope.rootDocPath + selItem.extra);
+       OpenDocFile($rootScope.rootDocPath + selItem.extra);
+
+       })
+       .catch(function(err)
+       {
+           alert("Unable to get Document");
+           console.log("Error getting or Storing doc");
+
+       });
+
+     }//end of downloadFile
+
+
+      function fileError(msg)
+      {
+
+          console.log(msg);
+          alert("Failed to Open File");
+      }
+
+      Promise.all([$cordovaFile.checkFile($rootScope.rootDocPath,selItem.extra)]).then(function(result) {OpenDocFile($rootScope.rootDocPath + selItem.extra);}).catch(function(message){downLoadFile(message);});
+
+         
+     }
 })
 
 
@@ -505,6 +637,10 @@ AssignmentsCtrl
             return;
         });
     }
+
+     
+
+
     $scope.LoadTimeLine();
     $scope.itemclick = function(docId,ProgId) {
         console.log("clicked");

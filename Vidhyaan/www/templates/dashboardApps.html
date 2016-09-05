@@ -1,5 +1,5 @@
 <ion-view view-title="Dashboard App">
-    <div ng-if="AppUserInformation.SelProgram=='51-npsbsk'">
+    <div ng-if="AppUserInformation.ProgramType=='Radio'">
         <div ng-controller='RadioCtrl'>
         <ion-content>
         </ion-content>
@@ -12,7 +12,7 @@
   </div>
   </div> -->
 </div>
-<div ng-if="AppUserInformation.SelProgram=='52-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Dairy'">
     <div ng-controller='DiaryCtrl'>
         <div class="card">
             <div class="item item-avatar">
@@ -34,32 +34,29 @@
     </div>
 </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='53-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='TimeTable'">
     <div ng-controller=TimetableCtrl>bye
   </div>
 </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='54-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Attendance'">
     <ion-pane>
         <div ng-controller="CardsCtrl" class="background-grey">
             <div class="td-title">
                 <div class="row">
                     <div class="col">
-                        Master: <span>{{ cards.master.length }}</span>
+                        Total: <span>{{ cards.master.length }}</span>
                     </div>
                     <div class="col">
-                        Cards: <span>{{ cards.active.length }}</span>
-                    </div>
-                    <div class="col">
-                        Discards: <span>{{ cards.discards.length }}</span>
+                        Remaining: <span>{{ cards.active.length }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        Liked: <span>{{ cards.liked.length }}</span>
+                        Present: <span>{{ cards.liked.length }}</span>
                     </div>
                     <div class="col">
-                        Disliked: <span>{{ cards.disliked.length }}</span>
+                        Absent: <span>{{ cards.disliked.length }}</span>
                     </div>
                 </div>
             </div>
@@ -84,8 +81,9 @@
                 - onClickTransitionOut is found in ionic.tdcards.js
                 - Animation can be customized by changing defaults
               ************************* -->
-                            <div class="discard" ng-click="onClickTransitionOut(card)">DISCARD</div>
-                            <img ng-src="{{ card.image }}">
+                            <div class="discard" ng-click="onClickTransitionOut(card)">{{card.name}}</div>
+                            <img  image = "{{rootAvatarPath + card.avatar}}"></img>
+                            <!--<img ng-src="{{ card.avatar }}">-->
                         </div>
                     </td-card>
                     <!-- *************************
@@ -101,7 +99,7 @@
         </div>
     </ion-pane>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='55-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Gallery'">
     <div ng-controller=GalleryCtrl style="height:100vh;">
         <h4 style:"color:solid black; text-align:center;">
             School annual Day, 12-12-1980 
@@ -123,53 +121,53 @@
   -->
 </fab-button>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='56-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='UserMessages'">
     <div ng-controller=MessagesCtrl>bye
   </div>
 </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='57-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Calender'">
     <div ng-controller=CalendarCtrl>bye
   </div>
 </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='58-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='NoticeBoard'">
     <div ng-controller=NoticeboardCtrl>bye
   </div>
 </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='59-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='OnlineTest'">
     <div ng-controller=OnlineCtrl>bye
   </div>
 </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='60-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Survey'">
     <div ng-controller=SurveyCtrl>bye
   </div>
 </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='61-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Assignments'">
     <div ng-controller=AssignmentsCtrl>bye
   </div>
 </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='62-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Sylabus'">
     <div ng-controller="SyllabusCtrl">bye
   </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='63-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Payments'">
     <div ng-controller="PaymentsCtrl">bye
   </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='64-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Magazine'">
     <div ng-controller="MagazinesCtrl">bye
   </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='65-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Notes'">
     <div ng-controller="NotesCtrl">bye
   </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='66-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='LocateMe'">
     <div ng-controller="LocatemeCtrl">
         <div style="width:100%;height:400px" id="map_canvas"></div>
         Map above
@@ -178,15 +176,15 @@
     
     </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='67-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='LostFound'">
     <div ng-controller="LostnfoundCtrl">bye
   </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='70-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Results'">
     <div ng-controller="ResultsCtrl">bye
   </div>
 </div>
-<div ng-if="AppUserInformation.SelProgram=='69-npsbsk'">
+<div ng-if="AppUserInformation.ProgramType=='Leaves'">
     <div ng-controller="LeavesCtrl">bye
   </div>
 </div>
