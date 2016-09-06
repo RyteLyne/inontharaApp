@@ -11,13 +11,15 @@
 
 
   <div ng-repeat = "data in newslist" style="text-decoration:none;">
-   <div class="card" ng-click = itemclick(data.MsgId)>
+   <div class="card" ng-click = itemclick(data.MsgId) style="position:relative">
    <div class="item item-avatar">
     <img image = "{{rootAvatarPath + data.Avatar}}" image-holder="img/avatar.svg"></img>
       <h2> {{data.Heading}} <h2>
+       <h3>new post from {{data.Author}}</h3>
+       <div style="position:absolute;top:0px;right:4px;">
        <p ng-if = "data.Unread == 0"> read </p>
        <p ng-if = "data.Unread == 1"> unread </p>      
-      <h3>{{data.Author}}</h3>
+       </div>
         <h4>{{data.DateTime}}</h4>
    </div>
 

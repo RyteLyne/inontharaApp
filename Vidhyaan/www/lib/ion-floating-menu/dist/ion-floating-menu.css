@@ -18,9 +18,9 @@
     position: fixed;
     right: 20px;
     z-index : 9999;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -72,9 +72,9 @@
     position: fixed;
     right: 20px;
     z-index: 9999;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
     list-style-type: none;
     margin: 0;
     padding: 0;

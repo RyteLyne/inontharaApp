@@ -286,8 +286,9 @@ AssignmentsCtrl
 
 
 
-.controller('slideCtrl', function($scope, $state, $ionicHistory) {
+.controller('slideCtrl', function($scope, $state, $ionicHistory, $ionicNavBarDelegate) {
     console.log("in SlideCtrl");
+       $ionicNavBarDelegate.align('left');
     jQuery.getJSON('json/settings.json', function(data) {
         $scope.slides = data.slideImages;
     });
@@ -393,6 +394,7 @@ console.log("OK came here");
     $scope.Credentials.password = "1234";
 
     $scope.login = function Login() {
+
         $ionicLoading.show({
       template: 'Logging In...'
        });

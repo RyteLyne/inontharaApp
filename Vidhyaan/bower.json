@@ -19,7 +19,5 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "ion-gallery": "~0.1.14"
-  }
+  "dependencies": {}
 }

@@ -1,8 +1,7 @@
 <ion-view view-title="Dashboard App">
     <div ng-if="AppUserInformation.ProgramType=='Radio'">
         <div ng-controller='RadioCtrl'>
-        <ion-content>
-        </ion-content>
+            <ion-content></ion-content>
         </div>
     </div>
     <!--  <div ng-if="AppUserInformation.SelProgram==14" >
@@ -82,7 +81,7 @@
                 - Animation can be customized by changing defaults
               ************************* -->
                             <div class="discard" ng-click="onClickTransitionOut(card)">{{card.name}}</div>
-                            <img  image = "{{rootAvatarPath + card.avatar}}"></img>
+                            <img image="{{rootAvatarPath + card.avatar}}"></img>
                             <!--<img ng-src="{{ card.avatar }}">-->
                         </div>
                     </td-card>
@@ -100,26 +99,65 @@
     </ion-pane>
 </div>
 <div ng-if="AppUserInformation.ProgramType=='Gallery'">
-    <div ng-controller=GalleryCtrl style="height:100vh;">
-        <h4 style:"color:solid black; text-align:center;">
-            School annual Day, 12-12-1980 
-            
-            
-            <h4>
-                <ion-gallery ion-gallery-items="items"></ion-gallery>
-                <h4 style:"color:solid black; text-align:center;">
-                    School annual Day, 12-12-1981 
-                    
-                    
-                    <h4>
-                        <ion-gallery ion-gallery-items="items1"></ion-gallery>
+    <div ng-controller=GalleryCtrl style="height:100vh;"></div>
+    <ion-view view-title="Explore">
+
+    <ion-content>
+ <div class="card">
+  <div class="item item-avatar">
+    <img image = "{{rootAvatarPath + data.Avatar}}" image-holder="img/avatar.svg"></img>
+      <h2> School annual day <h2>
+        <h3>Shreyamsa has posted to gallery</h3>
+        <h4>{{data.DateTime}}</h4>
     </div>
+ <div>
+
+    <ul class="gallery" style="margin-left:5%;">
+
+    <li class="gallery">
+
+      <a href="#"><img src="http://placehold.it/50x50"></a>
+
+    </li>
+
+    <li class="gallery" style="list-style-type: none;">
+
+      <a href="#"><img src="http://placehold.it/50x50"></a>
+
+    </li>
+
+    <li class="gallery" style="list-style-type: none;">
+
+      <a href="#"><img src="http://placehold.it/50x50"></a>
+
+    </li>
+
+    <li class="gallery" style="list-style-type: none;">
+
+      <a href="#"><img src="http://placehold.it/50x50"></a>
+
+    </li>
+
+    <li class="gallery" style="list-style-type: none;">
+
+      <a href="#"><img src="http://placehold.it/50x50"></a>
+
+    </li>
+
+    <li class="gallery" style="list-style-type: none;">
+
+      <a href="#"><img src="http://placehold.it/50x50"></a>
+
+    </li>
+
+      </ul>
 </div>
-<fab-button target-id="scrollFabButtonTarget">
-    <a class="icon ion-plus-round" style="text-align:center;" href="#/app/newsPostEditor"></a>
-    <!--    <i class="icon ion ion-android-create"></i>
-  -->
-</fab-button>
+</div> 
+
+    </ion-content>
+
+</ion-view>
+    
 </div>
 <div ng-if="AppUserInformation.ProgramType=='UserMessages'">
     <div ng-controller=MessagesCtrl>bye
@@ -172,6 +210,9 @@
         <div style="width:100%;height:400px" id="map_canvas"></div>
         Map above
 
+    
+    
+    
     
     
     </div>
