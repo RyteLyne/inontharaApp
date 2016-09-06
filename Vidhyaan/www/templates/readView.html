@@ -40,6 +40,11 @@ navigation history that also transitions its views in and out.
       
   
       </ion-content>
-  
 
-    </ion-view>
+  <div ng-if = "canReply == 1">
+  <ion-floating-button click="OnReplyClick()" has-footer="false" button-color="#2AC9AA" icon="ion-reply" icon-color="#fff">
+ 
+  </ion-floating-button>
+  </div> 
+  
+</ion-view>

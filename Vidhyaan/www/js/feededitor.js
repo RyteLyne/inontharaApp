@@ -5,6 +5,7 @@ angular.module('Editor.controllers', ['ngCordova'])
 
 //$scope.messages = [];
 $scope.serverMessage = [];
+$scope.TagsToSend = [];
 $scope.typedData= {};
 $scope.typedData.data = "";
 //$scope.firstImage = "";
@@ -322,7 +323,7 @@ for(var i=0;i<$rootScope.AppUserInformation.runson.length;i++)
 {
 
   item.Title = $rootScope.AppUserInformation.runson[i]; //should be name;;
-  item.Id = $rootScope.AppUserInformation.runson[i]; //should be name;;
+  item.Id = $rootScope.AppUserInformation.runson[i];
   item.ischecked = false;
 
    $scope.Channels.push( angular.extend({}, item));
@@ -345,7 +346,10 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
   $scope.postMessage =function()
   {
     if($scope.serverMessage.length <1) // not even one message;;
+    {
+     $rootScope.ShowToast("Cannot Send Empty Message", false);
     return;
+    }
 
     console.log($scope.serverMessage);
     if($rootScope.AppUserInformation.runson.length > 1)
@@ -353,10 +357,29 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
     else
     {
        $scope.TagsToSend = [];
-       var tag =$rootScope.BuildTag($rootScope.AppUserInformation.runson[0],
-						$rootScope.AppUserInformation.SelProgram,
-						$rootScope.AppUserInformation.OrgId);
-       $scope.TagsToSend.push( angular.extend({}, tag));
+       
+       var item = {}
+
+      item.Title = $rootScope.AppUserInformation.runson[0]; //should be name;;
+      item.Id = $rootScope.AppUserInformation.runson[0];
+      item.ischecked = true;
+
+      $scope.Channels.push( angular.extend({}, item));
+
+     if($rootScope.AppUserInformation.ProgramType == "Leaves" || "Feedback")
+     ret = $scope.BuildTagsApps($rootScope.AppUserInformation.ProgramType);
+     else
+     ret = $scope.BuildTagsFeeds();
+
+    console.log( $scope.TagsToSend);
+
+    if(ret==false)
+    {
+      $rootScope.ShowToast("No Channel to Send Message",false);
+     return;
+
+    }
+
        SendMessageToServer();
       
     }
@@ -380,17 +403,11 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
   }
 
 
-   $scope.OnOkChannelSel = function()
-   {
-    //console.log("Ok selected Channel Sel");
-    //if($scope.AllChannels.checked == true)
-    //console.log("All Channels Selected");
-    //else
-    //console.log("All not selected");
+  $scope.BuildTagsFeeds = function()
+  {
 
-    $scope.TagsToSend = [];
-
-    for(var i=0;i<$scope.Channels.length;i++)
+  console.log("Tags Feed");
+   for(var i=0;i<$scope.Channels.length;i++)
     {
      if($scope.Channels[i].ischecked == true)
      {
@@ -399,20 +416,111 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
       var tag =$rootScope.BuildTag($scope.Channels[i].Id,
 						$rootScope.AppUserInformation.SelProgram,
 						$rootScope.AppUserInformation.OrgId);
-       $scope.TagsToSend.push( angular.extend({}, tag));
+       $scope.TagsToSend.push(tag);
      }
 
+     console.log("FeedTagToSend",$scope.TagsToSend);
+
     }
 
-    console.log( $scope.TagsToSend);
-    
-    if($scope.TagsToSend.length >0)//atleast one channel selected;;
+    if( $scope.TagsToSend.length <=0)
+    return(false);
+
+    return(true);
+
+  }
+
+  $scope.BuildTagsApps= function(appType) //builds tags for apps like leaves and feedback;;
+  {
+
+    console.log("Tags Apps");
+    var channelSummary = $rootScope.GetDocument("ChannelSummary");
+
+    if(channelSummary == undefined)
+     return(false);
+
+    var appData = channelSummary.DocumentBody.ApplicationSpecificData;
+
+   
+    for(var i=0;i<$scope.Channels.length;i++)
     {
+     if($scope.Channels[i].ischecked == true)
+     {
+       console.log("Checked");
+       if(appData[$scope.Channels[i].Id]==undefined) //channel entry does not exist;;
+         continue;
+
+       var Channel = appData[$scope.Channels[i].Id];
+
+       var Target = "";
+
+       if(appType == "Leaves")
+       Target = "LeaveIncharge";
+       else if(appType == "Feedback")
+       Target = "FeedBackIncharge";
+
+       if(Channel[Target]== undefined)
+        continue;
+
+        var TargetIds = Channel[Target];
+
+        console.log("TargetIds:", TargetIds);
+
+
+        for(var k=0;k<TargetIds.length;k++){
+
+      var tag =$rootScope.BuildUserTag(TargetIds[k],
+						$rootScope.AppUserInformation.OrgId);
+						console.log("TagsToSend2",tag);
+       $scope.TagsToSend.push(tag);
+        }
+
+        console.log("TagsToSend1",$scope.TagsToSend);
+
+
+       }
+   
+     }
+
+     if( $scope.TagsToSend.Length <= 0)
+      return(false); //not even one tag found;;
+
+
+      return(true);
+
+    }//end of BuildTagsApps
+  
+
+
+   $scope.OnOkChannelSel = function()
+   {
+    
+    if($scope.Channels.length <=0)//atleast one channel selected;;
+    {
+      $rootScope.ShowToast("Select Atleast one Channel",false);
+     return;
+    }
+
+    $scope.TagsToSend = [];
+    var ret =false;
+
+    if($rootScope.AppUserInformation.ProgramType == "Leaves" || $rootScope.AppUserInformation.ProgramType == "Feedback")
+     ret = $scope.BuildTagsApps($rootScope.AppUserInformation.ProgramType);
+     else
+     ret = $scope.BuildTagsFeeds();
+
+    console.log( "tagsToSend", $scope.TagsToSend);
+
+    if(ret==false)
+    {
+      $rootScope.ShowToast("No Channel to Send Message",false);
+     return;
+
+    }
+    
        $scope.modal.hide();
       
-      SendMessageToServer();
-
-    }
+       SendMessageToServer();
 
    }
 
@@ -495,6 +603,16 @@ tempDoc.DocumentSubHeader.ProgramId=$rootScope.AppUserInformation.SelProgram;
 tempDoc.DocumentSubHeader.ModeratorId='someModerator';
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
+tempDoc.DocumentBody.ApplicationSpecificeData.CanReply = false; //default cant reply;;
+
+
+if($rootScope.AppUserInformation.ProgramType == "Leaves" || $rootScope.AppUserInformation.ProgramType == "Feedback")
+tempDoc.DocumentBody.ApplicationSpecificeData.CanReply = true;
+
+if($rootScope.AppUserInformation.EditorType == "Reply")
+tempDoc.DocumentBody.ApplicationSpecificeData.CanReply = false; // to stop infinite reply loop;;
+
+
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading=heading;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail= firstImage;

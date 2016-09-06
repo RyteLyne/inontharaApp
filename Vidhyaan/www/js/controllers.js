@@ -350,7 +350,7 @@ console.log("OK came here");
    //get documents from server here;;
 
   
-   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"), datafactory.getdata( userId, ordId, "ChannelInfo")]).then(function() {
+   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"),datafactory.getdata( userId, ordId, "ChannelSummary")]).then(function() {
                
                 
                 initApp();
@@ -516,8 +516,19 @@ console.log("OK came here");
     }
     //$scope.readFunc();
     Promise.all([feeddetailsfactory.getdata($rootScope.AppUserInformation.DocId)]).then(function(ret) {
-        $scope.messages = ret[0];
-     
+        if(ret[0] !=undefined)
+        {
+        $scope.messages = ret[0].messages.messages;
+        $scope.canReply = ret[0].canReply;
+        if($rootScope.isFromTimeLine == true)
+          $scope.canReply =0; //cant reply from timeline;;
+        }
+        else
+         $scope.messages = [];
+
+         $rootScope.isFromTimeLine = false;
+
+        console.log($scope.canReply);
         console.log("DataLoaded");
         console.log($scope.messages);
     })//getdata promise;;
@@ -530,6 +541,12 @@ console.log("OK came here");
     });
     //$scope.messages = JSON.parse(localStorage.getItem('recievedMessage'));
     //console.log($scope.messages);
+
+    $scope.OnReplyClick = function()
+    {
+      console.log("On Reply Click");
+
+    }
 
    function OpenDocFile(path)
    {
@@ -647,6 +664,7 @@ console.log("OK came here");
         $rootScope.MarkAsRead(docId);
         $rootScope.AppUserInformation.DocId = docId;
         $rootScope.DecNotificationCounts(ProgId);
+        $rootScope.isFromTimeLine = true;
         //handle different views for different items here;;
         $state.go('app.readView', {}, {
             reload: true
