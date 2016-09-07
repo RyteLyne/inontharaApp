@@ -45,13 +45,25 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
         isCameraEnabled : true,
         isTextEnabled : true,
         isHeadingEnabled : true,
-        isFileEnabled : true
-        }
+        isFileEnabled : true,
+        isDateEnabled : true,
+        },
+        EditorType : "compose",
+        isFromTimeLine : false,
+        MsgSentBy:"",
+        OriginalMessage : []
     }
     $rootScope.BuildTag = function(channel, progid, orgid) {
         tag = channel + "_" + progid + "_" + orgid;
         return ( tag) ;
     }
+
+    $rootScope.BuildUserTag = function (userId, orgId)
+    {
+      tag = userId + "_" + orgId;
+        return(tag);
+    }
+
     $rootScope.AvailableChannels = [];
     $rootScope.NotificationCounts = {};
     //$rootScope.ServerStatus=0;
@@ -90,20 +102,34 @@ $cordovaToast.showShortCenter(message).then(function(success) {
 $rootScope.LoadEditorControls = function(mType)
 {
 
+$rootScope.AppUserInformation.EditorControls.isGalleryEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isVideoEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isCameraEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isTextEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isHeadingEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isFileEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isDateEnabled = false;
+
+
+if(mType == "Notes" || mType == "TimeTable" || mType == "Magazine" || mType == "Sylabus")
+{
+$rootScope.AppUserInformation.EditorControls.isFileEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isTextEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isHeadingEnabled = true;
+
+}
+else if(mType == "Leaves")
+{
+$rootScope.AppUserInformation.EditorControls.isTextEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isDateEnabled = true;
+}
+else
+{
 $rootScope.AppUserInformation.EditorControls.isGalleryEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isVideoEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isCameraEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isTextEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isHeadingEnabled = true;
-$rootScope.AppUserInformation.EditorControls.isFileEnabled = true;
-
-if(mType == "Notes")
-{
-  $rootScope.AppUserInformation.EditorControls.isVideoEnabled = false;
-}
-else
-{
-$rootScope.AppUserInformation.EditorControls.isFileEnabled = false;
 }
 
 }
@@ -179,7 +205,8 @@ window.localStorage.setItem(docname, JSON.stringify(obj));
             {
                 for (var j = 0; j < groups[i].mItems.length; j++) {
                     if (priv[groups[i].mItems[j].mId] == undefined)
-                        continue;$rootScope.AddToTag(groups[i].mItems[j].mRunsOn, subscribedchannels, groups[i].mItems[j].mId, orid);
+                        continue;
+                        $rootScope.AddToTag(groups[i].mItems[j].mRunsOn, subscribedchannels, groups[i].mItems[j].mId, orid);
                 }
             }
             //load commonly used information onto AppUserInformation;;
@@ -210,8 +237,14 @@ window.localStorage.setItem(docname, JSON.stringify(obj));
                 continue;
                 $rootScope.AddToTag(items[k].mRunsOn, subscribedchannels, items[k].mId, orid);
         }
-        //console.log("final 1 Tags");
-        //console.log($rootScope.AvailableChannels);
+        
+        //add user specific tag;;
+
+       var userTag = $rootScope.BuildUserTag($rootScope.AppUserInformation.SubId,$rootScope.AppUserInformation.OrgId);
+       $rootScope.AvailableChannels.push(userTag);
+       console.log("BuiltTag:", $rootScope.AvailableChannels);
+
+        
     }
     //get basic document from server;;
     $rootScope.Testing = function(subid, orgid, docname) {
@@ -222,6 +255,8 @@ window.localStorage.setItem(docname, JSON.stringify(obj));
         } else
             console.log("failed to get from server");
     }
+    
+
     /*
  $rootScope.PrepareDocs = function(subid,orgid,docname)
  {
@@ -332,8 +367,8 @@ $rootScope.LoadNotificationCounts = function()
 
     $rootScope.GetDocument = function(docname) {
         var ret = {};
-        if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
-            return ( ret) ;
+        //if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
+          //  return ( ret) ;
         if (window.localStorage.getItem(docname) != undefined) {
             ret = JSON.parse(window.localStorage.getItem(docname));
         }
@@ -454,7 +489,7 @@ console.log("registering push notification");*/
             $rootScope.myDB = window.openDatabase("Vidhyaan.db", '1', 'my', 1024 * 1024 * 100);
             // browser
         }
-        $cordovaSQLite.execute($rootScope.myDB, 'CREATE TABLE IF NOT EXISTS feedmsgs (id integer primary key, docid text, progid text, posttime text, fpreview text, addtline integer, msg text, unread integer)', []).then(function(results) {
+        $cordovaSQLite.execute($rootScope.myDB, 'CREATE TABLE IF NOT EXISTS feedmsgs (id integer primary key, docid text, progid text, posttime text, fpreview text, addtline integer, msg text, unread integer,canreply integer)', []).then(function(results) {
             console.log('Table Created');
         }, function(error) {
             console.log('Error occurred while create');
@@ -468,12 +503,20 @@ console.log("registering push notification");*/
         var posttime = msg.DocumentHeader.Datetime.toString();
         var fpreview = JSON.stringify(msg.DocumentBody.ApplicationSpecificeData.FeedPreview);
         var fpreview1 = msg.DocumentBody.ApplicationSpecificeData.FeedPreview;
+        var  canReply = "0";
+        if(msg.DocumentBody.ApplicationSpecificeData.CanReply == "true")
+        canReply = "1";
+
+        console.log("CanReply:",canReply);
+
+        
+
         var addtline = "1";
         //should read from docname
         var unread = "1";
         //unread new message
         var msgtext = JSON.stringify(msg.DocumentBody.DocumentDetails);
-        $cordovaSQLite.execute($rootScope.myDB, "INSERT INTO feedmsgs (docid, progid, posttime, fpreview, addtline, msg, unread) VALUES (?,?,?,?,?,?,?)", [docid, progid, posttime, fpreview, addtline, msgtext, unread]).then(function(results) {
+        $cordovaSQLite.execute($rootScope.myDB, "INSERT INTO feedmsgs (docid, progid, posttime, fpreview, addtline, msg, unread, canreply) VALUES (?,?,?,?,?,?,?,?)", [docid, progid, posttime, fpreview, addtline, msgtext, unread,canReply]).then(function(results) {
             //fire newfeedarrived;;
             $rootScope.IncNotificationCounts(progid);
             $rootScope.$broadcast('NewFeedEvent', []);
@@ -490,8 +533,8 @@ console.log("registering push notification");*/
     var factory = {};
     factory.getdata = function(subid, orgid, docname) {
         var defer = $q.defer();
-        if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
-            return;
+        //if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
+          //  return;
         //temp line;;
        // window.localStorage.removeItem(docname);
        /* if (window.localStorage.getItem(docname) != undefined) {
@@ -619,17 +662,24 @@ console.log("registering push notification");*/
         var defer = $q.defer();
         //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
         //var myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
-        var ret = [];
+        var ret = {};
         addtline = 1;
         console.log("in feed details factory");
-        $cordovaSQLite.execute($rootScope.myDB, 'SELECT msg,progid FROM feedmsgs where docid = ?', [docid]).then(function(results) {
+        $cordovaSQLite.execute($rootScope.myDB, 'SELECT msg,progid,canreply FROM feedmsgs where docid = ?', [docid]).then(function(results) {
             console.log(results);
             console.log(results.rows.length);
             if (results.rows.length > 0) //atleast one record
             {
                 // console.log(results.rows.item(0).msg);
                 var messages = JSON.parse(results.rows.item(0).msg);
-                ret = messages.messages;
+                ret = 
+                {
+                  progid : results.rows.item(0).progid,
+                  messages: messages,
+                  canReply : results.rows.item(0).canreply 
+
+                }
+                //ret = messages.messages;
                 console.log(ret);
             }
             console.log("Got data for feed details");

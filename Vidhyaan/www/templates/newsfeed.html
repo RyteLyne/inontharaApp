@@ -18,7 +18,11 @@
 
 
   <div ng-repeat = "data in newslist" style="text-decoration:none;">
+
    <div class="card" ng-click = itemclick(data.MsgId) style="position:relative">
+
+   <!--<div class="card" ng-click = itemclick(data)> -->
+
    <div class="item item-avatar">
     <img image = "{{rootAvatarPath + data.Avatar}}" image-holder="img/avatar.svg"></img>
       <h2> {{data.Heading}} <h2>
@@ -63,6 +67,7 @@
 
 
   </ion-content>
+  
   <div ng-if = "AppUserInformation.WritePriv == true">
   <ion-floating-button click="OnComposeClick()" has-footer="false" button-color="#2AC9AA" icon="ion-edit" icon-color="#fff">
  

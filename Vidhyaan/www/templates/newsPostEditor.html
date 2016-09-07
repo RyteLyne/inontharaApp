@@ -23,7 +23,9 @@
             <ion-floating-item ng-if = "AppUserInformation.EditorControls.isHeadingEnabled == true" icon="ion-ios-compose" click="addHeading()"></ion-floating-item>
             <ion-floating-item ng-if = "AppUserInformation.EditorControls.isVideoEnabled == true" icon="ion-ios-videocam" click="addVideo()"></ion-floating-item>
             <ion-floating-item ng-if = "AppUserInformation.EditorControls.isFileEnabled == true" icon="ion-document-text" click=" addfile()"></ion-floating-item>
-           
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isDateEnabled == true && AppUserInformation.EditorType == 'compose'" icon="ion-ios-calendar-outline" click=" AddDateRange()"></ion-floating-item>
+
+          
         </ion-floating-menu>
         <ion-content has-header="true" class="padding">
             <ion-list class="messages item-text-wrap">
@@ -42,9 +44,12 @@
                     <div ng-if= "message.type == 'file'">
                         <img src="{{message.msg }}" ng-click = "OnFileClick(message)"></img>
                     </div>
+
+                    <div ng-if="message.type =='date'">
+                        <p>Date : {{message.msg}}</p>
+                    </div>
+
                 
-
-
             </ion-list>
         </ion-content>
         <ion-footer-bar>

@@ -1,23 +1,116 @@
 angular.module('Editor.controllers', ['ngCordova'])
 
 
-.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload) {
+.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload,$cordovaDatePicker) {
 
 //$scope.messages = [];
 $scope.serverMessage = [];
+$scope.TagsToSend = [];
 $scope.typedData= {};
 $scope.typedData.data = "";
 //$scope.firstImage = "";
 
-
-
-//console.log("data dir:",cordova.file.dataDirectory);
-
-
-if(window.cordova)
+function FormatDate(date)
 {
-console.log("data dir:",cordova.file.dataDirectory);
+
+var currentDate = date;
+var day = currentDate.getDate()
+var month = currentDate.getMonth() + 1
+var year = currentDate.getFullYear()
+var dt =  day + "/" + month + "/" + year ;
+   return(dt);
 }
+
+$scope.onDateSelectionOk = function()
+{
+console.log("OK Selected");
+
+console.log($scope.dateRange.startDate);
+console.log($scope.dateRange.endDate);
+
+if($scope.dateRange.endDate < $scope.dateRange.startDate)
+{
+  console.log("Please select valid end date");
+  $rootScope.ShowToast("Please select valid end date", false);
+  return;
+}
+
+ $scope.modal.hide();
+
+ var Message = $scope.dateRange.startDate + " To " + $scope.dateRange.endDate;
+ AddMessageToServer("date",Message,"");
+
+}
+
+$scope.onDateSelectionCancel = function()
+{
+console.log("Cancel Selected");
+ $scope.modal.hide();
+
+}
+
+
+
+$scope.calShow = function(type) {
+  var options = {
+    date: new Date(),
+    mode: 'date', // or 'time'
+    minDate: new Date(),
+    allowOldDates: true,
+    allowFutureDates: false,
+    doneButtonLabel: 'DONE',
+    doneButtonColor: '#F2F3F4',
+    todayText:'Today',
+    nowText :'Now',
+    is24Hour :true,
+    cancelButtonLabel: 'CANCEL',
+    cancelButtonColor: '#000000'
+  };
+
+$cordovaDatePicker.show(options).then(function(date){
+      if(type == 0)
+        $scope.dateRange.startDate = FormatDate(date);
+      else
+        $scope.dateRange.endDate = FormatDate(date);
+      //  alert(date);
+    });
+ }
+
+$scope.OnDateSelectionText = function(type)
+{
+
+  console.log("Clicked on Text Box");
+  $scope.calShow(type);
+}
+
+
+$scope.AddDateRange = function()
+{
+
+if($rootScope.AppUserInformation.EditorType == "compose" && $rootScope.AppUserInformation.ProgramType == "Leaves")
+{
+  $scope.dateRange = {
+  startDate: "",
+  endDate: ""
+  }
+
+  $ionicModal.fromTemplateUrl('templates/DateSelection.html', {
+  scope: $scope,
+  animation: 'slide-in-up',
+  
+}).then(function(modal) {
+  console.log("Modal");
+  $scope.modal = modal;
+  $scope.modal.show();
+});
+
+
+}
+
+}
+
+
+
 
 function AddMessageToServer(type, msg,extra)
 {
@@ -31,6 +124,7 @@ var obj =
 $scope.serverMessage.push(angular.extend({}, obj));
 
 }
+
 
 
 $scope.OnOkClick = function()
@@ -322,7 +416,7 @@ for(var i=0;i<$rootScope.AppUserInformation.runson.length;i++)
 {
 
   item.Title = $rootScope.AppUserInformation.runson[i]; //should be name;;
-  item.Id = $rootScope.AppUserInformation.runson[i]; //should be name;;
+  item.Id = $rootScope.AppUserInformation.runson[i];
   item.ischecked = false;
 
    $scope.Channels.push( angular.extend({}, item));
@@ -342,21 +436,90 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
 }
 
 
-  $scope.postMessage =function()
+function CheckContains(tag)
+{
+  for(var i=0;i< $scope.serverMessage.length; i++)
+{
+if($scope.serverMessage[i].type == tag)
+ return(true);
+}
+
+ return(false);
+}
+
+
+$scope.postMessage =function()
   {
+    
+
     if($scope.serverMessage.length <1) // not even one message;;
+    {
+     $rootScope.ShowToast("Cannot Send Empty Message", false);
     return;
+    }
+
+    if($rootScope.AppUserInformation.EditorType == "compose" && $rootScope.AppUserInformation.ProgramType == "Leaves")
+    {
+      var isDt =  CheckContains("date");
+      var isTxt = CheckContains("p");
+
+      if(isDt==false)
+      {
+        $rootScope.ShowToast("Please select Date", false);
+        return;
+      }
+
+       if(isTxt==false)
+      {
+        $rootScope.ShowToast("Please Add text", false);
+        return;
+      }
+
+    }
 
     console.log($scope.serverMessage);
+
+   
+    if($rootScope.AppUserInformation.EditorType == "Reply")
+      {
+       var ReplyTag = $rootScope.BuildUserTag($rootScope.AppUserInformation.MsgSentBy, $rootScope.AppUserInformation.OrgId);
+       $scope.TagsToSend.push(ReplyTag);
+       console.log("ReplyTag:",  $scope.TagsToSend);
+        SendMessageToServer();
+        return;
+      }
+
+
     if($rootScope.AppUserInformation.runson.length > 1)
     ShowChannelSel();
     else
     {
        $scope.TagsToSend = [];
-       var tag =$rootScope.BuildTag($rootScope.AppUserInformation.runson[0],
-						$rootScope.AppUserInformation.SelProgram,
-						$rootScope.AppUserInformation.OrgId);
-       $scope.TagsToSend.push( angular.extend({}, tag));
+       
+       var item = {}
+
+      item.Title = $rootScope.AppUserInformation.runson[0]; //should be name;;
+      item.Id = $rootScope.AppUserInformation.runson[0];
+      item.ischecked = true;
+
+      $scope.Channels.push( angular.extend({}, item));
+
+     
+      
+     if($rootScope.AppUserInformation.ProgramType == "Leaves" || $rootScope.AppUserInformation.ProgramType == "Feedback")
+     ret = $scope.BuildTagsApps($rootScope.AppUserInformation.ProgramType);
+     else
+     ret = $scope.BuildTagsFeeds();
+
+    console.log( $scope.TagsToSend);
+
+    if(ret==false)
+    {
+      $rootScope.ShowToast("No Channel to Send Message",false);
+     return;
+
+    }
+
        SendMessageToServer();
       
     }
@@ -380,17 +543,11 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
   }
 
 
-   $scope.OnOkChannelSel = function()
-   {
-    //console.log("Ok selected Channel Sel");
-    //if($scope.AllChannels.checked == true)
-    //console.log("All Channels Selected");
-    //else
-    //console.log("All not selected");
+  $scope.BuildTagsFeeds = function()
+  {
 
-    $scope.TagsToSend = [];
-
-    for(var i=0;i<$scope.Channels.length;i++)
+  console.log("Tags Feed");
+   for(var i=0;i<$scope.Channels.length;i++)
     {
      if($scope.Channels[i].ischecked == true)
      {
@@ -399,20 +556,111 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
       var tag =$rootScope.BuildTag($scope.Channels[i].Id,
 						$rootScope.AppUserInformation.SelProgram,
 						$rootScope.AppUserInformation.OrgId);
-       $scope.TagsToSend.push( angular.extend({}, tag));
+       $scope.TagsToSend.push(tag);
      }
 
+     console.log("FeedTagToSend",$scope.TagsToSend);
+
     }
 
-    console.log( $scope.TagsToSend);
-    
-    if($scope.TagsToSend.length >0)//atleast one channel selected;;
+    if( $scope.TagsToSend.length <=0)
+    return(false);
+
+    return(true);
+
+  }
+
+  $scope.BuildTagsApps= function(appType) //builds tags for apps like leaves and feedback;;
+  {
+
+    console.log("Tags Apps");
+    var channelSummary = $rootScope.GetDocument("ChannelSummary");
+
+    if(channelSummary == undefined)
+     return(false);
+
+    var appData = channelSummary.DocumentBody.ApplicationSpecificData;
+
+   
+    for(var i=0;i<$scope.Channels.length;i++)
     {
+     if($scope.Channels[i].ischecked == true)
+     {
+       console.log("Checked");
+       if(appData[$scope.Channels[i].Id]==undefined) //channel entry does not exist;;
+         continue;
+
+       var Channel = appData[$scope.Channels[i].Id];
+
+       var Target = "";
+
+       if(appType == "Leaves")
+       Target = "LeaveIncharge";
+       else if(appType == "Feedback")
+       Target = "FeedBackIncharge";
+
+       if(Channel[Target]== undefined)
+        continue;
+
+        var TargetIds = Channel[Target];
+
+        console.log("TargetIds:", TargetIds);
+
+
+        for(var k=0;k<TargetIds.length;k++){
+
+      var tag =$rootScope.BuildUserTag(TargetIds[k],
+						$rootScope.AppUserInformation.OrgId);
+						console.log("TagsToSend2",tag);
+       $scope.TagsToSend.push(tag);
+        }
+
+        console.log("TagsToSend1",$scope.TagsToSend);
+
+
+       }
+   
+     }
+
+     if( $scope.TagsToSend.Length <= 0)
+      return(false); //not even one tag found;;
+
+
+      return(true);
+
+    }//end of BuildTagsApps
+  
+
+
+   $scope.OnOkChannelSel = function()
+   {
+    
+    if($scope.Channels.length <=0)//atleast one channel selected;;
+    {
+      $rootScope.ShowToast("Select Atleast one Channel",false);
+     return;
+    }
+
+    $scope.TagsToSend = [];
+    var ret =false;
+
+    if($rootScope.AppUserInformation.ProgramType == "Leaves" || $rootScope.AppUserInformation.ProgramType == "Feedback")
+     ret = $scope.BuildTagsApps($rootScope.AppUserInformation.ProgramType);
+     else
+     ret = $scope.BuildTagsFeeds();
+
+    console.log( "tagsToSend", $scope.TagsToSend);
+
+    if(ret==false)
+    {
+      $rootScope.ShowToast("No Channel to Send Message",false);
+     return;
+
+    }
+    
        $scope.modal.hide();
       
-      SendMessageToServer();
-
-    }
+       SendMessageToServer();
 
    }
 
@@ -495,6 +743,27 @@ tempDoc.DocumentSubHeader.ProgramId=$rootScope.AppUserInformation.SelProgram;
 tempDoc.DocumentSubHeader.ModeratorId='someModerator';
 tempDoc.DocumentBody={};
 tempDoc.DocumentBody.ApplicationSpecificeData={};
+tempDoc.DocumentBody.ApplicationSpecificeData.CanReply = false; //default cant reply;;
+
+
+if($rootScope.AppUserInformation.ProgramType == "Leaves" || $rootScope.AppUserInformation.ProgramType == "Feedback")
+tempDoc.DocumentBody.ApplicationSpecificeData.CanReply = true;
+
+if($rootScope.AppUserInformation.EditorType == "Reply")
+{
+tempDoc.DocumentBody.ApplicationSpecificeData.CanReply = false; // to stop infinite reply loop;;
+
+AddMessageToServer("p","\n\n***Original Message***\n\n","");
+
+for(var k=0;k<$rootScope.AppUserInformation.OriginalMessage.length;k++)
+{
+  $scope.serverMessage.push(angular.extend({},$rootScope.AppUserInformation.OriginalMessage[k]));
+}
+
+
+}
+
+
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading=heading;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail= firstImage;
@@ -506,6 +775,10 @@ tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.t
  
 tempDoc.DocumentBody.DocumentDetails={};
 //tempDoc.DocumentBody.DocumentDetails.messages=[];
+
+
+
+
 tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.serverMessage));
 console.log(tempDoc);
 doc2send= tempDoc;

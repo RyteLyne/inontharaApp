@@ -351,7 +351,7 @@ console.log("OK came here");
    //get documents from server here;;
 
   
-   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"), datafactory.getdata( userId, ordId, "ChannelInfo")]).then(function() {
+   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"),datafactory.getdata( userId, ordId, "ChannelSummary")]).then(function() {
                
                 
                 initApp();
@@ -468,12 +468,13 @@ console.log("OK came here");
         });
     }
     $scope.LoadFeedList();
-    $scope.itemclick = function(docId) {
+    $scope.itemclick = function(item) {
         console.log("clicked");
-        console.log(docId);
-        $rootScope.MarkAsRead(docId);
+        console.log(item.MsgId);
+        $rootScope.MarkAsRead(item.MsgId);
         $rootScope.DecNotificationCounts($rootScope.AppUserInformation.SelProgram);
-        $rootScope.AppUserInformation.DocId = docId;
+        $rootScope.AppUserInformation.DocId = item.MsgId;
+        $rootScope.AppUserInformation.MsgSentBy = item.SubscribersID;
         $state.go('app.readView', {}, {
             reload: true
         });
@@ -482,6 +483,7 @@ console.log("OK came here");
     $scope.OnComposeClick = function()
      {
 
+       $rootScope.AppUserInformation.EditorType="compose";
        $state.go('app.newsPostEditor', {}, {
             reload: true
         });
@@ -511,12 +513,23 @@ console.log("OK came here");
     });
 })
 
-.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet, feeddetailsfactory,blobDownloadFactory) {
+.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet, feeddetailsfactory,blobDownloadFactory,$state) {
     $scope.readFunc = function() {}
     //$scope.readFunc();
     Promise.all([feeddetailsfactory.getdata($rootScope.AppUserInformation.DocId)]).then(function(ret) {
-        $scope.messages = ret[0];
-     
+        if(ret[0] !=undefined)
+        {
+        $scope.messages = ret[0].messages.messages;
+        $scope.canReply = ret[0].canReply;
+        if($rootScope.isFromTimeLine == true)
+          $scope.canReply =0; //cant reply from timeline;;
+        }
+        else
+         $scope.messages = [];
+
+         $rootScope.isFromTimeLine = false;
+
+        console.log($scope.canReply);
         console.log("DataLoaded");
         console.log($scope.messages);
     })//getdata promise;;
@@ -529,6 +542,16 @@ console.log("OK came here");
     });
     //$scope.messages = JSON.parse(localStorage.getItem('recievedMessage'));
     //console.log($scope.messages);
+
+    $scope.OnReplyClick = function()
+    {
+      console.log("On Reply Click");
+      $rootScope.AppUserInformation.OriginalMessage=$scope.messages;
+      $rootScope.AppUserInformation.EditorType="Reply";
+      $state.go('app.newsPostEditor', {}, {
+            reload: true
+        });
+    }
 
    function OpenDocFile(path)
    {
@@ -646,6 +669,7 @@ console.log("OK came here");
         $rootScope.MarkAsRead(docId);
         $rootScope.AppUserInformation.DocId = docId;
         $rootScope.DecNotificationCounts(ProgId);
+        $rootScope.isFromTimeLine = true;
         //handle different views for different items here;;
         $state.go('app.readView', {}, {
             reload: true
