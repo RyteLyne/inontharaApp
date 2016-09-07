@@ -19,7 +19,10 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'Menus.controllers'
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider) {
+
+    
+
   $stateProvider
   
 
@@ -143,6 +146,11 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'Menus.controllers'
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/splash');
+      $ionicConfigProvider.navBar.alignTitle('left');
+    $ionicConfigProvider.views.maxCache(5);
+
+  // note that you can also chain configs
+  $ionicConfigProvider.backButton.text('').icon('ion-ios-arrow-left');
    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|content):|data:image\//);
 });
 

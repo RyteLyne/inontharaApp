@@ -1,15 +1,15 @@
 <ion-side-menus>
     <ion-side-menu-content>
-        <ion-nav-bar class="bar-dark" ng-controller="initCtrl" title ="{{AppUserInformation.SelProgName}}">
+        <ion-nav-bar class="bar-dark" ng-controller="initCtrl" title ="Vidhyaan">
             <ion-nav-buttons side="left">
                 <button style="color:rgba(255,255,255,1);" class="button button-icon button-clear ion-navicon" menu-toggle="left">
                     <span class="badge badge-assertive header-badge" ng-show="{{feedNotificationBadge}}"></span>
                 </button>
             </ion-nav-buttons>
             <ion-nav-buttons side="right">
-                <div class="buttons">
+             <!--   <div class="buttons">
                     <button style="color:rgba(255,255,255,1);font-size:12;" class="button button-icon ion-ios-gear-outline" ng-click="popover.show($event)"></button>
-                </div>
+                </div> -->
                 <button style="color:rgba(255,255,255,1);font-size:14;" class="button button-icon button-clear ion-ios-keypad-outline" menu-toggle="right">
                     <span class="badge badge-assertive header-badge" ng-show="{{appNotificationBadge}}"></span>
                 </button>

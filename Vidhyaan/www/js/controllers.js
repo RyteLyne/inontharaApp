@@ -513,9 +513,6 @@ console.log("OK came here");
 
 .controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet, feeddetailsfactory,blobDownloadFactory) {
     $scope.readFunc = function() {}
-    $scope.goBack = function() {
-        $ionicHistory.goBack();
-    }
     //$scope.readFunc();
     Promise.all([feeddetailsfactory.getdata($rootScope.AppUserInformation.DocId)]).then(function(ret) {
         $scope.messages = ret[0];

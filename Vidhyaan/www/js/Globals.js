@@ -1,4 +1,4 @@
-angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', function($rootScope, $http, $cordovaSQLite,$cordovaToast) {
+angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', function($ionicHistory, $rootScope, $http, $cordovaSQLite,$cordovaToast) {
     //window.localStorage.removeItem("subscriberInfo");
     $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient('https://edum.azure-mobile.net','yVQPRKXxocEazjPjDXGSnmIpyCBTYc97');
     console.log($rootScope.mobileServiceClient);
@@ -60,8 +60,10 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
 
 $rootScope.ShowToast = function(message,longx)
 {
+    if(window.cordova){
     if(longx == true)
     {
+
  $cordovaToast.showLongCenter(message).then(function(success) {
     // success
     console.log("Toast Success");
@@ -81,7 +83,7 @@ $cordovaToast.showShortCenter(message).then(function(success) {
     console.log("Toast Failed");
   });   
 
-}
+}}
 
 }
 
@@ -126,6 +128,10 @@ window.localStorage.setItem(docname, JSON.stringify(obj));
 
    }
  }*/
+ $rootScope.goBack = function() {
+        $ionicHistory.goBack();
+    }
+    
  
     $rootScope.GetProgramChannels = function(runson, subscribedchannels) {
         var userchannels = [];
