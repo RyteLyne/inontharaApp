@@ -466,12 +466,13 @@ console.log("OK came here");
         });
     }
     $scope.LoadFeedList();
-    $scope.itemclick = function(docId) {
+    $scope.itemclick = function(item) {
         console.log("clicked");
-        console.log(docId);
-        $rootScope.MarkAsRead(docId);
+        console.log(item.MsgId);
+        $rootScope.MarkAsRead(item.MsgId);
         $rootScope.DecNotificationCounts($rootScope.AppUserInformation.SelProgram);
-        $rootScope.AppUserInformation.DocId = docId;
+        $rootScope.AppUserInformation.DocId = item.MsgId;
+        $rootScope.AppUserInformation.MsgSentBy = item.SubscribersID;
         $state.go('app.readView', {}, {
             reload: true
         });
@@ -480,6 +481,7 @@ console.log("OK came here");
     $scope.OnComposeClick = function()
      {
 
+       $rootScope.AppUserInformation.EditorType="compose";
        $state.go('app.newsPostEditor', {}, {
             reload: true
         });
@@ -509,7 +511,7 @@ console.log("OK came here");
     });
 })
 
-.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet, feeddetailsfactory,blobDownloadFactory) {
+.controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet, feeddetailsfactory,blobDownloadFactory,$state) {
     $scope.readFunc = function() {}
     $scope.goBack = function() {
         $ionicHistory.goBack();
@@ -545,7 +547,11 @@ console.log("OK came here");
     $scope.OnReplyClick = function()
     {
       console.log("On Reply Click");
-
+      $rootScope.AppUserInformation.OriginalMessage=$scope.messages;
+      $rootScope.AppUserInformation.EditorType="Reply";
+      $state.go('app.newsPostEditor', {}, {
+            reload: true
+        });
     }
 
    function OpenDocFile(path)

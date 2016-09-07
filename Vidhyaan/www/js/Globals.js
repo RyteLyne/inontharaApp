@@ -45,11 +45,13 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
         isCameraEnabled : true,
         isTextEnabled : true,
         isHeadingEnabled : true,
-        isFileEnabled : true
+        isFileEnabled : true,
+        isDateEnabled : true,
         },
         EditorType : "compose",
         isFromTimeLine : false,
-        OriginalMessage : {}
+        MsgSentBy:"",
+        OriginalMessage : []
     }
     $rootScope.BuildTag = function(channel, progid, orgid) {
         tag = channel + "_" + progid + "_" + orgid;
@@ -98,23 +100,34 @@ $cordovaToast.showShortCenter(message).then(function(success) {
 $rootScope.LoadEditorControls = function(mType)
 {
 
+$rootScope.AppUserInformation.EditorControls.isGalleryEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isVideoEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isCameraEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isTextEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isHeadingEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isFileEnabled = false;
+$rootScope.AppUserInformation.EditorControls.isDateEnabled = false;
+
+
+if(mType == "Notes" || mType == "TimeTable" || mType == "Magazine" || mType == "Sylabus")
+{
+$rootScope.AppUserInformation.EditorControls.isFileEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isTextEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isHeadingEnabled = true;
+
+}
+else if(mType == "Leaves")
+{
+$rootScope.AppUserInformation.EditorControls.isTextEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isDateEnabled = true;
+}
+else
+{
 $rootScope.AppUserInformation.EditorControls.isGalleryEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isVideoEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isCameraEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isTextEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isHeadingEnabled = true;
-$rootScope.AppUserInformation.EditorControls.isFileEnabled = true;
-
-if(mType == "Notes" || mType == "TimeTable" || mType == "Magazine" || mType == "Sylabus")
-{
-$rootScope.AppUserInformation.EditorControls.isGalleryEnabled = false;
-$rootScope.AppUserInformation.EditorControls.isVideoEnabled = false;
-$rootScope.AppUserInformation.EditorControls.isCameraEnabled = false;
-}
-else
-{
-$rootScope.AppUserInformation.EditorControls.isFileEnabled = false;
-$rootScope.AppUserInformation.EditorControls.isVideoEnabled = false;
 }
 
 }

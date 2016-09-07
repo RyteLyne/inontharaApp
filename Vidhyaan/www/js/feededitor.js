@@ -1,7 +1,7 @@
 angular.module('Editor.controllers', ['ngCordova'])
 
 
-.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload) {
+.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload,$cordovaDatePicker) {
 
 //$scope.messages = [];
 $scope.serverMessage = [];
@@ -10,15 +10,107 @@ $scope.typedData= {};
 $scope.typedData.data = "";
 //$scope.firstImage = "";
 
-
-
-//console.log("data dir:",cordova.file.dataDirectory);
-
-
-if(window.cordova)
+function FormatDate(date)
 {
-console.log("data dir:",cordova.file.dataDirectory);
+
+var currentDate = date;
+var day = currentDate.getDate()
+var month = currentDate.getMonth() + 1
+var year = currentDate.getFullYear()
+var dt =  day + "/" + month + "/" + year ;
+   return(dt);
 }
+
+$scope.onDateSelectionOk = function()
+{
+console.log("OK Selected");
+
+console.log($scope.dateRange.startDate);
+console.log($scope.dateRange.endDate);
+
+if($scope.dateRange.endDate < $scope.dateRange.startDate)
+{
+  console.log("Please select valid end date");
+  $rootScope.ShowToast("Please select valid end date", false);
+  return;
+}
+
+ $scope.modal.hide();
+
+ var Message = $scope.dateRange.startDate + " To " + $scope.dateRange.endDate;
+ AddMessageToServer("date",Message,"");
+
+}
+
+$scope.onDateSelectionCancel = function()
+{
+console.log("Cancel Selected");
+ $scope.modal.hide();
+
+}
+
+
+
+$scope.calShow = function(type) {
+  var options = {
+    date: new Date(),
+    mode: 'date', // or 'time'
+    minDate: new Date(),
+    allowOldDates: true,
+    allowFutureDates: false,
+    doneButtonLabel: 'DONE',
+    doneButtonColor: '#F2F3F4',
+    todayText:'Today',
+    nowText :'Now',
+    is24Hour :true,
+    cancelButtonLabel: 'CANCEL',
+    cancelButtonColor: '#000000'
+  };
+
+$cordovaDatePicker.show(options).then(function(date){
+      if(type == 0)
+        $scope.dateRange.startDate = FormatDate(date);
+      else
+        $scope.dateRange.endDate = FormatDate(date);
+      //  alert(date);
+    });
+ }
+
+$scope.OnDateSelectionText = function(type)
+{
+
+  console.log("Clicked on Text Box");
+  $scope.calShow(type);
+}
+
+
+$scope.AddDateRange = function()
+{
+
+if($rootScope.AppUserInformation.EditorType == "compose" && $rootScope.AppUserInformation.ProgramType == "Leaves")
+{
+  $scope.dateRange = {
+  startDate: "",
+  endDate: ""
+  }
+
+  $ionicModal.fromTemplateUrl('templates/DateSelection.html', {
+  scope: $scope,
+  animation: 'slide-in-up',
+  
+}).then(function(modal) {
+  console.log("Modal");
+  $scope.modal = modal;
+  $scope.modal.show();
+});
+
+
+}
+
+}
+
+
+
 
 function AddMessageToServer(type, msg,extra)
 {
@@ -32,6 +124,7 @@ var obj =
 $scope.serverMessage.push(angular.extend({}, obj));
 
 }
+
 
 
 $scope.OnOkClick = function()
@@ -343,15 +436,60 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
 }
 
 
-  $scope.postMessage =function()
+function CheckContains(tag)
+{
+  for(var i=0;i< $scope.serverMessage.length; i++)
+{
+if($scope.serverMessage[i].type == tag)
+ return(true);
+}
+
+ return(false);
+}
+
+
+$scope.postMessage =function()
   {
+    
+
     if($scope.serverMessage.length <1) // not even one message;;
     {
      $rootScope.ShowToast("Cannot Send Empty Message", false);
     return;
     }
 
+    if($rootScope.AppUserInformation.EditorType == "compose" && $rootScope.AppUserInformation.ProgramType == "Leaves")
+    {
+      var isDt =  CheckContains("date");
+      var isTxt = CheckContains("p");
+
+      if(isDt==false)
+      {
+        $rootScope.ShowToast("Please select Date", false);
+        return;
+      }
+
+       if(isTxt==false)
+      {
+        $rootScope.ShowToast("Please Add text", false);
+        return;
+      }
+
+    }
+
     console.log($scope.serverMessage);
+
+   
+    if($rootScope.AppUserInformation.EditorType == "Reply")
+      {
+       var ReplyTag = $rootScope.BuildUserTag($rootScope.AppUserInformation.MsgSentBy, $rootScope.AppUserInformation.OrgId);
+       $scope.TagsToSend.push(ReplyTag);
+       console.log("ReplyTag:",  $scope.TagsToSend);
+        SendMessageToServer();
+        return;
+      }
+
+
     if($rootScope.AppUserInformation.runson.length > 1)
     ShowChannelSel();
     else
@@ -366,7 +504,9 @@ $ionicModal.fromTemplateUrl('templates/ChannelSel.html', {
 
       $scope.Channels.push( angular.extend({}, item));
 
-     if($rootScope.AppUserInformation.ProgramType == "Leaves" || "Feedback")
+     
+      
+     if($rootScope.AppUserInformation.ProgramType == "Leaves" || $rootScope.AppUserInformation.ProgramType == "Feedback")
      ret = $scope.BuildTagsApps($rootScope.AppUserInformation.ProgramType);
      else
      ret = $scope.BuildTagsFeeds();
@@ -610,7 +750,18 @@ if($rootScope.AppUserInformation.ProgramType == "Leaves" || $rootScope.AppUserIn
 tempDoc.DocumentBody.ApplicationSpecificeData.CanReply = true;
 
 if($rootScope.AppUserInformation.EditorType == "Reply")
+{
 tempDoc.DocumentBody.ApplicationSpecificeData.CanReply = false; // to stop infinite reply loop;;
+
+AddMessageToServer("p","\n\n***Original Message***\n\n","");
+
+for(var k=0;k<$rootScope.AppUserInformation.OriginalMessage.length;k++)
+{
+  $scope.serverMessage.push(angular.extend({},$rootScope.AppUserInformation.OriginalMessage[k]));
+}
+
+
+}
 
 
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview={};
@@ -624,6 +775,10 @@ tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.t
  
 tempDoc.DocumentBody.DocumentDetails={};
 //tempDoc.DocumentBody.DocumentDetails.messages=[];
+
+
+
+
 tempDoc.DocumentBody.DocumentDetails.messages=JSON.parse(JSON.stringify($scope.serverMessage));
 console.log(tempDoc);
 doc2send= tempDoc;

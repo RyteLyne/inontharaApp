@@ -1,0 +1,21 @@
+
+<ion-modal-view view-title="Date Selection" style="height:60vh;width:100%;">
+<ion-header-bar class="bar bar-header bar-positive">
+         <h1 class = "title">Date Selection</h1>
+ </ion-header-bar>
+      
+<ion-content padding="true" overflow-scroll="false">
+  <div style = "border-style: solid; border-width: 2px;color:grey;">
+  <div>
+  <input  ng-readonly="true" ng-model= "dateRange.startDate" placeholder="StartDate" ng-click = "OnDateSelectionText(0)" style="width: 70%; background-color: #336699;"></input>
+  <br/><br/>
+  <input  ng-readonly="true" ng-model= "dateRange.endDate" placeholder="EndDate" ng-click = "OnDateSelectionText(1)" style="width: 70%; background-color: #336699;"></input>
+  </div>
+  <div style= "text-align:center;">
+<i class="icon ion-checkmark-circled" style="font-size:56px; color:green; position:relative;" ng-click="onDateSelectionOk()"> </i>
+<i class="icon ion-close-circled" style="font-size:56px; color:red; position:relative;" ng-click="onDateSelectionCancel()"> </i>
+ </div>
+ </div>
+
+  </ion-content>
+</ion-modal-view>
