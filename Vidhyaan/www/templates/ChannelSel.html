@@ -1,7 +1,11 @@
 <ion-modal-view view-title="Channel Selection" >
-<ion-header-bar class="bar bar-header bar-positive">
-         <h1 class = "title">Select Channels</h1>
- </ion-header-bar>
+
+ <ion-header-bar class="sub-head" style="height:auto; background-color:  #00FFFF;">
+      
+        <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="OnCancelChannelSel()"> </i>
+        <i class="ion-android-done" style="font-size:46px; color:green;position:absolute;right:15px;" ng-click="OnOkChannelSel()"> </i>
+       
+    </ion-header-bar>
 
     <ion-content padding="true" overflow-scroll="false">
 
@@ -11,11 +15,6 @@
   <div ng-repeat="item in Channels">
     <ion-checkbox ng-model="item.ischecked">{{item.Title}}</ion-checkbox> 
   </div>
-
-    <div style= "text-align:center;">
-<i class="icon ion-checkmark-circled" style="font-size:56px; color:green; position:relative;" ng-click="OnOkChannelSel()"> </i>
-<i class="icon ion-close-circled" style="font-size:56px; color:red; position:relative;" ng-click="OnCancelChannelSel()"> </i>
- </div>
 
 </div>
     </ion-content>

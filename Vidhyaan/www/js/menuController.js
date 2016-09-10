@@ -1,6 +1,6 @@
 angular.module('Menus.controllers', ['ngCordova'])
 
-.controller('SideMenuCtrl', function($scope, $rootScope, $timeout, $stateParams, $ionicSideMenuDelegate) {
+.controller('SideMenuCtrl', function($scope, $rootScope, $timeout, $stateParams, $ionicSideMenuDelegate,$state) {
     /*!
    * Expects number from 0.0 -> 1.0
    * Returns absolute value
@@ -190,12 +190,15 @@ angular.module('Menus.controllers', ['ngCordova'])
         $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(selItem.runson, SubChannels);
         console.log("runs on", $rootScope.AppUserInformation.runson);
         console.log($rootScope.AppUserInformation.SelProgName);
+
+       $rootScope.setAppState($state.current);
+        
         $rootScope.$broadcast('FeedProgramEvent', []);
     }
 })
 
 
-.controller('RightMenuCtrl', function($scope, $stateParams, $rootScope) {
+.controller('RightMenuCtrl', function($scope, $stateParams, $rootScope,$state) {
     console.log("inJquery start");
     var priv = {};
     $scope.menulist = {};
@@ -252,6 +255,8 @@ angular.module('Menus.controllers', ['ngCordova'])
         $rootScope.AppUserInformation.XPriv = true;
         else
         $rootScope.AppUserInformation.XPriv = false;
+
+        $rootScope.setAppState($state.current);
         
         console.log("clicked Id : ", $rootScope.AppUserInformation.SelProgram);
         $rootScope.AppUserInformation.runson = $rootScope.GetProgramChannels(selItem.runson, SubChannels);

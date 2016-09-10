@@ -1,17 +1,19 @@
 
 <ion-modal-view view-title="Account" style="height:60vh;width:100%;">
-<ion-header-bar class="bar bar-header bar-positive">
-         <h1 class = "title">Message Edit</h1>
- </ion-header-bar>
+
+
+    <ion-header-bar class="sub-head" style="height:auto; background-color:  #00FFFF;">
+      
+        <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="OnCancelClick()"> </i>
+        <i class="ion-android-done" style="font-size:46px; color:green;position:absolute;right:15px;" ng-click="OnOkClick()"> </i>
+       
+    </ion-header-bar>
       
   <ion-content>
+  <br/><br/>
   <div style = "border-style: solid; border-width: 2px;color:grey;">
      <textarea name="textarea" ng-model= "typedData.data" placeholder={{tPlaceholder}} style="width: 100%; height:60vh;  background-color: #336699;"></textarea>
-  <div style= "text-align:center;">
-<i class="icon ion-checkmark-circled" style="font-size:56px; color:green; position:relative;" ng-click="OnOkClick()"> </i>
-<i class="icon ion-close-circled" style="font-size:56px; color:red; position:relative;" ng-click="OnCancelClick()"> </i>
- </div>
-
+ 
   </div>
   </ion-content>
 </ion-modal-view>

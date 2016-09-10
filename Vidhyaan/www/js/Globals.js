@@ -1,5 +1,26 @@
-angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', function($ionicHistory, $rootScope, $http, $cordovaSQLite,$cordovaToast) {
+angular.module('Global.controllers', ['ngCordova'])
+
+.controller('GlobalCtrl1', function($ionicPlatform, $rootScope, $http, $cordovaSQLite,$cordovaToast,$state,$ionicPopup) {
     //window.localStorage.removeItem("subscriberInfo");
+
+  $ionicPlatform.registerBackButtonAction(function (event) {
+
+      if($state.current.name == "app.home")
+      {
+        console.log("Back exit");
+        $rootScope.ShowConfirmExit();
+
+
+      }
+      else
+      {
+         console.log("Back pressed");
+         event.preventDefault();
+       }
+            }, 100);
+
+
+
     $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient('https://edum.azure-mobile.net','yVQPRKXxocEazjPjDXGSnmIpyCBTYc97');
     console.log($rootScope.mobileServiceClient);
     $rootScope.getBlob = function() {
@@ -51,8 +72,67 @@ angular.module('Global.controllers', ['ngCordova']).controller('GlobalCtrl1', fu
         EditorType : "compose",
         isFromTimeLine : false,
         MsgSentBy:"",
-        OriginalMessage : []
+        OriginalMessage : [],
+        stateInformation : []
     }
+
+
+$rootScope.ShowConfirmExit = function()
+    {
+     
+
+   var confirmPopup = $ionicPopup.confirm({
+
+      title: 'Exit',
+
+      template: 'Sure to Close App?',
+
+   });
+
+   confirmPopup.then(function(res) {
+
+      if (res) {
+
+         console.log('You clicked on "OK" button');
+         navigator.app.exitApp();
+
+      } else {
+
+         return;
+
+      }
+
+   });
+
+
+    }
+
+    $rootScope.rootGoBack = function()
+    {
+      var stateObject = $rootScope.getAppState();
+      $state.go(stateObject.name, {}, {
+            reload: true
+        });
+
+    }
+
+    $rootScope.setAppState = function(stateObject)
+    {
+
+      $rootScope.AppUserInformation.stateInformation.push(stateObject);
+      console.log("setAppState",stateObject.name);
+    }
+
+    $rootScope.getAppState = function()
+    {
+        var stateObject ={};
+        if($rootScope.AppUserInformation.stateInformation.length > 0)
+      stateObject =  $rootScope.AppUserInformation.stateInformation.pop();
+      console.log("getAppState",stateObject.name);
+      return(stateObject);
+    }
+
+
     $rootScope.BuildTag = function(channel, progid, orgid) {
         tag = channel + "_" + progid + "_" + orgid;
         return ( tag) ;
@@ -154,9 +234,9 @@ window.localStorage.setItem(docname, JSON.stringify(obj));
 
    }
  }*/
- $rootScope.goBack = function() {
-        $ionicHistory.goBack();
-    }
+ //$rootScope.goBack = function() {
+   //     $ionicHistory.goBack();
+    //}
     
  
     $rootScope.GetProgramChannels = function(runson, subscribedchannels) {

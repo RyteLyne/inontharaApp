@@ -101,7 +101,9 @@ AssignmentsCtrl
 })
 
 
-.controller('CardsCtrl', function($scope, TDCardDelegate, $timeout) {
+
+
+.controller('CardsCtrl240', function($scope, TDCardDelegate, $timeout) {
     console.log("in AttendanceCtrl");
 
 /*
@@ -144,8 +146,8 @@ AssignmentsCtrl
         master: Array.prototype.slice.call(cardTypes, 0),
         active: Array.prototype.slice.call(cardTypes, 0),
         discards: [],
-        liked: [],
-        disliked: []
+        //liked: [],
+        //disliked: []
     }
 
     })
@@ -156,7 +158,8 @@ AssignmentsCtrl
    
 
     $scope.cardDestroyed = function(index) {
-        $scope.cards.active.splice(index, 1);
+        console.log("Destroyed");
+        //$scope.cards.active.splice(index, 1);
     };
 
     $scope.addCard = function() {
@@ -176,17 +179,21 @@ AssignmentsCtrl
     });
     $scope.cardSwipedLeft = function(index) {
         console.log('LEFT SWIPE');
-        var card = $scope.cards.active[index];
-        $scope.cards.disliked.push(card);
+        //var card = $scope.cards.active[index];
+        //$scope.cards.disliked.push(card);
     }
     ;
     $scope.cardSwipedRight = function(index) {
         console.log('RIGHT SWIPE');
-        var card = $scope.cards.active[index];
-        $scope.cards.liked.push(card);
+        //var card = $scope.cards.active[index];
+        //$scope.cards.liked.push(card);
     }
     ;
-}).controller('TimetableCtrl', function($scope) {
+})
+
+
+
+.controller('TimetableCtrl', function($scope) {
     console.log("in TimetableCtrl");
 
     
@@ -471,11 +478,12 @@ console.log("OK came here");
     $scope.itemclick = function(item) {
         console.log("clicked");
         console.log(item.MsgId);
+        $rootScope.setAppState($state.current);
         $rootScope.MarkAsRead(item.MsgId);
         $rootScope.DecNotificationCounts($rootScope.AppUserInformation.SelProgram);
         $rootScope.AppUserInformation.DocId = item.MsgId;
         $rootScope.AppUserInformation.MsgSentBy = item.SubscribersID;
-        $state.go('app.readView', {}, {
+        $state.go('readView', {}, {
             reload: true
         });
     }
@@ -484,7 +492,8 @@ console.log("OK came here");
      {
 
        $rootScope.AppUserInformation.EditorType="compose";
-       $state.go('app.newsPostEditor', {}, {
+       $rootScope.setAppState($state.current);
+       $state.go('newsPostEditor', {}, {
             reload: true
         });
 
@@ -546,9 +555,10 @@ console.log("OK came here");
     $scope.OnReplyClick = function()
     {
       console.log("On Reply Click");
+      $rootScope.setAppState($state.current);
       $rootScope.AppUserInformation.OriginalMessage=$scope.messages;
       $rootScope.AppUserInformation.EditorType="Reply";
-      $state.go('app.newsPostEditor', {}, {
+      $state.go('newsPostEditor', {}, {
             reload: true
         });
     }
@@ -641,6 +651,7 @@ console.log("OK came here");
 
 .controller('TimeLineCtrl', function($scope, timelinefactory, $rootScope, $state) {
     //window.localStorage.removeItem("TimeLine");
+    console.log("state test", $state.current);
     $scope.timeline = [];
     $scope.LoadTimeLine = function() {
         Promise.all([timelinefactory.getdata()]).then(function(ret) {
@@ -670,8 +681,9 @@ console.log("OK came here");
         $rootScope.AppUserInformation.DocId = docId;
         $rootScope.DecNotificationCounts(ProgId);
         $rootScope.isFromTimeLine = true;
+        $rootScope.setAppState($state.current);
         //handle different views for different items here;;
-        $state.go('app.readView', {}, {
+        $state.go('readView', {}, {
             reload: true
         });
     }

@@ -21,6 +21,8 @@ var dt =  day + "/" + month + "/" + year ;
    return(dt);
 }
 
+
+
 $scope.onDateSelectionOk = function()
 {
 console.log("OK Selected");
@@ -798,6 +800,7 @@ console.log(req.data);
           console.log(data);
           $rootScope.ShowToast("Message Sent",false);
           $ionicLoading.hide();
+          $rootScope.rootGoBack();
           //close the view here;;
 
         }).

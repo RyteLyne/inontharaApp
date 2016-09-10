@@ -1,0 +1,64 @@
+<ion-view view-title="Attendance">
+<ion-header-bar class="sub-head" style="height:auto; background-color:  #00FFFF;">
+    <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
+    </ion-header-bar>
+
+    <ion-pane>
+        <div ng-controller="CardsCtrl" class="background-grey">
+            <div class="td-title">
+                <div class="row">
+                    <div class="col">
+                        Total: <span>{{ total }}</span>
+                    </div>
+                    <div class="col">
+                        Remaining: <span>{{ remaining }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Present: <span>{{present}}</span>
+                    </div>
+                    <div class="col">
+                        Absent: <span>{{absent}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- *************************
+        TD Cards
+        - We start off with an ng-if so that the cards are not generated
+          unless $scope.cards is not 'null'
+      ************************* -->
+            <div ng-if="cards.active">
+                <td-cards>
+                    <td-card ng-repeat="card in cards.active" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft(card)" on-swipe-right="cardSwipedRight(card)">
+                        <div class="image" ng-controller="CardCtrl">
+                            <div class="no-text">
+                                <i class="icon ion-thumbsdown"></i>
+                            </div>
+                            <div class="yes-text">
+                                <i class="icon ion-thumbsup"></i>
+                            </div>
+                            <!-- *************************
+                Discard
+                - The card is removed from the deck and a fly away animation is triggered.
+                - onClickTransitionOut is found in ionic.tdcards.js
+                - Animation can be customized by changing defaults
+              ************************* -->
+                            <div class="discard">{{card.name}}</div>
+                            <img image="{{rootAvatarPath + card.avatar}}"></img>
+                            <!--<img ng-src="{{ card.avatar }}">-->
+                        </div>
+                    </td-card>
+                    <!-- *************************
+            End Card
+            - 'drag' is set to false. The user cannot drag it.
+            - 'refreshCards()' reloads all cards that have NOT been discarded.
+          ************************* -->
+                    <td-card id="end-card" drag="false">
+                        <i class="icon ion-ios-refresh disable-user-behavior" ng-click="cardsDone()"></i>
+                    </td-card>
+                </td-cards>
+            </div>
+        </div>
+    </ion-pane>
+     </ion-view>

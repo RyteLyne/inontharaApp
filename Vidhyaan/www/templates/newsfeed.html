@@ -6,12 +6,18 @@
 -->
 
 <ion-view title="" cache-view="false" ng-controller= 'newsfeedctrl'>
- <ion-nav-bar class="bar-dark" >
+ <!-- <ion-nav-bar class="bar-dark" >
            <ion-nav-back-button>
   </ion-nav-back-button>
             
            
-          </ion-nav-bar>
+          </ion-nav-bar> -->
+
+<ion-header-bar class="sub-head" style="height:auto; background-color: #00FFFF;">
+      
+        <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click = "rootGoBack()"> </i>
+        
+ </ion-header-bar>
        
   <ion-content class="padding">
 
@@ -19,13 +25,13 @@
 
   <div ng-repeat = "data in newslist" style="text-decoration:none;">
 
-   <div class="card" ng-click = itemclick(data.MsgId) style="position:relative">
+   <div class="card" ng-click = itemclick(data) style="position:relative">
 
    <!--<div class="card" ng-click = itemclick(data)> -->
 
    <div class="item item-avatar">
     <img image = "{{rootAvatarPath + data.Avatar}}" image-holder="img/avatar.svg"></img>
-      <h2> {{data.Heading}} <h2>
+      <h2> {{data.Heading}} </h2>
        <h3>new post from {{data.Author}}</h3>
        <div style="position:absolute;top:0px;right:4px;">
        <p ng-if = "data.Unread == 0"> read </p>

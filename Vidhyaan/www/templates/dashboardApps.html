@@ -1,4 +1,9 @@
 <ion-view view-title="Dashboard App">
+<ion-header-bar class="sub-head" style="height:auto; background-color:  #00FFFF;">
+      
+        <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
+    </ion-header-bar>
+    
     <div ng-if="AppUserInformation.ProgramType=='Radio'">
         <div ng-controller='RadioCtrl'>
             <ion-content></ion-content>
@@ -38,6 +43,8 @@
   </div>
 </div>
 </div>
+
+
 <div ng-if="AppUserInformation.ProgramType=='Attendance'">
     <ion-pane>
         <div ng-controller="CardsCtrl" class="background-grey">
@@ -98,6 +105,10 @@
         </div>
     </ion-pane>
 </div>
+
+
+
+
 <div ng-if="AppUserInformation.ProgramType=='Gallery'">
     <div ng-controller=GalleryCtrl style="height:100vh;"></div>
     <ion-view view-title="Explore">

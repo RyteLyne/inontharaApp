@@ -1,4 +1,4 @@
-var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'Menus.controllers', 'Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards', 'elastichat', 'monospaced.elastic','angularMoment', 'ion-floating-menu'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'Menus.controllers', 'Global.controllers', 'Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards', 'elastichat', 'monospaced.elastic','angularMoment', 'ion-floating-menu','Attendance.controllers'])
 
 .run(function($ionicPlatform,$rootScope) {
 	 console.log("this is the grand begin");
@@ -42,90 +42,53 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'Menus.controllers'
   })
  
 
-    .state('app.play', {
-    url: "/play",
-    views: {
-      'content': {
-        templateUrl: "templates/play.html",
-         
-      }
-    }
-  })
-
-
-  .state('app.settings', {
+    
+  .state('settings', {
     url: "/settings",
-    views: {
-      'content': {
-        templateUrl: "templates/settings.html",
-         
-      }
-    }
+     templateUrl: "templates/settings.html"
+    
   })
 
 
-   .state('app.profile', {
+   .state('profile', {
     url: "/profile",
-    views: {
-      'content': {
-        templateUrl: "templates/profile.html",
+    templateUrl: "templates/profile.html"
          
-      }
-    }
+  
   })
 
     
 
-  .state('app.readView', {
+  .state('readView', {
     url: "/readView",
-    views: {
-      'content': {
-        templateUrl: "templates/readView.html",
-         
-      }
-    }
+     templateUrl: "templates/readView.html"
+   
   })
 
- .state('app.newsfeed', {
+ .state('newsfeed', {
     url: "/newsfeed",
-    views: {
-      'content': {
-        templateUrl: "templates/newsfeed.html",
-         
-      }
-    }
+   templateUrl: "templates/newsfeed.html"
+            
   })
 
-   .state('app.newsPostEditor', {
+   .state('newsPostEditor', {
     url: "/newsPostEditor",
-    views: {
-      'content': {
-        templateUrl: "templates/newsPostEditor.html",
-         
-      }
-    }
+    templateUrl: "templates/newsPostEditor.html"
+
   })
 
-.state('app.dashboardApps', {
+.state('dashboardApps', {
     url: "/dashboardApps",
-    views: {
-      'content': {
-        templateUrl: "templates/dashboardApps.html",
-         
-      }
-    }
+     templateUrl: "templates/dashboardApps.html"
+   
   })
 
 
-
-.state('app.logout', {
+.state('logout', {
     url: "/logout",
-    views: {
-      'content': {
-        templateUrl: "templates/logout.html",
+    templateUrl: "templates/logout.html"
          
-      }
-    }
+  
   })
 
    .state('login', {
@@ -141,6 +104,16 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', 'Menus.controllers'
    .state('splash', {
     url: "/splash",
     templateUrl: "templates/splash.html"
+  })
+
+   .state('Attendance', {
+    url: "/Attendance",
+    templateUrl: "templates/Attendance.html"
+  })
+
+  .state('AttendanceWrite', {
+    url: "/AttendanceWrite",
+    templateUrl: "templates/AttendanceWrite.html"
   })
 
 
@@ -225,10 +198,10 @@ myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHisto
 // $scope.setPlatform('ios');
 
   console.log("in init control");
-      $scope.goBack = function(){
+  /*    $scope.goBack = function(){
       console.log("pressed goback");
    $ionicHistory.goBack();
-}
+}*/
 
  $scope.isPlaying = false;
 
