@@ -668,6 +668,14 @@ console.log("OK came here");
             console.log("Error getting timeline");
             return;
         });
+
+   /*$scope.$on('NotificationEvent', function(event, data) 
+   {
+    console.log("caught in timeline");
+
+   });*/
+
+
     }
 
      

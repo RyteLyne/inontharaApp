@@ -31,7 +31,8 @@ angular.module('Menus.controllers', ['ngCordova'])
     for (var i = 0; i < groups.length; i++) {
         if (groups[i].mId != undefined)
             if (priv[groups[i].mId] == undefined)
-                continue;$scope.groups[k] = {
+                continue;
+                $scope.groups[k] = {
             name: groups[i].mName[language] == undefined ? groups[i].mName["0"] : groups[i].mName[language],
             icon: groups[i].mIcon,
             ref: groups[i].mRef,
@@ -71,7 +72,7 @@ angular.module('Menus.controllers', ['ngCordova'])
         k++;
     }
     //end of main for loop;;
-    $scope.$on('NotificationEvent', function(event, data) {
+    $rootScope.$on('NotificationEvent', function(event, data) {
         console.log("Notification Event Fired");
         console.log(data[0]);
         console.log(data[1]);
@@ -96,6 +97,7 @@ angular.module('Menus.controllers', ['ngCordova'])
 
 
     });
+
     $scope.$on('NotificationsReady', function(event, data) {
         console.log("Notification Ready Fired");
         console.log(data[0]);
@@ -194,6 +196,10 @@ angular.module('Menus.controllers', ['ngCordova'])
        $rootScope.setAppState($state.current);
         
         $rootScope.$broadcast('FeedProgramEvent', []);
+
+        $state.go(selItem.ref, {}, {
+        reload: true
+    });
     }
 })
 
@@ -263,14 +269,18 @@ angular.module('Menus.controllers', ['ngCordova'])
         console.log("runs on", $rootScope.AppUserInformation.runson);
         console.log($rootScope.AppUserInformation.SelProgName);
 
+        $state.go(selItem.ref, {}, {
+        reload: true
+        });
+
         //$rootScope.IncNotificationCounts("2-npsbsk");
         //$rootScope.MarkAsRead("2-npsbsk");
     }
-    $scope.$on('NotificationEvent', function(event, data) {
+    $rootScope.$on('NotificationEvent', function(event, data) {
         console.log("Notification Event Fired Right");
-        console.log(data[0]);
+        console.log("notiEvent" , data[0]);
         //programId;;
-        console.log(data[1]);
+        console.log("notiEvent", data[1]);
         //notification count;;
         if ($scope.menulist[data[0]] != undefined)
         {

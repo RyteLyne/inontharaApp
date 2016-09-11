@@ -401,6 +401,7 @@ $rootScope.LoadNotificationCounts = function()
         $rootScope.$broadcast('NotificationEvent', [ProgramId, $rootScope.NotificationCounts[tag],true]);
         return;
     }
+    
     $rootScope.DecNotificationCounts = function(ProgramId) {
         var roottag = "NotificationCount";
         var tag = "Nc_" + ProgramId;
