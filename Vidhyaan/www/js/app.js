@@ -49,6 +49,18 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', , 'Global.controlle
     
   })
 
+   .state('Payments', {
+    url: "/Payments",
+     templateUrl: "templates/Payments.html"
+    
+  })
+
+    .state('Events', {
+    url: "/Events",
+     templateUrl: "templates/Events.html"
+    
+  })
+
 
    .state('profile', {
     url: "/profile",

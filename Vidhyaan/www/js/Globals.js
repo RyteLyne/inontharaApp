@@ -31,6 +31,7 @@ angular.module('Global.controllers', ['ngCordova'])
     $rootScope.rootFeedImagePath = cordova.file.dataDirectory;
     $rootScope.rootAvatarPath = cordova.file.dataDirectory;
     $rootScope.rootDocPath = cordova.file.externalDataDirectory;
+    $rootScope.rootSlidePath = cordova.file.dataDirectory;
     }
 
     $rootScope.feedNotificationBadge="true";
@@ -73,7 +74,8 @@ angular.module('Global.controllers', ['ngCordova'])
         isFromTimeLine : false,
         MsgSentBy:"",
         OriginalMessage : [],
-        stateInformation : []
+        stateInformation : [],
+        DocDetails: {}
     }
 
 
@@ -215,14 +217,57 @@ $rootScope.AppUserInformation.EditorControls.isHeadingEnabled = true;
 }
 
 
-
  
- $rootScope.StoreDocument = function(docname,obj)
+$rootScope.StoreDocument = function(docname,obj)
  { //migrate to sqlite later;;
 
+if(!window.cordova)
+{
+console.log("Came to if part");
 window.localStorage.setItem(docname, JSON.stringify(obj));
 
+}
+
+else
+{
+
+console.log("Came to else part");
+ $rootScope.AppUserInformation.DocDetails[docname] = obj;
+console.log("Came to else part2");
+ var obj1 = JSON.stringify(obj);
+ console.log("Came to else part3");
+
+
+ $cordovaSQLite.execute($rootScope.myDB, "UPDATE docdetails set doctext = ? where docid = ? ", [obj1,docname]).then(function(results) {
+            if(results.rowsAffected > 0)
+            console.log('updated into docdetails');
+            else
+            {
+
+        console.log('trying to insert');
+       $cordovaSQLite.execute($rootScope.myDB, "INSERT INTO docdetails (docid, doctext) VALUES (?,?)", [docname,obj1]).then(function(results2) {
+            
+            console.log('Inserted into docdetails');
+        }, function(error) {
+            console.log('Error occurred while insert doctails');
+        })
+
+
+            }
+        }, function(error) {
+            console.log('Error occurred while update doctails');
+
+     
+        })
+
+
+}
+           
  }
+
+
+
+
 
  /*$rootScope.GetChannelNames = function(channelIds)
  {
@@ -250,6 +295,7 @@ window.localStorage.setItem(docname, JSON.stringify(obj));
         }
         return ( userchannels) ;
     }
+
     $rootScope.AddToTag = function(runson, subscribedchannels, progid, orgid) {
         console.log("Add to Tag");
         //console.log(runson);
@@ -267,6 +313,7 @@ window.localStorage.setItem(docname, JSON.stringify(obj));
             }
         }
     }
+
     $rootScope.GetAllTags = function() {
         var priv = {};
         var sub = $rootScope.GetDocument("SubscriberInfo");
@@ -337,52 +384,7 @@ window.localStorage.setItem(docname, JSON.stringify(obj));
     }
     
 
-    /*
- $rootScope.PrepareDocs = function(subid,orgid,docname)
- {
 
- if(!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
-  return;
- //temp line;;
-  window.localStorage.removeItem(docname);
-
-     var doc = {};
-  if (window.localStorage.getItem(docname) == undefined) //doesnot exist in localstorage
-  {
-    
-     datafactory.getdata(subid,orgid,docname)
-  }
-   else
-   {
-     console.log("found in localstorage");
-
-   }
- }*/
-    /*
-$rootScope.LoadNotificationCounts = function()
-{
- var roottag = "NotificationCount" ;
- var noti = {};
-
- //window.localStorage.removeItem(roottag);
-
- if(window.localStorage.getItem(roottag) == undefined)
- {
-   console.log("notitag not found");
-   //$rootScope.NotificationCounts["Nc_2-npsbsk"] = 1;
-   //$rootScope.NotificationCounts["Nc_52-npsbsk"] = 1;
-  return;
- }
- noti =JSON.parse(window.localStorage.getItem(roottag)); // get notification object;;
-
- console.log(noti);
-
- console.log("notitag found");
- $rootScope.NotificationCounts = noti;
-
- return;
-}
-*/
     $rootScope.IncNotificationCounts = function(ProgramId) {
         //var roottag = "NotificationCount" ;
         var tag = "Nc_" + ProgramId;
@@ -448,11 +450,18 @@ $rootScope.LoadNotificationCounts = function()
 
     $rootScope.GetDocument = function(docname) {
         var ret = {};
-        //if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
-          //  return ( ret) ;
-        if (window.localStorage.getItem(docname) != undefined) {
+
+        if (!window.cordova)
+        {
+           if (window.localStorage.getItem(docname) != undefined) {
             ret = JSON.parse(window.localStorage.getItem(docname));
+             }
+
         }
+       else
+        ret =$rootScope.AppUserInformation.DocDetails[docname];
+
+      
         return ( ret) ;
     }
 
@@ -560,22 +569,48 @@ console.log("registering push notification");*/
         }
     }
     ;
-    $rootScope.InitStorage = function() {
+
+
+    $rootScope.InitStorage = function(userId) {
+        var dbName = userId + "_" + "Vidhyaan.db";
+
         if (window.cordova) {
             $rootScope.myDB = $cordovaSQLite.openDB({
-                name: "Vidhyaan.db",
+                name: dbName,
                 location: 'default'
             })
         } else {
-            $rootScope.myDB = window.openDatabase("Vidhyaan.db", '1', 'my', 1024 * 1024 * 100);
+
+            $rootScope.myDB = window.openDatabase(dbName, '1', 'my', 1024 * 1024 * 100);
             // browser
         }
+
+
+
+
+
         $cordovaSQLite.execute($rootScope.myDB, 'CREATE TABLE IF NOT EXISTS feedmsgs (id integer primary key, docid text, progid text, posttime text, fpreview text, addtline integer, msg text, unread integer,canreply integer)', []).then(function(results) {
-            console.log('Table Created');
+            console.log('Message Table Created');
         }, function(error) {
-            console.log('Error occurred while create');
+            console.log('Error occurred while create Message Table');
         })
+
+
+
+          $cordovaSQLite.execute($rootScope.myDB, 'CREATE TABLE IF NOT EXISTS docdetails (id integer primary key, docid text, doctext text)', []).then(function(results) {
+            console.log('Document Table Created');
+        }, function(error) {
+            console.log('Error occurred while create Document Table');
+        })
+
+
+
+
+
+
     }
+
+
     $rootScope.SaveNewsFeed = function(msg) {
         //var myDB = $cordovaSQLite.openDB("Vidhyaan.db");
         //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
@@ -610,18 +645,14 @@ console.log("registering push notification");*/
 
 
 
-.factory('datafactory', function($http, $q) {
+.factory('datafactory', function($http, $q,$rootScope) {
     var factory = {};
     factory.getdata = function(subid, orgid, docname) {
         var defer = $q.defer();
         //if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
           //  return;
         //temp line;;
-       // window.localStorage.removeItem(docname);
-       /* if (window.localStorage.getItem(docname) != undefined) {
-            console.log("found in local storage");
-            defer.resolve("");
-        }*/
+      
 
         var details = {
             "SubId": subid,
@@ -644,8 +675,8 @@ console.log("registering push notification");*/
             // alter data if needed
             console.log(data);
             console.log("server success");
-            window.localStorage.setItem(docname, JSON.stringify(data.Data));
-            //$rootScope.StoreDocument(docname,data.Data);
+            //window.localStorage.setItem(docname, JSON.stringify(data.Data));
+            $rootScope.StoreDocument(docname,data.Data);
             defer.resolve(data.Data);
         }).error(function(data, status, headers, config) {
             console.log(data);
@@ -698,7 +729,10 @@ console.log("registering push notification");*/
         return defer.promise;
     }
     return factory;
-}).factory('timelinefactory', function($q, $cordovaSQLite, $rootScope) {
+})
+
+
+.factory('timelinefactory', function($q, $cordovaSQLite, $rootScope) {
     var factory = {};
     factory.getdata = function() {
         var defer = $q.defer();
@@ -737,7 +771,53 @@ console.log("registering push notification");*/
         return defer.promise;
     }
     return factory;
-}).factory('feeddetailsfactory', function($q, $cordovaSQLite, $rootScope) {
+})
+
+
+
+.factory('docdetailsfactory', function($q, $cordovaSQLite, $rootScope) {
+    var factory = {};
+    factory.getdata = function(docid) {
+        var defer = $q.defer();
+        var ret = {};
+
+        if(!window.cordova)
+        {
+        defer.resolve();
+        //return;
+        }
+
+        console.log("in doc details factory");
+        $cordovaSQLite.execute($rootScope.myDB, 'SELECT doctext FROM docdetails where docid = ?', [docid]).then(function(results) {
+            console.log(results);
+            console.log(results.rows.length);
+            if (results.rows.length > 0) //atleast one record
+            {
+                console.log("Got data for doc details");
+                // console.log(results.rows.item(0).msg);
+                ret = JSON.parse(results.rows.item(0).doctext);
+                console.log(ret);
+                $rootScope.AppUserInformation.DocDetails[docid] = ret;
+                defer.resolve();
+            }
+            else
+             defer.reject();
+            
+        }, function(error) {
+            defer.reject();
+        })
+        return defer.promise;
+    }
+    return factory;
+})
+
+
+
+
+
+
+
+.factory('feeddetailsfactory', function($q, $cordovaSQLite, $rootScope) {
     var factory = {};
     factory.getdata = function(docid) {
         var defer = $q.defer();
@@ -772,7 +852,10 @@ console.log("registering push notification");*/
         return defer.promise;
     }
     return factory;
-}).factory('loginfactory', function($http, $q) {
+})
+
+
+.factory('loginfactory', function($http, $q) {
     var factory = {};
     factory.getdata = function(Subid, Pass) {
         var defer = $q.defer();

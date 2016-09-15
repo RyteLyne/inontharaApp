@@ -3,33 +3,33 @@
 "items" : [
 {
  "mIcon" : "ion-link",
- "mRef"  : "#/app/home",
- "mText" : { "1": "Refer", "2" : "Refer", "3" :"घर"}
+ "mRef"  : "app.home",
+ "mText" : { "1": "Refer", "2" : "ಪರಿಚಯಿಸಿ", "3" :"घर"}
 },
 
 {
  "mIcon" : "ion-bug",
- "mRef"  : "#/app/benefits",
- "mText" : {"1" : "Report", "2" : "ಉಲ್ಲೇಖ", "3" : "उल्लेख"}
+ "mRef"  : "app.home",
+ "mText" : {"1" : "Report", "2" : "ವರದಿ ಕೊಡಿ", "3" : "उल्लेख"}
 },
 {
  "mIcon" : "ion-help",
- "mRef"  : "#/home/main",
- "mText" : {"1" : "Help","2": "ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ","3" : "पासवर्ड बदलें"}
+ "mRef"  : "app.home",
+ "mText" : {"1" : "Help","2": "ಸಹಾಯ","3" : "पासवर्ड बदलें"}
 
 },
 
 {
  "mIcon" : "ion-gear-b",
- "mRef"  : "#/app/settings",
- "mText" : {"1" : "Settings", "2" : "ವರದಿ",  "3" : "रिपोर्ट"}
+ "mRef"  : "settings",
+ "mText" : {"1" : "Settings", "2" : "ಸೆಟ್ಟಿಂಗ್",  "3" : "रिपोर्ट"}
 
 },
 
 {
  "mIcon" : "ion-log-out",
- "mRef"  : "#/app/logout",
- "mText" : {"1" : "Logout", "2" : "Logout", "3" : "लोग आउट"}
+ "mRef"  : "logout",
+ "mText" : {"1" : "Logout", "2" : "ಲಾಗ್ಔಟ್", "3" : "लोग आउट"}
 }
 
 ]

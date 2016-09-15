@@ -42,9 +42,11 @@ AssignmentsCtrl
     console.log("in NotesCtrlCtrl");
 }).controller('MagazinesCtrl', function($scope) {
     console.log("in MagazinesCtrl");
-}).controller('PaymentsCtrl', function($scope) {
-    console.log("in PaymentsCtrl");
-}).controller('SyllabusCtrl', function($scope) {
+})
+
+
+
+.controller('SyllabusCtrl', function($scope) {
     console.log("in SyllabusCtrl");
 }).controller('AssignmentsCtrl', function($scope) {
     console.log("in AssignmentsCtrl");
@@ -54,14 +56,25 @@ AssignmentsCtrl
     console.log("in OnlineCtrl");
 }).controller('NoticeboardCtrl', function($scope) {
     console.log("in NoticboardCtrl");
-}).controller('CalendarCtrl', function($scope) {
-    console.log("in CalendarCtrl");
-}).controller('MessagesCtrl', function($scope) {
+})
+
+
+
+
+
+
+
+
+.controller('MessagesCtrl', function($scope) {
 
     console.log("in MessagesCtrl");
 
 
-}).controller('GalleryCtrl', function($scope) {
+})
+
+
+
+.controller('GalleryCtrl', function($scope) {
     console.log("in GalleryCtrl");
     $scope.items = [
   {
@@ -229,6 +242,24 @@ AssignmentsCtrl
 })
 
 
+.controller('CalendarCtrl', function($scope) {
+    console.log("in CalendarCtrl");
+
+$scope.eventList=[
+     {
+       Date:'1-06-2016',Event:'Drawing Competation',Pic:'/img/drawing.jpg'
+     },
+     {
+        Date:'2-06-2016',Event:'Rangoli Competation',Pic:'/img/Rangoli.jpg'
+     },
+     {
+        Date:'3-06-2016',Event:'Mahandi Competation',Pic:'/img/mehendi.jpg'
+     }
+     ] 
+
+})
+
+
 
 //load json profile;;
 .controller('ProfileLoad', function($scope, $rootScope) {
@@ -293,15 +324,20 @@ AssignmentsCtrl
 
 
 
-.controller('slideCtrl', function($scope, $state, $ionicHistory, $ionicNavBarDelegate) {
+.controller('slideCtrl', function($scope, $state, $ionicHistory, $ionicNavBarDelegate,$rootScope) {
     console.log("in SlideCtrl");
-       $ionicNavBarDelegate.align('left');
-    jQuery.getJSON('json/settings.json', function(data) {
-        $scope.slides = data.slideImages;
-    });
+    $ionicNavBarDelegate.align('left');
+
+    var doc = $rootScope.GetDocument("OrganizationInfo");
+
+    var slideImages = doc.DocumentBody.ApplicationSpecificData.slideImages;
+
+    
+    $scope.slides = slideImages;
+    
 })
 
-.controller('SplashCtrl', function($scope, $rootScope, $state,$ionicLoading,datafactory) {
+.controller('SplashCtrl', function($scope, $rootScope, $state,$ionicLoading,datafactory,docdetailsfactory) {
     $scope.Credentials = {
         username: "",
         password: ""
@@ -328,15 +364,16 @@ console.log("OK came here");
         $scope.Credentials.username = window.localStorage.getItem("username");
         $scope.Credentials.password = window.localStorage.getItem("password");
 
-        var sub = $rootScope.GetDocument("SubscriberInfo");
+       
 
-        var userId = sub.DocumentBody.ApplicationSpecificData.SubscriberID;
-        var ordId = sub.DocumentHeader.OrganizationId;
+        var userId = $scope.Credentials.username;
+
+      
 
         var initApp=function()
          {
 
-        $rootScope.InitStorage();
+       
         $rootScope.LoadNotificationCounts();
         $rootScope.GetAllTags();
         if (window.cordova) {
@@ -348,22 +385,35 @@ console.log("OK came here");
 
           if($rootScope.AppUserInformation.firstLogIn== false)
           {
-                initApp();
-                $ionicLoading.hide(); 
+               // initApp();
+           console.log("First LogIn false");
+           $rootScope.InitStorage(userId);
+           Promise.all([docdetailsfactory.getdata("SubscriberInfo"),docdetailsfactory.getdata("ProgramInfo"),docdetailsfactory.getdata("ChannelSummary"),docdetailsfactory.getdata("OrganizationInfo")]).then(function(){
+              initApp();
+
+               $ionicLoading.hide(); 
                 $state.go('app.home', {}, {
                     reload: true
                 });
+
+           })
+
+               return;
+               
           }
 
    //get documents from server here;;
 
+        var sub = $rootScope.GetDocument("SubscriberInfo");
+        var ordId = sub.DocumentHeader.OrganizationId;
+
   
-   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"),datafactory.getdata( userId, ordId, "ChannelSummary")]).then(function() {
+   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"),datafactory.getdata( userId, ordId, "ChannelSummary"),datafactory.getdata( userId, ordId, "OrganizationInfo")]).then(function() {
                
                 
                 initApp();
                 $ionicLoading.hide();
-                $rootScope.AppUserInformation.firstLogIn== false;
+                $rootScope.AppUserInformation.firstLogIn= false;
                 $state.go('app.home', {}, {
                     reload: true
                 });
@@ -397,7 +447,7 @@ console.log("OK came here");
         $scope.loginImages = data.loginScreen;
     });
 
-    $scope.Credentials.username = "1234-npsbsk";
+    $scope.Credentials.username = "";
     $scope.Credentials.password = "1234";
 
     $scope.login = function Login() {
@@ -406,13 +456,15 @@ console.log("OK came here");
       template: 'Logging In...'
        });
 
-        $scope.scrollSmallToTop();
+        $scope.scrollSmallToTop(); 
+        $scope.Credentials.username = $scope.Credentials.username.toLowerCase();
         console.log("UserName: ", $scope.Credentials.username, "Password: ", $scope.Credentials.password);
         Promise.all([loginfactory.getdata($scope.Credentials.username, $scope.Credentials.password)]).then(function(data) {
             console.log("serverdata",data);
 
 
             if (data[0].Result == "true") {
+            $rootScope.InitStorage( $scope.Credentials.username);
             console.log("Log in Success");
             window.localStorage.setItem("username", $scope.Credentials.username);
             window.localStorage.setItem("password", $scope.Credentials.password);
@@ -629,7 +681,33 @@ console.log("OK came here");
     $state.go('login', {}, {
         reload: true
     });
+
+    $window.location.reload(true);
 })
+
+
+  .controller('PaymentsCtrl', function($scope,$rootScope){
+ $scope.payments={
+
+  Avatar:$rootScope.AppUserInformation.UserAvatar,
+  Name:$rootScope.AppUserInformation.UserName,
+  AY:'2016-2017',
+  Amount:'85,100',Balance:'0',
+
+  Recipts:[
+  {
+  ReciptNum:'CYF123',ReciptDate:'22-10-2016' ,Amount:'2,500'
+  },
+  {
+  ReciptNum:'CYF124',ReciptDate:'23-10-2016' ,Amount:'1,500'
+  },
+  {
+  ReciptNum:'CYF125',ReciptDate:'24-10-2016' ,Amount:'1,900'  
+  }
+  ]
+}
+  
+  })
 
 
 .controller('PlatformCtrl', function($scope, $rootScope, $state, $http) {
@@ -751,6 +829,11 @@ console.log("OK came here");
     $scope.languageChange = function(item) {
         window.localStorage.setItem("language", $scope.choice.langchoice);
         console.log("Selected value, text:", item);
+
+        $state.go('app.home', {}, {
+            reload: true
+        });
+
         $window.location.reload(true);
     }
    

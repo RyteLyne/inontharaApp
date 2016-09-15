@@ -27,6 +27,13 @@ angular.module('Menus.controllers', ['ngCordova'])
     var k = 0;
     var language = $rootScope.Language.toString();
     var SubChannels = sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
+
+    var org = $rootScope.GetDocument("OrganizationInfo");
+
+    $scope.orgLogo = org.DocumentBody.ApplicationSpecificData.organizationLogo;
+
+    console.log("logo:",$scope.orgLogo);
+
     console.log("new Language ", language);
     for (var i = 0; i < groups.length; i++) {
         if (groups[i].mId != undefined)
@@ -330,7 +337,7 @@ angular.module('Menus.controllers', ['ngCordova'])
 })
 
 
-.controller('popOverCtrl', function($scope, $rootScope) {
+.controller('popOverCtrl', function($scope, $rootScope,$state) {
     console.log("inJquery start");
     jQuery.getJSON('json/popOverMenu.json', function(data) {
         console.log("inJquery PopOver");
@@ -347,6 +354,19 @@ angular.module('Menus.controllers', ['ngCordova'])
         }
         console.log(items.items[0].mIcon);
     })
+
+$scope.onPopOverClick= function(selItem)
+{
+//ng-href="{{items.ref}}"
+$rootScope.setAppState($state.current);
+
+
+$state.go(selItem.ref, {}, {
+        reload: true
+    });
+
+}
+
 });
 
 

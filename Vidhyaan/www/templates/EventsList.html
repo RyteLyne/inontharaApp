@@ -1,0 +1,18 @@
+<ion-view view-title="Events" ng-controller = "CalendarCtrl">
+
+<ion-header-bar class="sub-head" style="height:auto; background-color:   rgba(0,212,205,1);">
+    <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
+    </ion-header-bar>
+  <ion-content >
+
+<ion-content>
+ <ion-list ng-repeat="list in eventList">
+ <ion-item class="item item-thumbnail-right"  >
+ <img ng-if="list.Pic" image={{list.Pic}}></img>
+ <h2>{{list.Date}}</h2><br/>
+ <p>{{list.Event}}</p>
+ </ion-item>
+ </ion-list> 
+  
+</ion-content>
+</ion-view>

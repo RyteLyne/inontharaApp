@@ -2,7 +2,7 @@
         <ion-content style="background-color:transparent;" >
           <div class="list background-popmenu" style="background-image : url(img/menuBackground.jpg);" >
           
-            <a style="background-color:transparent;" ng-repeat="items in popItems" class="item" ng-href="{{items.ref}}" ng-click = "popover.hide();" >
+            <a style="background-color:transparent;" ng-repeat="items in popItems" class="item"  ng-click = "onPopOverClick(items);popover.hide();" >
               <i style="background-color:transparent;font-size:20px;color:white;" class="icon {{items.icon}}" > {{items.text}}</i>
             </a>
 

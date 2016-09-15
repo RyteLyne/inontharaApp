@@ -1,0 +1,41 @@
+<ion-view view-title="Student Fees">
+
+ <ion-header-bar class="sub-head" style="height:auto; background-color:  rgba(0,212,205,1);">
+      
+        <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
+    </ion-header-bar>
+
+
+<ion-content ng-controller='PaymentsCtrl'>
+<div class="card">
+ <div class="item item-text-wrap item-avatar" >
+  <img image="{{rootAvatarPath + payments.Avatar}}"> </img>
+   <h2>{{payments.Name}}</h2>
+   <p>{{payments.AY}}</p>
+<table style="width:60%;text-align:left;">
+ <tr>
+   <th>AmountPaid</th>
+   <th>Balance</th>
+ </tr>
+  <tr>
+   <td>{{payments.Amount}}</td>
+  <td>{{payments.Balance}}</td>
+ </tr>
+ </table>
+   </div>
+</div>
+<ion-item>
+<h2 style="float:left;">Recipts</h2>
+<h2 style="float:right;">Amount</h2>
+</ion-item>
+ <ion-list ng-repeat="list in payments.Recipts">
+ <ion-item class="item item-thumbnail-right"  >
+ <h2 >{{list.ReciptNum}}</h2>
+  <p style="position:absolute;right:15px;">{{list.Amount}}</p>
+ <p >{{list.ReciptDate}}</p>
+
+ </ion-item>
+ </ion-list> 
+  
+</ion-content>
+</ion-view>
