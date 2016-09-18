@@ -34,8 +34,8 @@ angular.module('Global.controllers', ['ngCordova'])
     $rootScope.rootSlidePath = cordova.file.dataDirectory;
     }
 
-    $rootScope.feedNotificationBadge="true";
-    $rootScope.appNotificationBadge="true";
+     $rootScope.rootfeedNotificationBadge="false";
+     $rootScope.rootappNotificationBadge="false";
     
     $rootScope.AppUserInformation = {
         SelChannel: "0",
@@ -112,10 +112,28 @@ $rootScope.ShowConfirmExit = function()
     $rootScope.rootGoBack = function()
     {
       var stateObject = $rootScope.getAppState();
-      $state.go(stateObject.name, {}, {
+      if(stateObject.name == undefined)
+      {
+
+           $state.go('splash', {}, {
             reload: true
         });
+      }
 
+      else
+      {
+      $state.go(stateObject.name, {}, {   
+            reload: true
+        });
+      }
+
+    }
+
+    $rootScope.clearAppState = function()
+    {
+
+      $rootScope.AppUserInformation.stateInformation = [];
+      
     }
 
     $rootScope.setAppState = function(stateObject)
@@ -129,8 +147,12 @@ $rootScope.ShowConfirmExit = function()
     {
         var stateObject ={};
         if($rootScope.AppUserInformation.stateInformation.length > 0)
+        {
       stateObject =  $rootScope.AppUserInformation.stateInformation.pop();
       console.log("getAppState",stateObject.name);
+        }
+       
+
       return(stateObject);
     }
 
@@ -341,7 +363,7 @@ console.log("Came to else part2");
             $rootScope.AppUserInformation.PrivLevels = priv;
             $rootScope.AppUserInformation.SubId = sub.DocumentBody.ApplicationSpecificData.SubscriberID;
             $rootScope.AppUserInformation.OrgId = sub.DocumentHeader.OrganizationId;
-            $rootScope.AppUserInformation.OrgName = sub.DocumentHeader.OrganizationName;
+            
             $rootScope.AppUserInformation.Class = sub.DocumentBody.Document_Details.profile.Division;
             $rootScope.AppUserInformation.UserAvatar = sub.DocumentBody.Document_Details.profile.Avatar;
             var titled = sub.DocumentBody.Document_Details.profile.Titled;
@@ -356,6 +378,7 @@ console.log("Came to else part2");
             console.log("App Information");
             console.log($rootScope.AppUserInformation);
             //end of AppUserInformation
+
         }
         //end of main for loop;;
         var items = pro.DocumentBody.ApplicationsSpecificData.appPrograms;

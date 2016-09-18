@@ -95,10 +95,17 @@ angular.module('Menus.controllers', ['ngCordova'])
 
             if($scope.TotNotiCount <0 ) $scope.TotNotiCount = 1;
 
-            if($scope.TotNotiCount > 0) 
-            $rootScope.feedNotificationBadge ="true";
+          var ret= [];
+          ret[0] = "left";
+
+         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+
+           if($scope.TotNotiCount > 0) 
+            ret[1] = "1";
             else
-            $rootScope.feedNotificationBadge ="false";
+            ret[1] = "0";
+
+            $rootScope.$broadcast('NotificationBadgeEvent', [ret]);
           }
 
 
@@ -124,10 +131,17 @@ angular.module('Menus.controllers', ['ngCordova'])
 
         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
 
+           var ret= [];
+         ret[0] = "left";
+
+         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+
            if($scope.TotNotiCount > 0) 
-            $rootScope.feedNotificationBadge ="true";
+            ret[1] = "1";
             else
-            $rootScope.feedNotificationBadge ="false";
+            ret[1] = "0";
+
+            $rootScope.$broadcast('NotificationBadgeEvent', [ret]);
 
 
     });
@@ -258,7 +272,7 @@ angular.module('Menus.controllers', ['ngCordova'])
         $rootScope.LoadEditorControls(selItem.type);
         $rootScope.AppUserInformation.ProgramType = selItem.type;
         $rootScope.AppUserInformation.SelProgram = selItem.id;
-        $rootScope.AppUserInformation.SelProgName = selItem.name;
+        $rootScope.AppUserInformation.SelProgName = selItem.text;
         if(priv[selItem.id].indexOf("w")>=0) 
         $rootScope.AppUserInformation.WritePriv = true;
         else
@@ -298,12 +312,19 @@ angular.module('Menus.controllers', ['ngCordova'])
             else
             $scope.TotNotiCount = $scope.TotNotiCount - 1;
 
-            if($scope.TotNotiCount <0 ) $scope.TotNotiCount = 1;
+            
 
-            if($scope.TotNotiCount > 0) 
-            $rootScope.appNotificationBadge ="true";
+         var ret= [];
+         ret[0] = "right";
+
+         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+
+           if($scope.TotNotiCount > 0) 
+            ret[1] = "1";
             else
-            $rootScope.appNotificationBadge ="false";
+            ret[1] = "0";
+
+            $rootScope.$broadcast('NotificationBadgeEvent', [ret]);
 
         }
     });
@@ -326,16 +347,28 @@ angular.module('Menus.controllers', ['ngCordova'])
            // console.log($rootScope.NotificationCounts[tg[i]]);
         }
 
+         var ret= [];
+         ret[0] = "right";
+
          if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
 
            if($scope.TotNotiCount > 0) 
-            $rootScope.appNotificationBadge ="true";
+            ret[1] = "1";
             else
-            $rootScope.appNotificationBadge ="false";
+            ret[1] = "0";
+
+            $rootScope.$broadcast('NotificationBadgeEvent', [ret]);
     })
 
 })
 
+.controller('menuBarCtrl', function($scope, $rootScope,$state) {
+
+
+
+//$rootScope.$broadcast('NotificationsReady', [ret]);
+
+})
 
 .controller('popOverCtrl', function($scope, $rootScope,$state) {
     console.log("inJquery start");

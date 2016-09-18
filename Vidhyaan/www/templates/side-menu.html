@@ -3,7 +3,7 @@
         <ion-nav-bar class="bar-dark" ng-controller="initCtrl" title ="Vidhyaan">
             <ion-nav-buttons side="left">
                 <button style="color:rgba(255,255,255,1);" class="button button-icon button-clear ion-navicon" menu-toggle="left">
-                    <span class="badge badge-assertive header-badge" ng-show="{{feedNotificationBadge}}"></span>
+                    <span ng-if = "rootfeedNotificationBadge" class="badge badge-assertive header-badge"></span>
                 </button>
             </ion-nav-buttons>
             <ion-nav-buttons side="right">
@@ -11,7 +11,7 @@
                     <button style="color:rgba(255,255,255,1);font-size:12;" class="button button-icon ion-ios-gear-outline" ng-click="popover.show($event)"></button>
                 </div> 
                 <button style="color:rgba(255,255,255,1);font-size:14;" class="button button-icon button-clear ion-ios-keypad-outline" menu-toggle="right">
-                    <span class="badge badge-assertive header-badge" ng-show="{{appNotificationBadge}}"></span>
+                    <span ng-if = "rootappNotificationBadge" class="badge badge-assertive header-badge"></span>
                 </button>
             </ion-nav-buttons>
         </ion-nav-bar>

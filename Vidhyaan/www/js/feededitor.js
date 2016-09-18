@@ -496,6 +496,7 @@ $scope.postMessage =function()
     ShowChannelSel();
     else
     {
+       $scope.Channels = [];
        $scope.TagsToSend = [];
        
        var item = {}

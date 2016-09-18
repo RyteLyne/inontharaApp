@@ -7,12 +7,12 @@
 		},
 		"Name": {
 			"1": "Name",
-			"2": "Hesaru",
+			"2": "ಹೆಸರು",
 			"3": "Naam"
 		},
 		"DOB": {
 			"1": "DOB",
-			"2": "Huttida dinanka",
+			"2": "ಹುಟ್ಟಿದ ದಿನಾಂಕ",
 			"3": "Janam din"
 		},
 		"Gender": {
@@ -27,53 +27,53 @@
 		},
 		"Division": {
 			"1": "Division",
-			"2": "Division",
+			"2": "ಡಿವಿಷನ್",
 			"3": "Division"
 		},
 		"EnrollmentNo": {
 			"1": "Enrollment No",
-			"2": "Enrollment No",
+			"2": "ನೋಂದಣಿ ಸಂಖ್ಯೆ",
 			"3": "Enrollment No"
 		},
 		"BloodGroup": {
 			"1": "Blood Group",
-			"2": "Blood Group",
+			"2": "ರಕ್ತದ ಗುಂಪು",
 			"3": "Blood Group"
 		},
 		"ClassTeacher": {
 			"1": "Class Teacher",
-			"2": "Class Teacher",
+			"2": "ವರ್ಗ ಶಿಕ್ಷಕ",
 			"3": "Class Teacher"
 		},
 		"MomName": {
 			"1": "Mother",
-			"2": "Amma",
+			"2": "ತಾಯಿ",
 			"3": "Mother Name"
 		},
 		"FatherName": {
 			"1": "Father",
-			"2": "Appa",
+			"2": "ತಂದೆ",
 			"3": "Father Name"
 		},
         "GuardianName": {
 			"1": "Guardian",
-			"2": "Guard",
+			"2": "ಪೋಷಕರು",
 			"3": "Guard1"
 		},
 		
 		"MomMobileNo": {
 			"1": "Mother Mobile No",
-			"2": "Mother Mobile No",
+			"2": "ತಾಯಿಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
 			"3": "Mother Mobile No"
 		},
 		"FatherMobileNo": {
 			"1": "Father Mobile No",
-			"2": "Father Mobile No",
+			"2": "ತಂದೆಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
 			"3": "Father Mobile No"
 		},
 		"HomeAddress": {
 			"1": "Home Address",
-			"2": "Home Address",
+			"2": "ಮನೆಯ ವಿಳಾಸ ",
 			"3": "Home Address"
 		}
 	},
@@ -89,6 +89,24 @@
 
 	],
 
+	"HomePage": {
+	"title" : {
+       "1": "Vidyaan",
+       "2": "ವಿದ್ಯಾನ್"
+      },
+      
+      "timeline" : {
+       "1": "timeline",
+       "2": "ಟೈಮ್ ಲೈನ್"
+      }
+
+	},
+
+	"PaymentsPage":{
+
+
+	},
+
 
 	"SettingsPage": {
 		"Title": {
@@ -98,47 +116,32 @@
 		},
 		"ChangePassword": {
 			"1": "Change Password",
-			"2": "Change Password",
+			"2": "ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಿ",
 			"3": "Change Password"
 		},
 		"OldPassword": {
 			"1": "Old Password",
-			"2": "Old Password",
+			"2": "ಹಳೆಯ ಪಾಸ್ವರ್ಡ್",
 			"3": "Old Password"
 		},
 		"NewPassword": {
 			"1": "New Password",
-			"2": "New Password",
+			"2": "ಹೊಸ ಪಾಸ್ವರ್ಡ್",
 			"3": "New Password"
 		},
 		"RepeatPassword": {
 			"1": "Repeat Password",
-			"2": "Repeat Password",
+			"2": "ಪಾಸ್ವರ್ಡ್ ಪುನರ್ವರ್ತಿಸಿ",
 			"3": "Repeat Password"
-		},
-		"EnableNotification": {
-			"1": "Enable Notifications",
-			"2": "Enable Notifications",
-			"3": "Enable Notifications"
-		},
-		"NotificationOn": {
-			"1": "Notification On",
-			"2": "Notification On",
-			"3": "Notification On"
-		},
-		"NotificationOff": {
-			"1": "Notification Off",
-			"2": "Notification Off",
-			"3": "Notification Off"
 		},
 		"Change": {
 			"1": "Change",
-			"2": "Change",
+			"2": "ಬದಲಾಯಿಸಿ",
 			"3": "Change"
 		},
 		"Language": {
 			"1": "Language",
-			"2": "Baashe",
+			"2": "ಬಾಷೆ",
 			"3": "Baasha"
 		}
 	}

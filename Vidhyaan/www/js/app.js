@@ -188,7 +188,41 @@ $scope.logoutFunc = function(){
 
 
 
-myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
+myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHistory,$rootScope) {
+  
+//$scope.feedNotificationBadge = false;
+//$scope.appNotificationBadge = false;
+
+$rootScope.$on('NotificationBadgeEvent', function(event, data) {
+
+	console.log("NotificationBadge",data);
+var typ = data[0];
+console.log("NotificationBadge",typ);
+
+if(typ[0] == "left")
+{
+if(typ[1] == "0")
+$rootScope.rootfeedNotificationBadge = false;
+else
+{
+$rootScope.rootfeedNotificationBadge = true;
+console.log("kkk");
+}
+
+}
+else
+{
+if(typ[1] == "0")
+$rootScope.rootappNotificationBadge = false;
+else
+$rootScope.rootappNotificationBadge = true; 
+}
+
+})
+
+
+
+
   $ionicPopover.fromTemplateUrl('templates/popover.html', {
     scope: $scope,
   }).then(function(popover) {

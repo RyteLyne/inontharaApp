@@ -328,12 +328,38 @@ $scope.eventList=[
     console.log("in SlideCtrl");
     $ionicNavBarDelegate.align('left');
 
-    var doc = $rootScope.GetDocument("OrganizationInfo");
+     var language = $rootScope.Language.toString();
+     var doc = $rootScope.GetDocument("OrganizationInfo");
+
+
+    jQuery.getJSON('json/UiLanguage.json', function(data) {
+       console.log("JSON Loaded");
+        $scope.timelineText = data.HomePage.timeline[language] == undefined ? data.HomePage.timeline["1"] : data.HomePage.timeline[language];
+        $scope.titleText = data.HomePage.title[language] == undefined ? data.HomePage.title["1"] : data.HomePage.title[language];
+
+    });
+
+    var orgName = doc.DocumentBody.ApplicationSpecificData.organizationName;
+     $rootScope.AppUserInformation.OrgName = orgName[language]==undefined?orgName["1"] : orgName[language];
+
 
     var slideImages = doc.DocumentBody.ApplicationSpecificData.slideImages;
 
+      
+   
     
     $scope.slides = slideImages;
+
+     
+   $scope.onAvatarClick = function()
+   {
+     console.log("click");
+     $rootScope.setAppState($state.current);
+     $state.go('profile', {}, {
+            reload: true
+        });
+   }
+
     
 })
 
@@ -815,9 +841,6 @@ console.log("OK came here");
             OldPassword: data.SettingsPage.OldPassword[lang] == undefined ? data.SettingsPage.OldPassword["1"] : data.SettingsPage.OldPassword[lang],
             NewPassword: data.SettingsPage.NewPassword[lang] == undefined ? data.SettingsPage.NewPassword["1"] : data.SettingsPage.NewPassword[lang],
             RepeatPassword: data.SettingsPage.RepeatPassword[lang] == undefined ? data.SettingsPage.RepeatPassword["1"] : data.SettingsPage.RepeatPassword[lang],
-            EnableNotification: data.SettingsPage.EnableNotification[lang] == undefined ? data.SettingsPage.EnableNotification["1"] : data.SettingsPage.EnableNotification[lang],
-            NotificationOn: data.SettingsPage.NotificationOn[lang] == undefined ? data.SettingsPage.NotificationOn["1"] : data.SettingsPage.NotificationOn[lang],
-            NotificationOff: data.SettingsPage.NotificationOff[lang] == undefined ? data.SettingsPage.NotificationOff["1"] : data.SettingsPage.NotificationOff[lang],
             Change: data.SettingsPage.Change[lang] == undefined ? data.SettingsPage.Change["1"] : data.SettingsPage.Change[lang],
             Language: data.SettingsPage.Language[lang] == undefined ? data.SettingsPage.Language["1"] : data.SettingsPage.Language[lang]
         }
@@ -830,11 +853,10 @@ console.log("OK came here");
         window.localStorage.setItem("language", $scope.choice.langchoice);
         console.log("Selected value, text:", item);
 
-        $state.go('app.home', {}, {
-            reload: true
-        });
+       $rootScope.clearAppState();
 
         $window.location.reload(true);
+        
     }
    
 });
