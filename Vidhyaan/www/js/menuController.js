@@ -34,6 +34,9 @@ angular.module('Menus.controllers', ['ngCordova'])
 
     console.log("logo:",$scope.orgLogo);
 
+    window.localStorage.setItem("orgLogo",$scope.orgLogo);
+
+
     console.log("new Language ", language);
     for (var i = 0; i < groups.length; i++) {
         if (groups[i].mId != undefined)

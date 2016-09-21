@@ -390,8 +390,13 @@ $scope.eventList=[
 console.log("OK came here");
         $scope.Credentials.username = window.localStorage.getItem("username");
         $scope.Credentials.password = window.localStorage.getItem("password");
-
+        $scope.orgLogo = "";
        
+       if(window.localStorage.getItem("orgLogo") !=undefined)
+       {
+         $scope.orgLogo = window.localStorage.getItem("orgLogo");
+         
+       }
 
         var userId = $scope.Credentials.username;
 
