@@ -79,6 +79,8 @@ angular.module('Global.controllers', ['ngCordova'])
         DocDetails: {}
     }
 
+    $rootScope.titleText = "";
+
 
 $rootScope.ShowConfirmExit = function()
     {

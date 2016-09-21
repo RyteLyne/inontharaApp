@@ -330,12 +330,15 @@ $scope.eventList=[
 
      var language = $rootScope.Language.toString();
      var doc = $rootScope.GetDocument("OrganizationInfo");
+      $scope.timelineText = "";
+      //$scope.titleText ="";
+
 
 
     jQuery.getJSON('json/UiLanguage.json', function(data) {
        console.log("JSON Loaded");
         $scope.timelineText = data.HomePage.timeline[language] == undefined ? data.HomePage.timeline["1"] : data.HomePage.timeline[language];
-        $scope.titleText = data.HomePage.title[language] == undefined ? data.HomePage.title["1"] : data.HomePage.title[language];
+        $rootScope.titleText = data.HomePage.title[language] == undefined ? data.HomePage.title["1"] : data.HomePage.title[language];
 
     });
 
