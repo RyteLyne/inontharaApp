@@ -818,7 +818,7 @@ console.log("registering push notification");*/
         console.log("in doc details factory");
         $cordovaSQLite.execute($rootScope.myDB, 'SELECT doctext FROM docdetails where docid = ?', [docid]).then(function(results) {
             console.log(results);
-            console.log(results.rows.length);
+            //console.log(results.rows.length);
             if (results.rows.length > 0) //atleast one record
             {
                 console.log("Got data for doc details");
