@@ -301,7 +301,7 @@ $scope.eventList=[
     }
     console.log($scope.profile.mName);
     // var prop = data.ProfilePage;
-    jQuery.getJSON('json/UiLanguage.json', function(data) {
+    jQuery.getJSON('json/uiLanguage.json', function(data) {
         $scope.UiLanguageProfile = {
             Title: data.ProfilePage.Title[language] == undefined ? data.ProfilePage.Title["1"] : data.ProfilePage.Title[language],
             Name: data.ProfilePage.Name[language] == undefined ? data.ProfilePage.Name["1"] : data.ProfilePage.Name[language],
@@ -335,7 +335,7 @@ $scope.eventList=[
 
 
 
-    jQuery.getJSON('json/UiLanguage.json', function(data) {
+    jQuery.getJSON('json/uiLanguage.json', function(data) {
        console.log("JSON Loaded");
         $scope.timelineText = data.HomePage.timeline[language] == undefined ? data.HomePage.timeline["1"] : data.HomePage.timeline[language];
         $rootScope.titleText = data.HomePage.title[language] == undefined ? data.HomePage.title["1"] : data.HomePage.title[language];
@@ -344,7 +344,8 @@ $scope.eventList=[
 
     var orgName = doc.DocumentBody.ApplicationSpecificData.organizationName;
      $rootScope.AppUserInformation.OrgName = orgName[language]==undefined?orgName["1"] : orgName[language];
-
+     
+    window.localStorage.getItem("orgName",$rootScope.AppUserInformation.OrgName);
 
     var slideImages = doc.DocumentBody.ApplicationSpecificData.slideImages;
 
@@ -391,10 +392,17 @@ console.log("OK came here");
         $scope.Credentials.username = window.localStorage.getItem("username");
         $scope.Credentials.password = window.localStorage.getItem("password");
         $scope.orgLogo = "vid.jpg";
+        $scope.orgName ="Vidyaan";
        
        if(window.localStorage.getItem("orgLogo") !=undefined)
        {
          $scope.orgLogo = window.localStorage.getItem("orgLogo");
+         
+       }
+
+        if(window.localStorage.getItem("orgName") !=undefined)
+       {
+         $scope.orgLogo = window.localStorage.getItem("orgName");
          
        }
 
@@ -415,12 +423,12 @@ console.log("OK came here");
           }
 
 
-          if($rootScope.AppUserInformation.firstLogIn== false)
+          if($rootScope.AppUserInformation.firstLogIn== false) //autologin;;
           {
                // initApp();
            console.log("First LogIn false");
            $rootScope.InitStorage(userId);
-           Promise.all([docdetailsfactory.getdata("SubscriberInfo"),docdetailsfactory.getdata("ProgramInfo"),docdetailsfactory.getdata("ChannelSummary"),docdetailsfactory.getdata("OrganizationInfo")]).then(function(){
+           Promise.all([docdetailsfactory.getdata("SubscriberInfo"),docdetailsfactory.getdata("ProgramInfo"),docdetailsfactory.getdata("ChannelSummary"),docdetailsfactory.getdata("OrganizationInfo"),docdetailsfactory.getdata("ProgramExtraData")]).then(function(){
               initApp();
 
               
@@ -440,7 +448,7 @@ console.log("OK came here");
         var ordId = sub.DocumentHeader.OrganizationId;
 
   
-   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"),datafactory.getdata( userId, ordId, "ChannelSummary"),datafactory.getdata( userId, ordId, "OrganizationInfo")]).then(function() {
+   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"),datafactory.getdata( userId, ordId, "ChannelSummary"),datafactory.getdata( userId, ordId, "OrganizationInfo"),datafactory.getdata( userId, ordId, "ProgramExtraData")]).then(function() {
                
                 
                 initApp();
@@ -609,10 +617,10 @@ console.log("OK came here");
 .controller('readPageCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet, feeddetailsfactory,blobDownloadFactory,$state) {
     $scope.readFunc = function() {}
     //$scope.readFunc();
-    Promise.all([feeddetailsfactory.getdata($rootScope.AppUserInformation.DocId)]).then(function(ret) {
+    Promise.all([feeddetailsfactory.getdata($rootScope.AppUserInformation.DocId,$rootScope.AppUserInformation.SelProgram)]).then(function(ret) {
         if(ret[0] !=undefined)
         {
-        $scope.messages = ret[0].messages.messages;
+        $scope.messages = ret[0].messages;
         $scope.canReply = ret[0].canReply;
         if($rootScope.isFromTimeLine == true)
           $scope.canReply =0; //cant reply from timeline;;
@@ -839,7 +847,7 @@ console.log("OK came here");
         
     }
     $scope.notificationstatus = "";
-    jQuery.getJSON('json/UiLanguage.json', function(data) {
+    jQuery.getJSON('json/uiLanguage.json', function(data) {
         var lang = $rootScope.Language.toString();
         $scope.UiLanguageSettings = {
             Title: data.SettingsPage.Title[lang] == undefined ? data.SettingsPage.Title["1"] : data.SettingsPage.Title[lang],

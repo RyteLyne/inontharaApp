@@ -731,6 +731,33 @@ console.log("registering push notification");*/
         $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid, progid, posttime, fpreview, unread FROM feedmsgs where progid = ? ORDER BY posttime DESC', [progid]).then(function(results) {
             console.log(results);
             console.log(results.rows.length);
+            if(results.rows.length <=0)
+            { //load sample data;;
+
+            var dc =  $rootScope.GetDocument("ProgramExtraData");
+            if(dc.DocumentBody.ApplicationSpecificData[progid]!=undefined)
+            {
+                var rc = dc.DocumentBody.ApplicationSpecificData[progid].SampleMessage;
+                var dt = new Date(parseInt(rc.FeedPreview.Datetime));
+                ret[0] = {
+                    MsgId: rc.DocumentId,
+                    ProgId: progid,
+                    Unread: "0",
+                    DateTime: dt.toString(),
+                    Heading: rc.FeedPreview.Heading,
+                    Author: rc.FeedPreview.AuthorName,
+                    Avatar: rc.FeedPreview.AuthorAvatar,
+                    TextPreview: rc.FeedPreview.ContentPreview,
+                    Image: rc.FeedPreview.Thumbnail,
+                    SubscribersID: rc.FeedPreview.SubscribersID
+                };
+               console.log("Loaded Sample data to Feed List ");
+               defer.resolve(ret);
+            }
+
+
+            }
+
             for (var i = 0; i < results.rows.length; i++) {
                 var feedpreview = JSON.parse(results.rows.item(i).fpreview);
                 var dt = new Date(parseInt(results.rows.item(i).posttime));
@@ -847,13 +874,41 @@ console.log("registering push notification");*/
 
 .factory('feeddetailsfactory', function($q, $cordovaSQLite, $rootScope) {
     var factory = {};
-    factory.getdata = function(docid) {
+    factory.getdata = function(docid,progid) {
         var defer = $q.defer();
+
+       
+
         //var myDB = window.sqlitePlugin.openDatabase({name: "Vidhyaan.db", location: 'default'});
         //var myDB = $cordovaSQLite.openDB({ name: "Vidhyaan.db", location: 'default' })
         var ret = {};
         addtline = 1;
         console.log("in feed details factory");
+
+         if(docid == "sample")
+        {
+             var dc =  $rootScope.GetDocument("ProgramExtraData");
+            if(dc.DocumentBody.ApplicationSpecificData[progid]!=undefined)
+            {
+                var rc = dc.DocumentBody.ApplicationSpecificData[progid].SampleMessage;
+           
+           ret = 
+                {
+                  progid : progid,
+                  messages: rc.messages,
+                  canReply : "0" 
+
+                }
+
+                 
+            }
+            defer.resolve(ret);    
+            
+        }
+
+
+
+
         $cordovaSQLite.execute($rootScope.myDB, 'SELECT msg,progid,canreply FROM feedmsgs where docid = ?', [docid]).then(function(results) {
             console.log(results);
             console.log(results.rows.length);
@@ -864,7 +919,7 @@ console.log("registering push notification");*/
                 ret = 
                 {
                   progid : results.rows.item(0).progid,
-                  messages: messages,
+                  messages: messages.messages,
                   canReply : results.rows.item(0).canreply 
 
                 }
