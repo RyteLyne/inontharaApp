@@ -385,9 +385,7 @@ $scope.eventList=[
        return;
     }
 
-    $ionicLoading.show({
-      template: 'Initializing...'
-       });
+   
 
 console.log("OK came here");
         $scope.Credentials.username = window.localStorage.getItem("username");
@@ -420,7 +418,7 @@ console.log("OK came here");
            Promise.all([docdetailsfactory.getdata("SubscriberInfo"),docdetailsfactory.getdata("ProgramInfo"),docdetailsfactory.getdata("ChannelSummary"),docdetailsfactory.getdata("OrganizationInfo")]).then(function(){
               initApp();
 
-               $ionicLoading.hide(); 
+              
                 $state.go('app.home', {}, {
                     reload: true
                 });
@@ -441,7 +439,7 @@ console.log("OK came here");
                
                 
                 initApp();
-                $ionicLoading.hide();
+               
                 $rootScope.AppUserInformation.firstLogIn= false;
                 $state.go('app.home', {}, {
                     reload: true
@@ -451,7 +449,7 @@ console.log("OK came here");
             .catch(function(err) {
                 
                 alert("Unable to Query Server");
-                $ionicLoading.hide();
+                
 
                 console.log("Unable to Query Server");
 
