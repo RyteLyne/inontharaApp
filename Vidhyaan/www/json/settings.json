@@ -2,8 +2,8 @@
 
 "loginScreen" :
 {
-"background" : "img/g20.png",
-"logo": "img/g74.png"
+"background" : "img/loginBackGround.jpg",
+"logo": "img/vidhyaanlogo.svg"
 }
 
 }
