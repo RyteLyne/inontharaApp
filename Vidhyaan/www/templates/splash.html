@@ -1,7 +1,12 @@
 
 <ion-view cache-view="false" view-title="Splash">
    <ion-content  overflow-scroll="false" ng-controller="SplashCtrl" scroll=true style=" background-image : url('img/redTexture.jpg');background-size: cover;">
-  
+   
+<div style="position:relative;top:25vh;">
+   <h2  style="text-align:center;;color:white;font-size:8vmin;">
+    {{orgName}}
+   </h2>
+   </div>
      <div class="item-avatar">
                     <img image="{{rootSlidePath + orgLogo}}" image-loading="img/vidhyaanlogo.svg" image-holder="img/vidhyaanlogo.svg" style="height:30vmin; width:30vmin; max-width:30vmin;max-height:30vmin;border: 0.8vmin solid white;box-shadow: 0vmin 0vmin 0.8vmin rgba(0,0,0,0.7);position:absolute;left:35vw;top:40vh;"></img>
                 </div> 

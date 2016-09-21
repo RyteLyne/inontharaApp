@@ -33,7 +33,7 @@ angular.module('ion-floating-menu', [])
                 replace: true,
                 transclude: true,
                 controller: function ($scope) {
-                    $scope.buttonColor = $scope.buttonColor || '#2AC9AA';
+                    $scope.buttonColor = $scope.buttonColor || 'red';
                     $scope.icon = $scope.icon || 'ion-plus';
                     $scope.iconColor = $scope.iconColor || '#fff';
                     $scope.hasFooter = $scope.hasFooter || false;
@@ -91,10 +91,10 @@ angular.module('ion-floating-menu', [])
                         $scope.icon = menuIcon;
                         $scope.iconColor = menuIconColor;
                     };
-                    var menuColor = $scope.menuColor || '#2AC9AA';
+                    var menuColor = $scope.menuColor || 'red';
                     var menuIcon = $scope.menuIcon || 'ion-plus';
                     var menuIconColor = $scope.menuIconColor || '#fff';
-                    var menuOpenColor = $scope.menuOpenColor || '#2AC9AA';
+                    var menuOpenColor = $scope.menuOpenColor || 'red';
                     var menuOpenIcon = $scope.menuOpenIcon || 'ion-minus';
                     var menuOpenIconColor = $scope.menuOpenIconColor || '#fff';
                     $scope.setClose();
@@ -127,7 +127,7 @@ angular.module('ion-floating-menu', [])
                         '</li>',
                 replace: true,
                 controller: function ($scope) {
-                    $scope.buttonColor = $scope.buttonColor || '#2AC9AA';
+                    $scope.buttonColor = $scope.buttonColor || 'red';
                     $scope.iconColor = $scope.iconColor || '#fff';
                 }
             };

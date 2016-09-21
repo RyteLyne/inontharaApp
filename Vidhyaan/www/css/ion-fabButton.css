@@ -67,7 +67,7 @@
     animation-name: fadeOutDown;
 }
 .fab-button {
-    background-color: rgb(63, 81, 181);
+    background-color: rgb(255, 0, 0);
     position: fixed;
     bottom: 20px;
     right: 20px;

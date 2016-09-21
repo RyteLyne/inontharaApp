@@ -1,8 +1,11 @@
  <ion-view  ng-controller = "SettingsCtrl">
 
- <ion-header-bar class="sub-head" style="height:auto; background-color:   rgba(0,212,205,1);">
-      
-        <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
+<ion-header-bar class="sub-head bar-dark" style="position:relative;" >
+    <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="rootGoBack()">
+  <i class="ion-ios-close-empty" style="font-size:46px; padding-left:8px; position:absolute; color:white;text-align:center;top:-5px;"> </i>
+</button>
+ <p class = "title" style="position:absolute;text-align:left;padding-left:25px "> {{AppUserInformation.SelProgName}}</p>
+ 
     </ion-header-bar>
         
     <ion-content>
@@ -12,7 +15,7 @@
 "NotificationOff" : "Notification Off",
 -->
 
-<div class="bar bar-header bar-positive">
+<div class="bar bar-header bar-dark">
 <h1 class="title">{{UiLanguageSettings.Language}}</h1>
 </div> </br></br>
 <div ng-repeat="item in LanguageOptions">
@@ -27,7 +30,7 @@
 
 
 
-<div class="bar bar-positive">
+<div class="bar bar-dark">
   <h1 class="title">{{UiLanguageSettings.ChangePassword}}</h1>
 </div> </br></br>
 

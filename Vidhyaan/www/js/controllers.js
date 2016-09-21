@@ -436,7 +436,10 @@ console.log("OK came here");
                     reload: true
                 });
 
-           })
+           }).catch(function(err) {
+             console.log("something went wrong");
+  console.log(err.message); // some coding error in handling happened
+});
 
                return;
                

@@ -1,20 +1,28 @@
 <ion-view title="Write a post" ng-controller="EditorCtrl" cache-view="false">
-   
-    <ion-header-bar  align-title="center" class="sub-head" style="height:auto; background-color:  rgba(0,212,205,1);">
-      
-        <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
-        <i class="ion-ios-paperplane-outline" style="font-size:46px; color:green;position:absolute;right:15px;" ng-click="postMessage()"> </i>
-        <p class = "title"> {{AppUserInformation.SelProgName}}</p>
+  
+   <ion-header-bar class="sub-head bar-dark" style="position:relative;" >
+    <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="rootGoBack()">
+  <i class="ion-ios-close-empty" style="font-size:46px; padding-left:8px; position:absolute; color:white;text-align:center;top:-5px;"> </i>
+</button>
+
+<button class="button button-clear button-positive" style="position:absolute; right:45px; width:auto;display:inline;" ng-click="postMessage()">
+  <i class="ion-ios-paperplane-outline" style="font-size:46px; padding-right:25px; position:absolute; color:white;text-align:center;top:-3px;transform: rotate(20deg);"> </i>
+</button>
+
+ <p class = "title" style="position:absolute;text-align:left;padding-left:25px "> {{AppUserInformation.SelProgName}}</p>
+ 
     </ion-header-bar>
+
+   
     <ion-pane> 
         <ion-floating-menu>
 
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isCameraEnabled == true" icon="ion-camera" click="addImage(1)"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isGalleryEnabled == true" icon="ion-image" click="addImage(0)"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isTextEnabled == true" icon="ion-ios-compose-outline" click="addText()"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isHeadingEnabled == true" icon="ion-ios-compose" click="addHeading()"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isVideoEnabled == true" icon="ion-ios-videocam" click="addVideo()"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isFileEnabled == true" icon="ion-document-text" click=" addfile()"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isCameraEnabled == true" icon="ion-camera" text="take photo" click="addImage(1)"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isGalleryEnabled == true" icon="ion-image" text="add image" click="addImage(0)"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isTextEnabled == true" icon="ion-ios-compose-outline" text="add text" click="addText()"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isHeadingEnabled == true" icon="ion-ios-compose" text="add heading" click="addHeading()"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isVideoEnabled == true" icon="ion-ios-videocam" text="add video" click="addVideo()"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isFileEnabled == true" icon="ion-document-text" text="attach file" click=" addfile()"></ion-floating-item>
             <ion-floating-item ng-if = "AppUserInformation.EditorControls.isDateEnabled == true && AppUserInformation.EditorType == 'compose'" icon="ion-ios-calendar-outline" click=" AddDateRange()"></ion-floating-item>
 
           
