@@ -772,7 +772,7 @@ tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Heading=heading;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Thumbnail= firstImage;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.ContentPreview= txt;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorAvatar=$rootScope.AppUserInformation.UserAvatar;
-tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName=$rootScope.AppUserInformation.UserName;
+tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.AuthorName=$rootScope.AppUserInformation.englishName;
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.SubscribersID =  $rootScope.AppUserInformation.SubId
 tempDoc.DocumentBody.ApplicationSpecificeData.FeedPreview.Datetime = curr_time.toString();;
  

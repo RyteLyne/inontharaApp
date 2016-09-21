@@ -53,6 +53,7 @@ angular.module('Global.controllers', ['ngCordova'])
         UserName: "",
         firstName:"",
         lastName:"",
+        englishName:"",
         UserTag: "",
         Class: "",
         UserAvatar: "",
@@ -77,6 +78,8 @@ angular.module('Global.controllers', ['ngCordova'])
         stateInformation : [],
         DocDetails: {}
     }
+
+    $rootScope.titleText = "";
 
 
 $rootScope.ShowConfirmExit = function()
@@ -375,6 +378,8 @@ console.log("Came to else part2");
             $rootScope.AppUserInformation.firstName = fname1;
             $rootScope.AppUserInformation.lastName = lname1;
             $rootScope.AppUserInformation.UserName = fname1 + " " + lname1;
+
+            $rootScope.AppUserInformation.englishName = fname["1"] + " " + lname["1"];
             console.log("App Information");
             console.log($rootScope.AppUserInformation);
             //end of AppUserInformation
