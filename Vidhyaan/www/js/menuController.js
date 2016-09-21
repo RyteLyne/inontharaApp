@@ -395,7 +395,7 @@ $scope.onPopOverClick= function(selItem)
 {
 //ng-href="{{items.ref}}"
 $rootScope.setAppState($state.current);
-
+$rootScope.AppUserInformation.SelProgName = selItem.text;
 
 $state.go(selItem.ref, {}, {
         reload: true
