@@ -833,6 +833,7 @@ console.log("OK came here");
         langchoice: 1,
         
     };
+    //$rootScope.AppUserInformation.
     console.log("Language : ", $rootScope.Language);
     //window.localStorage.removeItem("setting");
     //window.localStorage.removeItem("language");

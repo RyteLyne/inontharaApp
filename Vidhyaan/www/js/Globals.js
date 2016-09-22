@@ -42,7 +42,7 @@ angular.module('Global.controllers', ['ngCordova'])
         SelProgram: "0",
 
    
-        SelProgName: "TimeLine",
+        SelProgName: "Settings",
 
         WritePriv: false,
         XPriv: false,
