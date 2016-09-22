@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.kshipra.Vidhyaan" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Vidhyaan</name>
-  <description>&#xD;
-&#xD;
-        Vidyaan educational app&#xD;
-&#xD;
+  <description>&#xD;&#xD;
+&#xD;&#xD;
+        Vidyaan educational app&#xD;&#xD;
+&#xD;&#xD;
     </description>
-  <author email="you@example.com" href="http://example.com.com/">&#xD;
-&#xD;
-      Your Name Her&#xD;
-&#xD;
+  <author email="you@example.com" href="http://example.com.com/">&#xD;&#xD;
+&#xD;&#xD;
+      Your Name Her&#xD;&#xD;
+&#xD;&#xD;
     </author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -20,7 +20,7 @@
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="SplashScreenDelay" value="2000"/>
-  <preference name="FadeSplashScreenDuration" value="2000"/>
+  <preference name="FadeSplashScreenDuration" value="200"/>
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <feature name="StatusBar">
@@ -29,12 +29,12 @@
   <platform name="android">
     <preference name="android-minSdkVersion" value="16"/>
     <preference name="android-targetSdkVersion" value="22"/>
-    <icon density="ldpi" src="resources\android\icon\drawable-ldpi-icon.png"/>
-    <icon density="mdpi" src="resources\android\icon\drawable-mdpi-icon.png"/>
-    <icon density="hdpi" src="resources\android\icon\drawable-hdpi-icon.png"/>
-    <icon density="xhdpi" src="resources\android\icon\drawable-xhdpi-icon.png"/>
-    <icon density="xxhdpi" src="resources\android\icon\drawable-xxhdpi-icon.png"/>
-    <icon density="xxxhdpi" src="resources\android\icon\drawable-xxxhdpi-icon.png"/>
+    <icon src="resources\android\icon\drawable-ldpi-icon.png" density="ldpi"/>
+    <icon src="resources\android\icon\drawable-mdpi-icon.png" density="mdpi"/>
+    <icon src="resources\android\icon\drawable-hdpi-icon.png" density="hdpi"/>
+    <icon src="resources\android\icon\drawable-xhdpi-icon.png" density="xhdpi"/>
+    <icon src="resources\android\icon\drawable-xxhdpi-icon.png" density="xxhdpi"/>
+    <icon src="resources\android\icon\drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
     <splash src="resources\android\splash\drawable-port-ldpi-screen.png" density="port-ldpi"/>
     <splash src="resources\android\splash\drawable-port-mdpi-screen.png" density="port-mdpi"/>
     <splash src="resources\android\splash\drawable-port-hdpi-screen.png" density="port-hdpi"/>

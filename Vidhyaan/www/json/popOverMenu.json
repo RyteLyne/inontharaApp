@@ -1,16 +1,22 @@
 {
 
 "items" : [
+
+{
+ "mIcon" : "",
+ "mRef"  : "about",
+ "mText" : {"1" : "About vidyaān", "2" : "ನಮ್ಮ ವಿಧ್ಯಾನ್", "3" : "लोग आउट"}
+},
 {
  "mIcon" : "ion-link",
  "mRef"  : "app.home",
- "mText" : { "1": "Refer", "2" : "ಪರಿಚಯಿಸಿ", "3" :"घर"}
+ "mText" : { "1": "Invite others", "2" : "ಪರಿಚಯಿಸಿ", "3" :"घर"}
 },
 
 {
  "mIcon" : "ion-bug",
  "mRef"  : "app.home",
- "mText" : {"1" : "Report", "2" : "ವರದಿ ಕೊಡಿ", "3" : "उल्लेख"}
+ "mText" : {"1" : "Report issue", "2" : "ವರದಿ ಕೊಡಿ", "3" : "उल्लेख"}
 },
 {
  "mIcon" : "ion-help",
