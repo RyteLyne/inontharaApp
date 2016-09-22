@@ -1,13 +1,18 @@
 
 <ion-modal-view view-title="Date Selection" style="height:60vh;width:100%;">
 
+ <ion-header-bar class="sub-head bar-dark" style="position:relative;" >
+    <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="onDateSelectionCancel()">
+  <i class="ion-android-cancel" style="font-size:32px; padding-left:8px; position:absolute; color:white;text-align:center;top:0px;"> </i>
+</button>
 
-  <ion-header-bar class="sub-head" style="height:auto; background-color:   rgba(0,212,205,1);">
-      
-        <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="onDateSelectionCancel()"> </i>
-        <i class="ion-android-done" style="font-size:46px; color:green;position:absolute;right:15px;" ng-click="onDateSelectionOk()"> </i>
-       
+<button class="button button-clear button-positive" style="position:absolute; right:35px; width:auto;display:inline;" ng-click="onDateSelectionOk()">
+  <i class="ion-android-done" style="font-size:32px; padding-right:5px; position:absolute; color:white;text-align:center;top:2px;transform: rotate(0deg);"> </i>
+</button>
+
+
     </ion-header-bar>
+
       
 <ion-content padding="true" overflow-scroll="false">
 <br/><br/>

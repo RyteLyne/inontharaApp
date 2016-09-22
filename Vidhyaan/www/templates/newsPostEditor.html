@@ -2,7 +2,7 @@
   
    <ion-header-bar class="sub-head bar-dark" style="position:relative;" >
     <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="rootGoBack()">
-  <i class="ion-ios-close-empty" style="font-size:46px; padding-left:8px;padding-right:45px;overflow:auto; position:absolute; color:white;text-align:center;top:-5px;"> </i>
+  <i class="ion-android-cancel" style="font-size:32px; padding-left:8px;padding-right:45px; position:absolute; color:white;text-align:center;top:0px;"> </i>
 </button>
 
 <button class="button button-clear button-positive" style="position:absolute; right:35px; width:auto;display:inline;" ng-click="postMessage()">
@@ -13,22 +13,10 @@
  
     </ion-header-bar>
 
-   
-    <ion-pane> 
-        <ion-floating-menu>
-
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isCameraEnabled == true" icon="ion-camera" text="take photo" click="addImage(1)"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isGalleryEnabled == true" icon="ion-image" text="add image" click="addImage(0)"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isTextEnabled == true" icon="ion-ios-compose-outline" text="add text" click="addText()"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isHeadingEnabled == true" icon="ion-ios-compose" text="add heading" click="addHeading()"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isVideoEnabled == true" icon="ion-ios-videocam" text="add video" click="addVideo()"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isFileEnabled == true" icon="ion-document-text" text="attach file" click=" addfile()"></ion-floating-item>
-            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isDateEnabled == true && AppUserInformation.EditorType == 'compose'" icon="ion-ios-calendar-outline" text="add date" click=" AddDateRange()"></ion-floating-item>
-
-          
-        </ion-floating-menu>
-        <ion-content>
-            <ion-list class="messages item-text-wrap">
+   <ion-pane>
+        <ion-content  has-header="false" has-tabs="false" padding="false">
+        <div style="position:relative;top:-6vh;" >
+            <ion-list class="messages item-text-wrap" >
                 <ion-item class="item-borderless" ng-repeat="message in serverMessage">
                     <!--<pre ng-bind-html="message.content"></pre>-->
                     <div ng-if="message.type=='h1'">
@@ -51,7 +39,21 @@
 
                 
             </ion-list>
+            </div>
         </ion-content>
+        </ion-pane>
+        <ion-floating-menu>
+
+           <ion-floating-item ng-if = "AppUserInformation.EditorControls.isCameraEnabled == true" icon="ion-camera" text="take photo" click="addImage(1)"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isGalleryEnabled == true" icon="ion-image" text="add image" click="addImage(0)"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isTextEnabled == true" icon="ion-ios-compose-outline" text="add text" click="addText()"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isHeadingEnabled == true" icon="ion-ios-compose" text="add heading" click="addHeading()"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isVideoEnabled == true" icon="ion-ios-videocam" text="add video" click="addVideo()"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isFileEnabled == true" icon="ion-document-text" text="attach file" click=" addfile()"></ion-floating-item>
+            <ion-floating-item ng-if = "AppUserInformation.EditorControls.isDateEnabled == true && AppUserInformation.EditorType == 'compose'" icon="ion-ios-calendar-outline" text="add date" click=" AddDateRange()"></ion-floating-item>
+
+          
+        </ion-floating-menu>
         <ion-footer-bar>
             <!--<textarea name="textarea" ng-model="myInput" placeholder={{tPlaceholder}} style="width: 75%; min-width:220px;min-height:90px float:left;"></textarea>
          -->
@@ -62,5 +64,5 @@
             <!--      <button class="button button-positive" ng-click="gcmButton()">gcm </button> -->
             <!--           <button class="button button-positive" ng-click="postMessage()">post</button> -->
         </ion-footer-bar>
-    </ion-pane>
+  
 </ion-view>

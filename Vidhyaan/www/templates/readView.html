@@ -7,7 +7,7 @@ navigation history that also transitions its views in and out.
       <ion-view  title="" cache-view="false" ng-controller="readPageCtrl">
 <ion-header-bar class="sub-head bar-dark" style="position:relative;" >
     <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="rootGoBack()">
-  <i class="ion-ios-close-empty" style="font-size:46px; padding-left:8px; position:absolute; color:white;text-align:center;top:-5px;"> </i>
+  <i class="ion-android-cancel" style="font-size:32px; padding-left:8px; position:absolute; color:white;text-align:center;top:0px;"> </i>
 </button>
  <p class = "title" style="position:absolute;text-align:left;padding-left:25px "> {{AppUserInformation.SelProgName}}</p>
  
@@ -19,7 +19,7 @@ navigation history that also transitions its views in and out.
           <ion-item class="item-borderless" ng-repeat="message in messages" > 
           <pre ng-bind-html="message.txt"></pre>
         </ion-list> -->
-
+        <div style="position:relative;top:-6vh;" >
         <ion-list class="messages item-text-wrap">
           <ion-item class="item-borderless" ng-repeat="message in messages" > 
           <div ng-if = "message.type=='h1'">
@@ -38,7 +38,7 @@ navigation history that also transitions its views in and out.
            <p>Date : {{message.msg}}</p>
            </div>
         </ion-list>
-      
+      </div>
   
       </ion-content>
 
