@@ -23,7 +23,7 @@ angular.module('Menus.controllers', ['ngCordova'])
     $scope.groups = [];
     console.log("groups:", groups);
     $scope.menulist = {};
-    $scope.TotNotiCount = 0;
+    $scope.leftTotNotiCount = 0;
     var k = 0;
     var language = $rootScope.Language.toString();
     var SubChannels = sub.DocumentBody.ApplicationSpecificData.SubscribedChannels;
@@ -51,6 +51,9 @@ angular.module('Menus.controllers', ['ngCordova'])
             cnt: $rootScope.NotificationCounts["Nc_" + groups[i].mId] == undefined ? "" : $rootScope.NotificationCounts["Nc_" + groups[i].mId],
             items: []
         };
+        if( $scope.groups[k].cnt>0)
+        $scope.leftTotNotiCount = $scope.leftTotNotiCount +  $scope.groups[k].cnt;
+
         if (groups[i].mId != undefined) {
             $scope.menulist[groups[i].mId] = $scope.groups[k];
         }
@@ -81,6 +84,18 @@ angular.module('Menus.controllers', ['ngCordova'])
         }
         k++;
     }
+
+    if($scope.leftTotNotiCount > 0)
+    {
+
+         var ret= [];
+         ret[0] = "left";
+         ret[1] = "1";
+         $rootScope.$broadcast('NotificationBadgeEvent', [ret]);
+    }
+
+
+
     //end of main for loop;;
     $rootScope.$on('NotificationEvent', function(event, data) {
         console.log("Notification Event Fired");
@@ -92,18 +107,18 @@ angular.module('Menus.controllers', ['ngCordova'])
           {
             $scope.menulist[data[0]].cnt = data[1];
             if(data[2] == true) //increment
-            $scope.TotNotiCount = $scope.TotNotiCount + 1;
+            $scope.leftTotNotiCount = $scope.leftTotNotiCount + 1;
             else
-            $scope.TotNotiCount = $scope.TotNotiCount - 1;
+            $scope.leftTotNotiCount = $scope.leftTotNotiCount - 1;
 
-            if($scope.TotNotiCount <0 ) $scope.TotNotiCount = 1;
+            if($scope.leftTotNotiCount <0 ) $scope.leftTotNotiCount = 1;
 
           var ret= [];
           ret[0] = "left";
 
-         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+         if($scope.leftTotNotiCount < 0) $scope.leftTotNotiCount = 0;
 
-           if($scope.TotNotiCount > 0) 
+           if($scope.leftTotNotiCount > 0) 
             ret[1] = "1";
             else
             ret[1] = "0";
@@ -115,8 +130,9 @@ angular.module('Menus.controllers', ['ngCordova'])
 
     });
 
-    $scope.$on('NotificationsReady', function(event, data) {
+    $scope.$on('Notifications1Ready', function(event, data) {
         console.log("Notification Ready Fired");
+
         console.log(data[0]);
         var tg = data[0];
         for (var i = 0; i < tg.length; i++) {
@@ -124,22 +140,22 @@ angular.module('Menus.controllers', ['ngCordova'])
             if ($scope.menulist[tg[i]] != undefined)
             {
                 $scope.menulist[tg[i]].cnt = $rootScope.NotificationCounts[tag];
-                $scope.TotNotiCount = $scope.TotNotiCount + $scope.menulist[tg[i]].cnt;
+                $scope.leftTotNotiCount = $scope.leftTotNotiCount + $scope.menulist[tg[i]].cnt;
             }
 
             
         }
 
-        console.log("TotNotiCounts: " , $scope.TotNotiCount);
+        console.log("TotNotiCounts: " , $scope.leftTotNotiCount);
 
-        if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+        if($scope.leftTotNotiCount < 0) $scope.leftTotNotiCount = 0;
 
            var ret= [];
          ret[0] = "left";
 
-         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+         if($scope.leftTotNotiCount < 0) $scope.leftTotNotiCount = 0;
 
-           if($scope.TotNotiCount > 0) 
+           if($scope.leftTotNotiCount > 0) 
             ret[1] = "1";
             else
             ret[1] = "0";
@@ -232,7 +248,7 @@ angular.module('Menus.controllers', ['ngCordova'])
     console.log("inJquery start");
     var priv = {};
     $scope.menulist = {};
-    $scope.TotNotiCount = 0;
+    $scope.rightTotNotiCount = 0;
     var Sub = $rootScope.GetDocument("SubscriberInfo");
     console.log("Subscriber : ", Sub);
     priv = Sub.DocumentBody.ApplicationSpecificData.previlageLevels
@@ -268,8 +284,23 @@ angular.module('Menus.controllers', ['ngCordova'])
             cnt: $rootScope.NotificationCounts["Nc_" + items[i].mId] == undefined ? "" : $rootScope.NotificationCounts["Nc_" + items[i].mId]
         };
         $scope.menulist[items[i].mId] = $scope.rightItems[k];
+       
+
+        if($scope.rightItems[k].cnt >0)
+        $scope.rightTotNotiCount = $scope.rightTotNotiCount + $scope.rightItems[k].cnt;
         k++;
+
     }
+
+     if($scope.rightTotNotiCount > 0)
+    {
+
+         var ret= [];
+         ret[0] = "right";
+         ret[1] = "1";
+         $rootScope.$broadcast('NotificationBadgeEvent', [ret]);
+    }
+
     $scope.itemclick = function(selItem) {
         console.log(selItem.id);
         $rootScope.LoadEditorControls(selItem.type);
@@ -311,18 +342,18 @@ angular.module('Menus.controllers', ['ngCordova'])
             $scope.menulist[data[0]].cnt = data[1];
 
             if(data[2] == true) //increment
-            $scope.TotNotiCount = $scope.TotNotiCount + 1;
+            $scope.rightTotNotiCount = $scope.rightTotNotiCount + 1;
             else
-            $scope.TotNotiCount = $scope.TotNotiCount - 1;
+            $scope.rightTotNotiCount = $scope.rightTotNotiCount - 1;
 
             
 
          var ret= [];
          ret[0] = "right";
 
-         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+         if($scope.rightTotNotiCount < 0) $scope.rightTotNotiCount = 0;
 
-           if($scope.TotNotiCount > 0) 
+           if($scope.rightTotNotiCount > 0) 
             ret[1] = "1";
             else
             ret[1] = "0";
@@ -332,7 +363,7 @@ angular.module('Menus.controllers', ['ngCordova'])
         }
     });
 
-    $scope.$on('NotificationsReady', function(event, data) {
+    $scope.$on('Notifications2Ready', function(event, data) {
         console.log("Notification Ready Fired Right");
         console.log(data[0]);
         var tg = data[0];
@@ -342,7 +373,7 @@ angular.module('Menus.controllers', ['ngCordova'])
              {
                 $scope.menulist[tg[i]].cnt = $rootScope.NotificationCounts[tag];
 
-                 $scope.TotNotiCount = $scope.TotNotiCount + $scope.menulist[tg[i]].cnt;
+                 $scope.rightTotNotiCount = $scope.rightTotNotiCount + $scope.menulist[tg[i]].cnt;
              }
 
 
@@ -353,9 +384,9 @@ angular.module('Menus.controllers', ['ngCordova'])
          var ret= [];
          ret[0] = "right";
 
-         if($scope.TotNotiCount < 0) $scope.TotNotiCount = 0;
+         if($scope.rightTotNotiCount < 0) $scope.rightTotNotiCount = 0;
 
-           if($scope.TotNotiCount > 0) 
+           if($scope.rightTotNotiCount > 0) 
             ret[1] = "1";
             else
             ret[1] = "0";
@@ -373,7 +404,7 @@ angular.module('Menus.controllers', ['ngCordova'])
 
 })
 
-.controller('popOverCtrl', function($scope, $rootScope,$state) {
+.controller('popOverCtrl', function($scope, $rootScope,$state,$ionicModal) {
     console.log("inJquery start");
     jQuery.getJSON('json/popOverMenu.json', function(data) {
         console.log("inJquery PopOver");
@@ -391,11 +422,54 @@ angular.module('Menus.controllers', ['ngCordova'])
         console.log(items.items[0].mIcon);
     })
 
+
+function HandleRefer()
+{
+
+$scope.reference = {
+     name : "",
+     contact : "",
+     message : ""
+}
+
+
+    $scope.OnOkClick = function()
+    {
+       $scope.modal.hide();
+        $rootScope.ShowToast("Message Sent", false);
+    }
+
+     $scope.OnCancelClick = function()
+    {
+       $scope.modal.hide();
+        //$rootScope.ShowToast("Message Sent", false);
+    }
+
+$ionicModal.fromTemplateUrl('templates/refer.html', {
+  scope: $scope,
+  animation: 'slide-in-up',
+  
+}).then(function(modal) {
+  console.log("Modal");
+  $scope.modal = modal;
+  $scope.modal.show();
+});  
+
+}
+
+
 $scope.onPopOverClick= function(selItem)
 {
 //ng-href="{{items.ref}}"
 $rootScope.setAppState($state.current);
 $rootScope.AppUserInformation.SelProgName = selItem.text;
+
+if(selItem.ref == "refer")
+{
+
+HandleRefer();
+return;
+}
 
 $state.go(selItem.ref, {}, {
         reload: true

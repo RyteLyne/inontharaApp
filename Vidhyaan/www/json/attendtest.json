@@ -17,19 +17,19 @@
   "DocumentBody": {
     "ApplicationSpecificData": {
 	"subcribers": [{
-			"subId": "1234-npsbsk",
-			"name": "siddhant",
-			"avatar": "1234_npsbsk_avatar.jpg",
+			"subId": "student1-advid",
+			"name": "Namish",
+			"avatar": "student1-advid_avatar.jpg",
 			"role": "student"
 		}, {
-			"subId": "1235-npsbsk",
-			"name": "samrudh",
-			"avatar": "1235-npsbsk_Avatar.jpg",
+			"subId": "student2-advid",
+			"name": "Samrudh",
+			"avatar": "student2-advid_avatar.jpg",
 			"role": "student"
 		}, {
-			"subId": "1236-npsbsk",
-			"name": "namish",
-			"avatar": "1234-npsbsk_Avatar.jpg",
+			"subId": "student3-advid",
+			"name": "Siddhant",
+			"avatar": "student3-advid_avatar.jpg",
 			"role": "student"
 		}, {
 			"subId": "1237-npsbsk",

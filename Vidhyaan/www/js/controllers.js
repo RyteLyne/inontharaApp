@@ -345,13 +345,10 @@ $scope.eventList=[
     var orgName = doc.DocumentBody.ApplicationSpecificData.organizationName;
      $rootScope.AppUserInformation.OrgName = orgName[language]==undefined?orgName["1"] : orgName[language];
      
-    window.localStorage.getItem("orgName",$rootScope.AppUserInformation.OrgName);
+    window.localStorage.setItem("orgName",$rootScope.AppUserInformation.OrgName);
 
     var slideImages = doc.DocumentBody.ApplicationSpecificData.slideImages;
 
-      
-   
-    
     $scope.slides = slideImages;
 
      
@@ -402,7 +399,7 @@ console.log("OK came here");
 
         if(window.localStorage.getItem("orgName") !=undefined)
        {
-         $scope.orgLogo = window.localStorage.getItem("orgName");
+         $scope.orgName = window.localStorage.getItem("orgName");
          
        }
 
@@ -574,8 +571,11 @@ console.log("OK came here");
         console.log("clicked");
         console.log(item.MsgId);
         $rootScope.setAppState($state.current);
+        if(item.Unread == 1)
+        {
         $rootScope.MarkAsRead(item.MsgId);
         $rootScope.DecNotificationCounts($rootScope.AppUserInformation.SelProgram);
+        }
         $rootScope.AppUserInformation.DocId = item.MsgId;
         $rootScope.AppUserInformation.MsgSentBy = item.SubscribersID;
         $state.go('readView', {}, {
@@ -803,14 +803,21 @@ console.log("OK came here");
 
 
     $scope.LoadTimeLine();
-    $scope.itemclick = function(docId,ProgId) {
+    $scope.itemclick = function(item) {
         console.log("clicked");
-        console.log(docId);
-        $rootScope.MarkAsRead(docId);
-        $rootScope.AppUserInformation.DocId = docId;
-        $rootScope.DecNotificationCounts(ProgId);
+        console.log(item.MsgId);        
+        $rootScope.AppUserInformation.DocId = item.MsgId;
+
+        if(item.Unread == 1)
+        {
+         $rootScope.MarkAsRead(item.MsgId);
+         $rootScope.DecNotificationCounts(item.ProgId);
+        }
+
         $rootScope.isFromTimeLine = true;
         $rootScope.setAppState($state.current);
+
+
         //handle different views for different items here;;
         $state.go('readView', {}, {
             reload: true

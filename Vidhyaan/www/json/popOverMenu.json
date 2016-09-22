@@ -3,7 +3,7 @@
 "items" : [
 {
  "mIcon" : "ion-link",
- "mRef"  : "app.home",
+ "mRef"  : "refer",
  "mText" : { "1": "Refer", "2" : "ಪರಿಚಯಿಸಿ", "3" :"घर"}
 },
 

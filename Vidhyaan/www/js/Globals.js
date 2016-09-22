@@ -34,8 +34,8 @@ angular.module('Global.controllers', ['ngCordova'])
     $rootScope.rootSlidePath = cordova.file.dataDirectory;
     }
 
-     $rootScope.rootfeedNotificationBadge="false";
-     $rootScope.rootappNotificationBadge="false";
+     //$rootScope.rootfeedNotificationBadge="false";
+     //$rootScope.rootappNotificationBadge="false";
     
     $rootScope.AppUserInformation = {
         SelChannel: "0",
@@ -465,10 +465,10 @@ console.log("Came to else part2");
                 $rootScope.NotificationCounts[tag] = results.rows.item(i).cnt;
                 console.log(tag);
                 console.log($rootScope.NotificationCounts[tag]);
-                ret[i] = results.rows.item(i).progid;
+                //ret[i] = results.rows.item(i).progid;
             }
-            console.log("Calculated Noti Counts");
-            $rootScope.$broadcast('NotificationsReady', [ret]);
+            //console.log("Calculated Noti Counts");
+            //$rootScope.$broadcast('NotificationsReady', [ret]);
             //console.log(ret);
         }, function(error) {
             console.log("read noti failed");

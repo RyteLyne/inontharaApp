@@ -202,10 +202,10 @@ console.log("NotificationBadge",typ);
 if(typ[0] == "left")
 {
 if(typ[1] == "0")
-$rootScope.rootfeedNotificationBadge = false;
+$scope.rootfeedNotificationBadge = false;
 else
 {
-$rootScope.rootfeedNotificationBadge = true;
+$scope.rootfeedNotificationBadge = true;
 console.log("kkk");
 }
 
@@ -213,9 +213,9 @@ console.log("kkk");
 else
 {
 if(typ[1] == "0")
-$rootScope.rootappNotificationBadge = false;
+$scope.rootappNotificationBadge = false;
 else
-$rootScope.rootappNotificationBadge = true; 
+$scope.rootappNotificationBadge = true; 
 }
 
 })
