@@ -4,11 +4,11 @@
             <button class="button button-negative" style="float: left;" ng-click="discardMessage()">discard</button>
             <button class="button  button-negative" style="float: right;" ng-click="postMessage()">post</button>
         -->
-        <div class="item-avatar">
+        <div class="item-avatar" ng-click = "onAvatarClick();">
             <!--   <img ng-src="{{('assets/img/networkicons/'+network.actual+'.png')}}" onerror="this.src='assets/img/networkicons/default.png'" /> -->
             <!--       <img ng-src="{{('img/sid2.jpg')}}"  onerror="this.srcErr=this.src;this.src='img/avatar.svg';getBlob();" style= "width:350px;height:350px;max-width:100px;max-height:100px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;right:10px;top:23vh;z-index:1; background-color:#eee;"> 
    -->
-            <img image="{{rootAvatarPath + AppUserInformation.UserAvatar}}" ng-click = "onAvatarClick()" style="width:320px;height:320px;max-width:22vmin;max-height:22vw;border: 0.8vmin solid white;box-shadow: 0vmin 0vmin 2vmin rgba(0,0,0,0.7);position:absolute;right:10px;top:10px; background-color:#eee;">
+            <img image="{{rootAvatarPath + AppUserInformation.UserAvatar}}" image-loading="img/avatar.svg" image-holder="img/avatar.svg" style="width:320px;height:320px;max-width:22vmin;max-height:22vw;border: 0.8vmin solid white;box-shadow: 0vmin 0vmin 2vmin rgba(0,0,0,0.7);position:absolute;right:10px;top:10px; background-color:#eee;">
             <!--<img image = "{{'file:///data/user/0/com.kshipra.Vidhyaan/files/1234_npsbsk_avatar.jpg'}}" style= "width:350px;height:350px;max-width:100px;max-height:100px;border: 3px solid white;box-shadow: 0px 0px 7px rgba(0,0,0,0.7);position:absolute;right:10px;top:23vh;z-index:1; background-color:#eee;"> 
 -->
             <!--   <img image="{{'img/sid2.jpg''}}" image-loading="/image/loading.gif" image-holder="/image/error.png" />

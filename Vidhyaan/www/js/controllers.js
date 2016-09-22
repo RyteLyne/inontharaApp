@@ -835,7 +835,7 @@ console.log("OK came here");
 })
 
 
-.controller('SettingsCtrl', function($scope, $window, $rootScope) {
+.controller('SettingsCtrl', function($scope, $window, $rootScope, $ionicLoading) {
     $scope.choice = {
         langchoice: 1,
         
@@ -875,12 +875,17 @@ console.log("OK came here");
        
     });
     $scope.languageChange = function(item) {
+      $ionicLoading.show({
+  template: '<ion-spinner></ion-spinner>'
+            
+});
         window.localStorage.setItem("language", $scope.choice.langchoice);
         console.log("Selected value, text:", item);
 
        $rootScope.clearAppState();
 
         $window.location.reload(true);
+        $ionicLoading.hide();
         
     }
    
