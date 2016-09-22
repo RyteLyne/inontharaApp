@@ -61,6 +61,17 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', , 'Global.controlle
     
   })
 
+    .state('Gallery', {
+    url: "/Gallery",
+     templateUrl: "templates/Gallery.html"
+    
+  })
+
+   .state('galleryEditor', {
+    url: "/galleryEditor",
+     templateUrl: "templates/galleryEditor.html"
+    
+  })
 
    .state('profile', {
     url: "/profile",

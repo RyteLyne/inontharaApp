@@ -21,7 +21,6 @@ AssignmentsCtrl
 "LeavesCtrl"
 "feedbackCtrl"
 "ResultsCtrl"
-
 */
 .controller('ResultsCtrl', function($scope) {
     console.log("in ResultsCtrl");
@@ -63,53 +62,39 @@ AssignmentsCtrl
 
 
 
+.controller('GalleryCtrl', function($scope,$rootScope,feedlistfactory) 
+{
+ console.log("in GalleryCtrl");
 
+    Promise.all([feeddetailsfactory.getdata($rootScope.AppUserInformation.DocId,$rootScope.AppUserInformation.SelProgram)]).then(function(ret) {
+        if(ret[0] !=undefined)
+        {
+        $scope.itemslist = ret[0].messages;
+        }
+      else
+         $scope.itemslist = [];
+        console.log($scope.itemslist);
+    })//getdata promise;;
+    .catch(function(err) {
+        console.log("Error getting gallery images");
+        return;
+    });
 
-.controller('MessagesCtrl', function($scope) {
+    $scope.OnComposeClick = function()
+    {
 
-    console.log("in MessagesCtrl");
-
-
+      $rootScope.AppUserInformation.EditorType="compose";
+       $rootScope.setAppState($state.current);
+       $state.go('galleryEditor', {}, {
+            reload: true
+        });
+      
+    }   
 })
 
 
 
-.controller('GalleryCtrl', function($scope) {
-    console.log("in GalleryCtrl");
-    $scope.items = [
-  {
-    src:'http://www.wired.com/images_blogs/rawfile/2013/11/offset_WaterHouseMarineImages_62652-2-660x440.jpg',
-    sub: 'Shreyamsa eating fish <b>subtitle</b>'
-  },
-  {
-    src:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg',
-    sub: '' /* Not showed */
-  },
-  {
-    src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg',
-    thumb:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg'
-  }
-];
-    $scope.items1 = [
-  
-    {
-    src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg',
-    thumb:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg'
-  },
-  {
-    src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg',
-    thumb:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg'
-  },
-   { src:'http://www.wired.com/images_blogs/rawfile/2013/11/offset_WaterHouseMarineImages_62652-2-660x440.jpg',
-    sub: 'Shreyamsa eating fish <b>subtitle</b>'
-  },
-  {
-    src:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg',
-    sub: '' /* Not showed */
-  }
-  
-]
-}).controller('CardCtrl', function($scope, TDCardDelegate) {
+.controller('CardCtrl', function($scope, TDCardDelegate) {
     console.log("in CardCtrl");
 })
 
@@ -566,6 +551,8 @@ console.log("OK came here");
             return;
         });
     }
+
+
     $scope.LoadFeedList();
     $scope.itemclick = function(item) {
         console.log("clicked");
@@ -578,9 +565,13 @@ console.log("OK came here");
         }
         $rootScope.AppUserInformation.DocId = item.MsgId;
         $rootScope.AppUserInformation.MsgSentBy = item.SubscribersID;
+       
+        
         $state.go('readView', {}, {
             reload: true
         });
+
+        
     }
 
     $scope.OnComposeClick = function()
@@ -588,9 +579,12 @@ console.log("OK came here");
 
        $rootScope.AppUserInformation.EditorType="compose";
        $rootScope.setAppState($state.current);
+
        $state.go('newsPostEditor', {}, {
             reload: true
         });
+
+        
 
      }
 

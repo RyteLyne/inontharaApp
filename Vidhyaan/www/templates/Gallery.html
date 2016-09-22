@@ -1,0 +1,30 @@
+<ion-view view-title="Account" ng-controller="GalleryCtrl">
+<ion-header-bar class="sub-head bar-dark" style="position:relative;" >
+    <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="rootGoBack()">
+  <i class="ion-ios-close-empty" style="font-size:46px; padding-left:8px; position:absolute; color:white;text-align:center;top:-5px;"> </i>
+</button>
+ <p class = "title" style="position:absolute;text-align:left;padding-left:25px "> {{AppUserInformation.SelProgName}}</p>
+ </ion-header-bar>
+
+<ion-content>
+ <div class="card">
+  <!--<div class="item item-avatar">
+    <img image = "{{rootAvatarPath + userAvatar}}" image-holder="img/avatar.svg"></img>
+    <h2>{{Title}}<h2>
+   </div>
+ <div>-->
+
+<div ng-repeat = "item in itemslist">
+  <li class="gallery" style="list-style-type: none;">
+      <image src="item.thumbnail"></a>
+   </li>
+</div>
+</ion-content>
+
+ <div ng-if = "AppUserInformation.WritePriv == true">
+  <ion-floating-button click="OnComposeClick()" has-footer="false" icon="ion-edit" icon-color="#fff">
+ 
+  </ion-floating-button>
+  </div>
+
+</ion-view>

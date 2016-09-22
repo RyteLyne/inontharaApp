@@ -3,6 +3,8 @@ angular.module('Global.controllers', ['ngCordova'])
 .controller('GlobalCtrl1', function($ionicPlatform, $rootScope, $http, $cordovaSQLite,$cordovaToast,$state,$ionicPopup) {
     //window.localStorage.removeItem("subscriberInfo");
 
+
+ //back button policy;;
   $ionicPlatform.registerBackButtonAction(function (event) {
 
       if($state.current.name == "app.home")
@@ -12,10 +14,14 @@ angular.module('Global.controllers', ['ngCordova'])
 
 
       }
-      else
+      else if($state.current.name == "splash" || $state.current.name == "login")
       {
          console.log("Back pressed");
          event.preventDefault();
+       }
+       else
+       {
+           $rootScope.rootGoBack();
        }
             }, 100);
 
@@ -229,6 +235,13 @@ else if(mType == "Leaves")
 {
 $rootScope.AppUserInformation.EditorControls.isTextEnabled = true;
 $rootScope.AppUserInformation.EditorControls.isDateEnabled = true;
+}
+else if(mType == "Gallery")
+{
+$rootScope.AppUserInformation.EditorControls.isGalleryEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isVideoEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isCameraEnabled = true;
+$rootScope.AppUserInformation.EditorControls.isHeadingEnabled = true;    
 }
 else
 {
