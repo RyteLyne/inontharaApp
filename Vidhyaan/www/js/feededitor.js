@@ -1,7 +1,7 @@
 angular.module('Editor.controllers', ['ngCordova'])
 
 
-.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload,$cordovaDatePicker) {
+.controller('EditorCtrl', function($scope, $http, $stateParams, $sce, $ionicLoading, $ionicHistory, $ionicScrollDelegate, $rootScope, $cordovaCamera, $cordovaFile, $ionicActionSheet,$ionicModal,imageUpload,$cordovaDatePicker,$ionicPopup) {
 
 //$scope.messages = [];
 $scope.serverMessage = [];
@@ -50,7 +50,6 @@ console.log("Cancel Selected");
  $scope.modal.hide();
 
 }
-
 
 
 $scope.calShow = function(type) {
@@ -365,6 +364,31 @@ window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem
 }
 
 
+$scope.showPopup = function(fName, tag) {
+
+  $scope.data = {};
+
+
+  $ionicPopup.show({
+    template: '<input type="text" ng-model = "data.model">',
+    title: 'Enter Description',
+    subTitle: 'Please Enter Image Description(optional)',
+    scope: $scope,
+    buttons: [
+      { text: 'Cancel' },
+      {
+        text: '<b>Done</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          // add your action
+          AddMessageToServer(tag,fName,$scope.data.model);
+        }
+      }
+    ]
+	});
+    }
+
+
 function onCopySuccess(entry)
       {
 console.log("copy successful ",entry.nativeURL);
@@ -374,15 +398,26 @@ console.log("copy successful ",entry.nativeURL);
  Promise.all([imageUpload.getdata(entry)]).then(function(ret)
       {
       var fName = entry.fullPath.substr(entry.fullPath.lastIndexOf('/') + 1);
+
+      if($rootScope.AppUserInformation.ProgramType == "Gallery")
+       {
+
+        $scope.showPopup(fName,"img");
+
+       }
    
+   else {
        $ionicLoading.show({
       template: 'Updating...'
        });
 
+
        AddMessageToServer("img",fName,"");
-       
+
+
        $ionicLoading.hide();
-       $ionicScrollDelegate.scrollBottom();
+       $ionicScrollDelegate.scrollBottom(); 
+       }
 
         })//getdata promise;;
        .catch(function(err)

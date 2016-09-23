@@ -13,18 +13,14 @@
     <h2>{{Title}}<h2>
    </div>
  <div>-->
-
+ <ul class="gallery" style="margin-left:5%;">
+</ion-view> <ul class="gallery" style="margin-left:5%;">
 <div ng-repeat = "item in itemslist">
   <li class="gallery" style="list-style-type: none;">
-      <image src="item.thumbnail"></a>
+      <img image="{{rootGalleryPath + item.msg}}" ng-click="onImageClick(item,$index)"> </img>
    </li>
 </div>
+</ul>
 </ion-content>
 
- <div ng-if = "AppUserInformation.WritePriv == true">
-  <ion-floating-button click="OnComposeClick()" has-footer="false" icon="ion-edit" icon-color="#fff">
- 
-  </ion-floating-button>
-  </div>
 
-</ion-view>

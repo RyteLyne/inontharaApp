@@ -38,6 +38,7 @@ angular.module('Global.controllers', ['ngCordova'])
     $rootScope.rootAvatarPath = cordova.file.dataDirectory;
     $rootScope.rootDocPath = cordova.file.externalDataDirectory;
     $rootScope.rootSlidePath = cordova.file.dataDirectory;
+    $rootScope.rootGalleryPath = cordova.file.dataDirectory;
     }
 
      //$rootScope.rootfeedNotificationBadge="false";
