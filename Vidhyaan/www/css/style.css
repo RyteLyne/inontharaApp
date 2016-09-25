@@ -187,16 +187,26 @@ font-size:4vmin;
 
 /*for login screen*/
 .vcenter-container{
-   height: 70vh;
-   width: 100vh;
+	position:relative;
+	z-index:3;
+	top:80px;
+	min-width:60vmin;!important
+   height: 70px;
+   width: 300px;
    background: none;
-   margin:10px;
-   padding:30px;
+   margin:auto;
+   padding:20px;
    text-align: center;
-   display:table-cell;
-  vertical-align:middle;
-  horizontal-align:middle;
+   display:block;
+  
+  
  
+}
+
+.form-control1::-webkit-input-placeholder {
+  color: red;
+  opacity:.8;
+
 }
 
 
