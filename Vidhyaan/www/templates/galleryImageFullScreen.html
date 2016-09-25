@@ -1,0 +1,13 @@
+<ion-modal-view view-title="ViewGallery" style="height:100%;width:100%;">
+  <ion-content>
+
+  <ion-slide-box  active-slide = "currentIndex" style="height:100%;width:100%;max-height:100vh;">
+  <ion-slide ng-repeat = "item in itemslist">
+    <img class= "fullscreen-gallery-image" image = "{{rootGalleryPath + item.msg}}" ng-click="closeModal()"> </img>
+  </ion-slide>
+  </ion-slide-box>
+  
+  </ion-content>
+</ion-modal-view>
+
+

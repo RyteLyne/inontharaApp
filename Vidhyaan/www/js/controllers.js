@@ -62,7 +62,7 @@ AssignmentsCtrl
 
 
 
-.controller('GalleryCtrl', function($scope,$rootScope,feedlistfactory) 
+.controller('GalleryCtrl', function($scope,$rootScope,feeddetailsfactory,$ionicModal,$ionicSlideBoxDelegate) 
 {
  console.log("in GalleryCtrl");
 
@@ -80,16 +80,37 @@ AssignmentsCtrl
         return;
     });
 
-    $scope.OnComposeClick = function()
+    $scope.closeModal = function()
     {
+     $scope.modal.hide();
 
-      $rootScope.AppUserInformation.EditorType="compose";
-       $rootScope.setAppState($state.current);
-       $state.go('galleryEditor', {}, {
-            reload: true
-        });
+    }
+
+    $scope.onImageClick = function(item, index)
+    {
+     console.log("Image Clicked");
+
+     //$scope.ImagePath = item.msg;
+     $scope.currentIndex = index;
+     //$ionicSlideBoxDelegate.slide(index);
+     //$ionicSlideBoxDelegate.update();
+     
+
+  $ionicModal.fromTemplateUrl('templates/galleryImageFullScreen.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+    $scope.modal.show();
+  });
+    
       
-    }   
+    } 
+
+ 
+
+
+
 })
 
 
@@ -565,11 +586,21 @@ console.log("OK came here");
         }
         $rootScope.AppUserInformation.DocId = item.MsgId;
         $rootScope.AppUserInformation.MsgSentBy = item.SubscribersID;
+
+        if($rootScope.AppUserInformation.ProgramType =="Gallery")
+        {
+          $state.go('Gallery', {}, {
+            reload: true
+        });
+
+        }
        
-        
+        else
+        {
         $state.go('readView', {}, {
             reload: true
         });
+        }
 
         
     }
@@ -810,6 +841,7 @@ console.log("OK came here");
 
         $rootScope.isFromTimeLine = true;
         $rootScope.setAppState($state.current);
+        $rootScope.AppUserInformation.SelProgName = "timeline";
 
 
         //handle different views for different items here;;
