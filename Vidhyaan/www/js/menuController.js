@@ -70,6 +70,7 @@ angular.module('Menus.controllers', ['ngCordova'])
                     ref: groups[i].mItems[j].mRef,
                     id: groups[i].mItems[j].mId,
                     runson: groups[i].mItems[j].mRunsOn,
+                    type:"newsfeed",
                     cnt: $rootScope.NotificationCounts["Nc_" + groups[i].mItems[j].mId] == undefined ? "" : $rootScope.NotificationCounts["Nc_" + groups[i].mItems[j].mId],
                 };
                 $scope.menulist[groups[i].mItems[j].mId] = $scope.groups[k].items[l];
@@ -215,6 +216,7 @@ angular.module('Menus.controllers', ['ngCordova'])
     }
     $scope.itemclick = function(selItem) {
         $rootScope.LoadEditorControls("default");
+        $rootScope.AppUserInformation.ProgramType = selItem.type;
         $rootScope.AppUserInformation.SelProgram = selItem.id;
         $rootScope.AppUserInformation.SelProgName = selItem.name;
         console.log("clicked Id : ", $rootScope.AppUserInformation.SelProgram);

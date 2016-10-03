@@ -575,8 +575,9 @@ console.log("OK came here");
 
 
     $scope.LoadFeedList();
+
     $scope.itemclick = function(item) {
-        console.log("clicked");
+        console.log("clicked me.. baby");
         console.log(item.MsgId);
         $rootScope.setAppState($state.current);
         if(item.Unread == 1)
@@ -584,11 +585,16 @@ console.log("OK came here");
         $rootScope.MarkAsRead(item.MsgId);
         $rootScope.DecNotificationCounts($rootScope.AppUserInformation.SelProgram);
         }
+        
         $rootScope.AppUserInformation.DocId = item.MsgId;
         $rootScope.AppUserInformation.MsgSentBy = item.SubscribersID;
 
+        console.log("before If loop");
+
         if($rootScope.AppUserInformation.ProgramType =="Gallery")
         {
+            console.log("Type is gallery");
+
           $state.go('Gallery', {}, {
             reload: true
         });
@@ -597,9 +603,11 @@ console.log("OK came here");
        
         else
         {
+            console.log("Type is Other");
         $state.go('readView', {}, {
             reload: true
         });
+
         }
 
         
