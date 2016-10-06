@@ -428,12 +428,6 @@ angular.module('Menus.controllers', ['ngCordova'])
 function HandleRefer()
 {
 
-$scope.reference = {
-     name : "",
-     contact : "",
-     message : ""
-}
-
 
     $scope.OnOkClick = function()
     {
