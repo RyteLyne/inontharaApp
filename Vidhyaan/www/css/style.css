@@ -256,12 +256,12 @@ font-size:4vmin;
 
 /* Buttons */
 .button-circle {
-  width: 50px;
-  height: 50px;
+  width: 13vmin;
+  height: 13vmin;
   color: white;
   border-radius: 50%;
   background-color: transparent;
-  border: 2px solid rgba(255, 255, 255, .5);
+  border: .8vmin solid rgba(255, 255, 255, .5);
   -webkit-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
   
