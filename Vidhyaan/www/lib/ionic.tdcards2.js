@@ -125,6 +125,7 @@
     },
 
     isUnderThreshold: function() {
+      console.log("threshold ", this.thresholdAmount);
       return Math.abs(this.thresholdAmount) < this.minThreshold;
     },
 
@@ -402,10 +403,11 @@
               swipeCards.partial(1);
             },
             onDestroy: function() {
+              console.log("Destroy called in card");
               $timeout(function() {
                 $scope.onDestroy();
               });
-            },
+            }, 
             onSnapBack: function(startX, startY, startRotation) {
               var leftText = el.querySelector('.yes-text');
               var rightText = el.querySelector('.no-text');

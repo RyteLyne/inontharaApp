@@ -45,9 +45,59 @@ AssignmentsCtrl
 
 
 
+
+ .controller('StudentInform',function($scope,$cordovaCamera,$rootScope){
+    
+       $scope.Detail={
+          Name:'',
+          ParentName:'',
+          MobileNumber:'',
+          EmailId:'',
+          Address:'',
+        }
+      $scope.submitClick = function(){
+       console.log('Obj :', $scope.Detail);
+       $rootScope.ShowToast("Sent to Server",false);
+       $rootScope.rootGoBack();
+       //alert($scope.Detail.Name+$scope.Detail.ParentName);
+      }
+      $scope.StudentPhoto = function() {
+  document.addEventListener("deviceready", function () {
+    var options = {
+      quality: 100,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: false,
+      encodingType: Camera.EncodingType.JPEG, 
+      targetWidth: 100,
+      targetHeight: 100,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false,
+	  correctOrientation:true
+	  
+    };
+
+    $cordovaCamera.getPicture(options).then(function(imageData) {
+      var image= "data:image/jpeg;base64," + imageData;
+     $scope.myImage = image; 
+    }, function(err) {
+      alert(err) 
+      console.log(err);
+    });    
+
+  }, false);  
+ } 
+     
+    }) 
+
+
+
+
 .controller('SyllabusCtrl', function($scope) {
     console.log("in SyllabusCtrl");
-}).controller('AssignmentsCtrl', function($scope) {
+})
+
+.controller('AssignmentsCtrl', function($scope) {
     console.log("in AssignmentsCtrl");
 }).controller('SurveyCtrl', function($scope) {
     console.log("in SurveyCtrl");
@@ -59,6 +109,46 @@ AssignmentsCtrl
 
 
 
+.controller('mapviewctrl', function($scope, $state, $cordovaGeolocation) 
+{
+    console.log("in mapviewctrl");
+
+    var options = {timeout: 10000, enableHighAccuracy: true};
+ 
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ 
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+ 
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+ 
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    
+        //Wait until the map is loaded
+google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+ 
+  var marker = new google.maps.Marker({
+      map: $scope.map,
+      animation: google.maps.Animation.DROP,
+      position: latLng
+  });      
+ 
+});
+ 
+  }, function(error){
+    console.log("Could not get location");
+  });
+
+
+
+
+
+
+})
 
 
 
@@ -575,8 +665,9 @@ console.log("OK came here");
 
 
     $scope.LoadFeedList();
+
     $scope.itemclick = function(item) {
-        console.log("clicked");
+        console.log("clicked me.. ");
         console.log(item.MsgId);
         $rootScope.setAppState($state.current);
         if(item.Unread == 1)
@@ -584,11 +675,16 @@ console.log("OK came here");
         $rootScope.MarkAsRead(item.MsgId);
         $rootScope.DecNotificationCounts($rootScope.AppUserInformation.SelProgram);
         }
+        
         $rootScope.AppUserInformation.DocId = item.MsgId;
         $rootScope.AppUserInformation.MsgSentBy = item.SubscribersID;
 
+        console.log("before If loop");
+
         if($rootScope.AppUserInformation.ProgramType =="Gallery")
         {
+            console.log("Type is gallery");
+
           $state.go('Gallery', {}, {
             reload: true
         });
@@ -597,9 +693,11 @@ console.log("OK came here");
        
         else
         {
+            console.log("Type is Other");
         $state.go('readView', {}, {
             reload: true
         });
+
         }
 
         

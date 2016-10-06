@@ -64,6 +64,7 @@ angular.module('Attendance.controllers', ['ngCordova'])
 
 
     $scope.cardDestroyed = function(index) {
+      console.log("card Destroyed");
         $scope.cards.active.splice(index, 1);
     };
 

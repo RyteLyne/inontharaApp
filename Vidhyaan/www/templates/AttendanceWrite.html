@@ -30,10 +30,10 @@
         TD Cards
         - We start off with an ng-if so that the cards are not generated
           unless $scope.cards is not 'null'
-      ************************* -->
+      ************************* on-destroy="cardDestroyed($index)" -->
             <div ng-if="cards.active">
                 <td-cards>
-                    <td-card ng-repeat="card in cards.active" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft(card)" on-swipe-right="cardSwipedRight(card)">
+                    <td-card ng-repeat="card in cards.active"  on-swipe-left="cardSwipedLeft(card)" on-swipe-right="cardSwipedRight(card)">
                         <div class="image" ng-controller="CardCtrl">
                             <div class="no-text">
                                 <i class="icon ion-thumbsdown"></i>

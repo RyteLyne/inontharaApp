@@ -150,7 +150,8 @@ $rootScope.ShowConfirmExit = function()
     {
 
       $rootScope.AppUserInformation.stateInformation.push(stateObject);
-      console.log("setAppState",stateObject.name);
+      console.log("setAppState 1234",stateObject.name);
+      
     }
 
     $rootScope.getAppState = function()

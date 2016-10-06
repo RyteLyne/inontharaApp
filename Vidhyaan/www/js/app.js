@@ -145,6 +145,13 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', , 'Global.controlle
     templateUrl: "templates/AttendanceWrite.html"
   })
 
+.state('mapview', {
+    url: "/mapview",
+    templateUrl: "templates/mapview.html"
+  })
+
+
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/splash');
