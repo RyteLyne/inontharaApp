@@ -1,20 +1,5 @@
 var elastichat = angular.module('elastichat', ['ionic', 'monospaced.elastic', 'angularMoment'])
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
-
-  .state('app.UserMessages', {
-    url: '/UserMessages',
-       views: {
-      'content': {
-    templateUrl: 'templates/UserMessages.html',
-    controller: 'UserMessagesCtrl'
-    }
-       }
-  });
-
-  $urlRouterProvider.otherwise('/UserMessages');
-})
 
 .controller('UserMessagesCtrl', ['$scope', '$rootScope', '$state',
   '$stateParams', 'MockService', '$ionicActionSheet',

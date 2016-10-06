@@ -1,4 +1,4 @@
-var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', , 'Global.controllers', 'Menus.controllers','Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards', 'elastichat', 'monospaced.elastic','angularMoment', 'ion-floating-menu','Attendance.controllers'])
+var myApp = angular.module('Vidhyaan', ['ionic','ngCordova','elastichat' , 'Global.controllers', 'Menus.controllers','Vidhyaan.controllers','azure-mobile-service.module', 'azureBlobUpload','angularImgFallback','Editor.controllers','ionic.contrib.ui.tinderCards2','cards', 'elastichat', 'monospaced.elastic','angularMoment', 'ion-floating-menu','Attendance.controllers'])
 
 
 .run(function($ionicPlatform,$rootScope) {
@@ -106,7 +106,13 @@ var myApp = angular.module('Vidhyaan', ['ionic','ngCordova', , 'Global.controlle
 
   })
 
-.state('dashboardApps', {
+.state('UserMessages', {
+    url: "/UserMessages",
+     templateUrl: "templates/UserMessages.html"
+   
+  })
+
+  .state('dashboardApps', {
     url: "/dashboardApps",
      templateUrl: "templates/dashboardApps.html"
    
