@@ -1,0 +1,16 @@
+<ion-view view-title="mapview" ng-controller="mapviewctrl" cache-view="false">
+  <ion-header-bar class="sub-head" style="height:auto; background-color:   rgba(0,212,205,1);">
+      <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
+ </ion-header-bar>
+ <ion-content>
+
+ <div id="map" data-tap-disabled="true"></div>
+
+   </ion-content>
+   <div ng-if = "AppUserInformation.WritePriv == true">
+    <ion-floating-button click="OnTripEditClick()" has-footer="false" icon="ion-edit" icon-color="#fff">
+ 
+  </ion-floating-button>
+  </div>
+
+</ion-view>

@@ -83,7 +83,21 @@ angular.module('Global.controllers', ['ngCordova'])
         MsgSentBy:"",
         OriginalMessage : [],
         stateInformation : [],
-        DocDetails: {}
+        DocDetails: {},
+        
+    }
+
+    $rootScope.LocationTracking = 
+    {
+      GpslastUpdateTime : {},
+      TripState : "stopped",
+      TransportInfo : {},
+      RouteDocument : {},
+      SelRoute : {},
+      triptype : 1,
+      watch : {}
+
+ 
     }
 
     $rootScope.titleText = "";
@@ -734,6 +748,54 @@ console.log("registering push notification");*/
 
 
 
+.factory('routefactory', function($http, $q,$rootScope) {
+    var factory = {};
+    factory.getdata = function(subid, orgid, docsearchtag,tripStatus) {
+        var defer = $q.defer();
+        //if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
+          //  return;
+        //temp line;;
+      
+
+        var details = {
+            "SubId": subid,
+            //subscriberId
+            //document name
+            "OrgId": orgid, //organisation Id
+            "DocSearchTag" : docsearchtag,
+            "tripStatus" : tripStatus
+
+        }
+        doc2send = details;
+        var req = {
+            method: 'POST',
+            url: "http://chungling.azurewebsites.net/VidgetRouteDocM/",
+            //url: "http://localhost:3000/VidgetRouteDocM/",
+            data: jQuery.param(doc2send),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        $http(req).success(function(data, status, headers, config) {
+            // alter data if needed
+            console.log(data);
+            console.log("server success");
+            //window.localStorage.setItem(docname, JSON.stringify(data.Data));
+            //$rootScope.StoreDocument(docname,data.Data);
+            defer.resolve(data.Data);
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+            //  defer.reject();
+            console.log("Error getting from server");
+            defer.reject();
+        });
+        return defer.promise;
+    }
+    return factory;
+})
+
+
+
 .factory('feedlistfactory', function($q, $cordovaSQLite, $rootScope) {
     var factory = {};
     factory.getdata = function(progid) {
@@ -988,6 +1050,78 @@ console.log("registering push notification");*/
     }
     return factory;
 })
+
+
+
+.factory('updateGPSFactory', function($http, $q) {
+    var factory = {};
+    factory.getdata = function(Subid, Pass,RouteId,lati,longi,tripType) {
+        var defer = $q.defer();
+        var details = {
+            "SubId": Subid,
+            "Pass": Pass,
+            "RouteId" : RouteId,
+            "lati" : lati,
+            "longi" : longi,
+            "tripType" : tripType            
+        }
+        doc2send = details;
+        var req = {
+            method: 'POST',
+            url: "http://chungling.azurewebsites.net/VidUpdateGPSM/",
+            data: jQuery.param(doc2send),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        $http(req).success(function(data, status, headers, config) {
+            // alter data if needed
+            console.log(data);
+            console.log("GPS update Success");
+            defer.resolve();
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+            console.log("Error Updating GPS");
+            defer.reject();
+        });
+        return defer.promise;
+    }
+    return factory;
+})
+
+
+.factory('GetGPSFactory', function($http, $q) {
+    var factory = {};
+    factory.getdata = function(Subid, Pass) {
+        var defer = $q.defer();
+        var details = {
+            "SubId": Subid,
+            "Pass": Pass,    
+        }
+        doc2send = details;
+        var req = {
+            method: 'POST',
+            url: "http://chungling.azurewebsites.net/VidGetGPSM/",
+            data: jQuery.param(doc2send),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        $http(req).success(function(data, status, headers, config) {
+            // alter data if needed
+            console.log(data);
+            console.log("GPS get Success");
+            defer.resolve(data);
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+            console.log("Error getting GPS");
+            defer.reject();
+        });
+        return defer.promise;
+    }
+    return factory;
+})
+
 
 
 

@@ -1,0 +1,52 @@
+<ion-view title="locatesel" id="page1" ng-controller="locateselctrl">
+
+  <ion-header-bar class="sub-head" style="height:auto; background-color:   rgba(0,212,205,1);">
+      <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
+ </ion-header-bar>
+   <ion-content padding="true" class="has-header">
+        <form id="page-form1" class="list">
+            <label class="item item-select" id="page-select1" name="RouteSel">
+                <span class="input-label">Select Route</span>
+               
+               <!-- <select ng-model="SelRoute"  ng-change="showSelectValue(SelRoute)">
+                
+                <option ng-repeat = "route in routes" value ="{{route.routeNo}}">{{route.name}}</option>
+                
+                </select> -->
+
+                <select ng-model = "SelRoute" ng-options = "route.name for route in routes" ng-change="showSelectValue(SelRoute)">
+
+                </select>
+
+            </label>
+            
+            <ion-radio ng-model="choice.triptype" ng-value="1" name="Pickup">Pickup</ion-radio>
+            <ion-radio ng-model="choice.triptype" ng-value="2" name="Drop">Drop</ion-radio>
+
+        </form>
+
+        <div id="page-button-bar1" class="button-bar">
+            <button id="page-button1" class="button button-positive  button-block" ng-click = "Trip()">{{buttontext}}</button>
+            <!--<button id="page-button3" class="button button-positive  button-block" ng-click = "EndTrip()">Stop</button>-->
+        </div>
+
+      <ion-list>
+      <ion-item class="item item-avatar" ng-repeat="item in RouteTravellers">
+  
+      <img image="{{rootAvatarPath + item.avatar}}">
+  
+
+      <ion-label> {{item.name}} </ion-label>
+   <i ng-show="item.status!=0" class= "button-clear ion-thumbsup" style = "font-size: 30px;color:#32cd32;position:absolute;right:15px;">
+   </i>
+   
+   <i ng-show="item.status==0" class="ion-thumbsdown" style = "font-size: 30px;color:red;position:absolute;right:15px;"></i>
+
+<br/>
+
+</ion-item>
+ </ion-list>
+
+    </ion-content>
+    
+</ion-view>
