@@ -272,9 +272,6 @@ var socket1 = {};
 
 
 
-
-
-
 $scope.UpdateLocations = function()
 {
 
@@ -431,24 +428,75 @@ var DocSearchTag =  "RouteInfo" + "-" + tripType + "-" + $scope.SelRoute.routeNo
 
 }
 
+function EndTripNow()
+{
+  console.log("Trying to Stop Trip");
+  console.log($rootScope.LocationTracking.watch);
 
+ if($rootScope.LocationTracking.watch.watchID !=undefined)
+ {
+ console.log($rootScope.LocationTracking.watch);
+ $rootScope.LocationTracking.watch.clearWatch($rootScope.LocationTracking.watch.watchID);
+ console.log("Watch Cleared");
+ $rootScope.LocationTracking.watch = null;
+ clearVariablesInRoot();
+ //$scope.buttontext = "Start";
+ $rootScope.ShowToast("Trip Stopped",false);
+ console.log("Trip Stopped");
+ }
+
+}
+
+
+
+
+
+function UpdateRootDocument(CallbackFunc)
+{
+
+   var doc2Send = $rootScope.LocationTracking.RouteDocument;
+   console.log("Root Doc: ", doc2Send);
+      
+   var req = 
+     {
+    method: 'POST',
+    //url: "http://chungling.azurewebsites.net/VidReplaceDocM/",
+    url: "http://localhost:3000/VidReplaceDocM/",
+    
+    data: jQuery.param(doc2Send),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+     }
+console.log(req.data);
+        $http(req).
+        success(function(data, status, headers, config) {
+            // alter data if needed
+          console.log(data);
+          CallbackFunc();
+          
+          //$ionicLoading.hide();
+          //$rootScope.rootGoBack();
+          //close the view here;;
+
+        }).
+        error(function(data, status, headers, config) {
+          console.log(data);
+          $rootScope.ShowToast("Unable to Contact Server(Stop Trip)",true);
+          //$ionicLoading.hide();
+        });
+
+
+}
 
 $scope.EndTrip = function()
 {
-
 console.log("End Started"); 
-
- if($rootScope.LocationTracking.watch !=undefined)
- {
- console.log($rootScope.LocationTracking.watch);
- $rootScope.LocationTracking.watch.clearWatch($rootScope.LocationTracking.watch.watchId);
- console.log("Watch Cleared");
- $rootScope.LocationTracking.watch = {};
- clearVariablesInRoot();
- //$scope.buttontext = "Start";
-}
+//set the status to stopped;;
+$rootScope.LocationTracking.RouteDocument.DocumentSubHeader.TripStatus = "stopped";
+UpdateRootDocument(EndTripNow);
 
 }
+
+
 
 $scope.Trip= function()
 {

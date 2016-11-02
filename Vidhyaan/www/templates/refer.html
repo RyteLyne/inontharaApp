@@ -1,15 +1,39 @@
 <ion-modal-view view-title="refer" style="height:60vh;width:100%;">
-  <ion-header-bar class="sub-head" style="height:auto; background-color:   rgba(0,212,205,1);">
-      <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="OnCancelClick()"> </i>
+
+<ion-header-bar class="sub-head bar-dark" style="position:relative;" >
+    <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="OnCancelClick()">
+  <i class="ion-android-cancel" style="font-size:32px; padding-left:8px; position:absolute; color:white;text-align:center;top:0px;"> </i>
+</button>
+ <p class = "title" style="position:absolute;text-align:left;padding-left:25px "> {{AppUserInformation.SelProgName}}</p>
+ 
+ <button class="button button-clear button-positive" style="position:absolute; right:35px; width:auto;display:inline;">
+  <i class="ion-android-done" style="font-size:32px; padding-right:5px; position:absolute; color:white;text-align:center;top:2px;transform: rotate(0deg);"> </i>
+</button>
+
+
+    </ion-header-bar>
+
+
+  <!--<ion-header-bar class= "sub-head bar-dark" style="height:auto; background-color:   rgba(0,212,205,1);">-->
+     <!-- <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="OnCancelClick()"> </i>
         <i class="ion-android-done" style="font-size:46px; color:green;position:absolute;right:15px;" ng-click="OnOkClick()"> </i>
- </ion-header-bar>
+ -->
+<!--
+  <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="OnCancelClick()">
+  <i class="ion-android-cancel" style="font-size:32px; padding-left:8px; position:absolute; color:white;text-align:center;top:0px;"> </i>
+</button>
+
+
+
+</ion-header-bar> -->
 
 <ion-content ng-controller="StudentInform">
    
   <!--<div class="card"> -->
-  <div class="item item-thumbnail-right">
-  <img  src="img/avatar.svg" ng-src="{{myImage}}" ng-click="StudentPhoto()">
+  <div class="item-avatar">
+  <img  src="img/avatar.svg" ng-src="{{myImage}}" ng-click="StudentPhoto()" style="width:320px;height:320px;max-width:22vmin;max-height:22vw;border: 0.8vmin solid white;box-shadow: 0vmin 0vmin 2vmin rgba(0,0,0,0.7);position:absolute;right:10px;top:10px; background-color:#eee;">
  </div>
+ <br><br>
   <!--</div>-->
    
         <div class="list">

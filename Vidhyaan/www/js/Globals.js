@@ -945,10 +945,6 @@ console.log("registering push notification");*/
 
 
 
-
-
-
-
 .factory('feeddetailsfactory', function($q, $cordovaSQLite, $rootScope) {
     var factory = {};
     factory.getdata = function(docid,progid) {

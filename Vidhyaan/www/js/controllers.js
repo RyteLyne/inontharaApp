@@ -64,16 +64,13 @@ AssignmentsCtrl
       $scope.StudentPhoto = function() {
   document.addEventListener("deviceready", function () {
     var options = {
-      quality: 100,
       destinationType: Camera.DestinationType.DATA_URL,
       sourceType: Camera.PictureSourceType.CAMERA,
       allowEdit: false,
-      encodingType: Camera.EncodingType.JPEG, 
-      targetWidth: 100,
-      targetHeight: 100,
+      encodingType: Camera.EncodingType.JPEG,
       popoverOptions: CameraPopoverOptions,
       saveToPhotoAlbum: false,
-	  correctOrientation:true
+	  
 	  
     };
 
