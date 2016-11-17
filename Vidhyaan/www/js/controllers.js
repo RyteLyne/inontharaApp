@@ -414,7 +414,7 @@ $scope.eventList=[
     
 })
 
-.controller('SplashCtrl', function($scope, $rootScope, $state,$ionicLoading,datafactory,docdetailsfactory) {
+.controller('SplashCtrl', function($scope, $rootScope, $state,$ionicLoading,datafactory,docdetailsfactory,getMessagesfactory,checkgetmessagefactory) {
     $scope.Credentials = {
         username: "",
         password: ""
@@ -469,6 +469,54 @@ console.log("OK came here");
         
           }
 
+    var CompareGetMessages = function(data)
+      {
+          
+
+          for(var i=0;i<data.length;i++)
+           {
+               //console.log("From GetMessage: ", data[i]);
+                Promise.all([checkgetmessagefactory.getdata(data[i])]).then(function(ret)
+                {
+                    console.log("got message: ", ret[0].docId);
+
+                }).catch(function(err) {
+
+                    console.log("failed to get message from message list");
+                });
+             
+
+           }
+
+
+      }
+
+    var GetNewMessages = function()
+    {
+     //console.log("channels: ", $rootScope.AvailableChannels);
+     Promise.all([getMessagesfactory.getdata($rootScope.AppUserInformation.OrgId, $rootScope.AvailableChannels,50)]).then(function(data) {
+    
+     if(data[0]==undefined) return;
+    if(data[0].Data.length > 0)
+      {
+    console.log("MessageList: ", data[0]);
+    CompareGetMessages(data[0].Data);
+      }
+
+     })
+     .catch(function(err) {
+       // alert("Unable to Query Server");
+      console.log("Unable to get messagelist");
+
+         
+     });
+
+
+    
+
+
+}
+
 
           if($rootScope.AppUserInformation.firstLogIn== false) //autologin;;
           {
@@ -478,7 +526,7 @@ console.log("OK came here");
            Promise.all([docdetailsfactory.getdata("SubscriberInfo"),docdetailsfactory.getdata("ProgramInfo"),docdetailsfactory.getdata("ChannelSummary"),docdetailsfactory.getdata("OrganizationInfo"),docdetailsfactory.getdata("ProgramExtraData")]).then(function(){
               initApp();
 
-              
+                GetNewMessages();
                 $state.go('app.home', {}, {
                     reload: true
                 });
@@ -519,9 +567,7 @@ console.log("OK came here");
                 return;
             });
 
-
-
-
+GetNewMessages();
 
 
 })

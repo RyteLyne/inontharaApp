@@ -231,7 +231,7 @@ myApp.controller('initCtrl', function($scope, $state, $ionicPopover, $ionicHisto
 
 $rootScope.$on('NotificationBadgeEvent', function(event, data) {
 
-	console.log("NotificationBadge",data);
+console.log("NotificationBadge",data);
 var typ = data[0];
 console.log("NotificationBadge",typ);
 

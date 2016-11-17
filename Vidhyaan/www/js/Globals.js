@@ -905,6 +905,66 @@ console.log("registering push notification");*/
     return factory;
 })
 
+.factory('checkgetmessagefactory', function($q, $cordovaSQLite, $rootScope,$http) {
+    var factory = {};
+    factory.getdata = function(docid) {
+        var defer = $q.defer();
+        var ret = {
+         docId: ""
+        };
+   
+        console.log("in checkdocexistsfactory factory: ", docid);
+
+
+        $cordovaSQLite.execute($rootScope.myDB, 'SELECT docid FROM feedmsgs where docid = ? ', [docid]).then(function(results) {
+            console.log(results);
+            console.log(results.rows.length);
+            if(results.rows.length <=0) {
+             
+
+             var doc2req = {};
+            doc2req.docID = docid;
+            var req = {
+                method: 'POST',
+                url: "http://chungling.azurewebsites.net/VidGetPostM/",
+                data: jQuery.param(doc2req),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+            console.log(req.data);
+           
+            $http(req).success(function(data, status, headers, config) {
+                // alter data if needed
+                console.log(data.fetchedNews);
+                $rootScope.SaveNewsFeed(data.fetchedNews);
+                ret.docId = docid;
+                console.log("From factory:", docid);
+                defer.resolve(ret);
+            }).error(function(data, status, headers, config) {
+                console.log(data);
+                  defer.reject(ret);
+            });
+          }
+          else
+          {
+           console.log("Failed DB");
+           defer.resolve(ret);
+          }
+
+        }, function(error) {
+            defer.reject(ret);
+        })
+
+
+        return defer.promise;
+    }
+    return factory;
+})
+
+
+
+
 
 
 .factory('docdetailsfactory', function($q, $cordovaSQLite, $rootScope) {
@@ -1040,6 +1100,45 @@ console.log("registering push notification");*/
             console.log(data);
             //  defer.reject();
             console.log("Error getting from server login");
+            defer.reject();
+        });
+        return defer.promise;
+    }
+    return factory;
+})
+
+
+.factory('getMessagesfactory', function($http, $q) {
+    var factory = {};
+    factory.getdata = function(OrgId, Tags,limit) {
+        var defer = $q.defer();
+        var details = {
+            "OrgId": OrgId,
+            //subscriberId
+            "Tags": Tags,
+            "limit" : limit,
+            //document name
+        }
+        doc2send = details;
+        var req = {
+            method: 'POST',
+             //url: "http://localhost:3000/GetMessageLogM/",
+            url: "http://chungling.azurewebsites.net/GetMessageLogM/",
+            //url: "http://localhost:3000/VidgetDocM/",
+            data: jQuery.param(doc2send),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        $http(req).success(function(data, status, headers, config) {
+            // alter data if needed
+            console.log(data);
+            console.log("Message List Success");
+            defer.resolve(data);
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+            //  defer.reject();
+            console.log("Message List Failure");
             defer.reject();
         });
         return defer.promise;
