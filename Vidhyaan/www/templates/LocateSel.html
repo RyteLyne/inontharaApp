@@ -1,8 +1,13 @@
 <ion-view title="locatesel" id="page1" ng-controller="locateselctrl">
 
-  <ion-header-bar class="sub-head" style="height:auto; background-color:   rgba(0,212,205,1);">
-      <i class="ion-ios-close-empty" style="font-size:46px; color:red;padding-left:15px;" ng-click="rootGoBack()"> </i>
- </ion-header-bar>
+<ion-header-bar class="sub-head bar-dark" style="position:relative;" >
+    <button class="button button-clear button-positive" style="position:relative; width:auto;display:inline;" ng-click="rootGoBack()">
+  <i class="ion-android-cancel" style="font-size:32px; padding-left:8px; position:absolute; color:white;text-align:center;top:0px;"> </i>
+</button>
+ <p class = "title" style="position:absolute;text-align:left;padding-left:25px "> {{AppUserInformation.SelProgName}}</p>
+ 
+    </ion-header-bar>
+ 
    <ion-content padding="true" class="has-header">
         <form id="page-form1" class="list">
             <label class="item item-select" id="page-select1" name="RouteSel">
