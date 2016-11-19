@@ -420,7 +420,9 @@ $scope.eventList=[
         password: ""
     }
 
-    console.log("OK came here 1");
+    console.log("OK came here 179");
+
+    //$rootScope.CheckUpdateDocuments();
 
      if (!(window.localStorage.getItem("username") != undefined && window.localStorage.getItem("password") != undefined)) //default settings;;
     {
@@ -469,71 +471,53 @@ console.log("OK came here");
         
           }
 
-    var CompareGetMessages = function(data)
-      {
-          
-
-          for(var i=0;i<data.length;i++)
-           {
-               //console.log("From GetMessage: ", data[i]);
-                Promise.all([checkgetmessagefactory.getdata(data[i])]).then(function(ret)
-                {
-                    console.log("got message: ", ret[0].docId);
-
-                }).catch(function(err) {
-
-                    console.log("failed to get message from message list");
-                });
-             
-
-           }
-
-
-      }
-
-    var GetNewMessages = function()
-    {
-     //console.log("channels: ", $rootScope.AvailableChannels);
-     Promise.all([getMessagesfactory.getdata($rootScope.AppUserInformation.OrgId, $rootScope.AvailableChannels,50)]).then(function(data) {
-    
-     if(data[0]==undefined) return;
-    if(data[0].Data.length > 0)
-      {
-    console.log("MessageList: ", data[0]);
-    CompareGetMessages(data[0].Data);
-      }
-
-     })
-     .catch(function(err) {
-       // alert("Unable to Query Server");
-      console.log("Unable to get messagelist");
-
-         
-     });
-
-
-    
-
-
-}
 
 
           if($rootScope.AppUserInformation.firstLogIn== false) //autologin;;
           {
                // initApp();
            console.log("First LogIn false");
-           $rootScope.InitStorage(userId);
-           Promise.all([docdetailsfactory.getdata("SubscriberInfo"),docdetailsfactory.getdata("ProgramInfo"),docdetailsfactory.getdata("ChannelSummary"),docdetailsfactory.getdata("OrganizationInfo"),docdetailsfactory.getdata("ProgramExtraData")]).then(function(){
-              initApp();
 
-                GetNewMessages();
-                $state.go('app.home', {}, {
+           $rootScope.InitStorage(userId);
+
+           Promise.all([docdetailsfactory.getdata("UpdateInfo")]).then(function()
+            {
+
+                console.log("Udate Info found and Loaded");
+
+            }).catch(function(err) {
+                   
+                   console.log("UpdateInfo Not found");
+
+            });
+           
+
+           var callback = function()
+           {
+             $state.go('app.home', {}, {
                     reload: true
                 });
 
+           }
+
+
+           var sub = {};
+           var ordId = "";
+
+           Promise.all([docdetailsfactory.getdata("SubscriberInfo"),docdetailsfactory.getdata("ProgramInfo"),docdetailsfactory.getdata("ChannelSummary"),docdetailsfactory.getdata("OrganizationInfo"),docdetailsfactory.getdata("ProgramExtraData")]).then(function(){
+              initApp();
+
+                sub = $rootScope.GetDocument("SubscriberInfo");
+                ordId = sub.DocumentHeader.OrganizationId;
+               
+                $rootScope.GetNewMessages();
+                $rootScope.CheckUpdateDocuments(userId,ordId,callback);
+
+                //return;
+
            }).catch(function(err) {
              console.log("something went wrong");
-  console.log(err.message); // some coding error in handling happened
+  console.log(err); // some coding error in handling happened
 });
 
                return;
@@ -542,16 +526,18 @@ console.log("OK came here");
 
    //get documents from server here;;
 
-        var sub = $rootScope.GetDocument("SubscriberInfo");
-        var ordId = sub.DocumentHeader.OrganizationId;
+    sub = $rootScope.GetDocument("SubscriberInfo");
+    ordId = sub.DocumentHeader.OrganizationId;
+       
 
   
-   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo"),datafactory.getdata( userId, ordId, "ChannelSummary"),datafactory.getdata( userId, ordId, "OrganizationInfo"),datafactory.getdata( userId, ordId, "ProgramExtraData")]).then(function() {
+   Promise.all([datafactory.getdata(userId,ordId, "ProgramInfo","true"),datafactory.getdata( userId, ordId, "ChannelSummary","true"),datafactory.getdata( userId, ordId, "OrganizationInfo","true"),datafactory.getdata( userId, ordId, "ProgramExtraData","true")]).then(function() {
                
                 
                 initApp();
                
                 $rootScope.AppUserInformation.firstLogIn= false;
+                $rootScope.GetNewMessages();
                 $state.go('app.home', {}, {
                     reload: true
                 });
@@ -567,7 +553,7 @@ console.log("OK came here");
                 return;
             });
 
-GetNewMessages();
+
 
 
 })

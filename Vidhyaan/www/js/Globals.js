@@ -1,6 +1,6 @@
 angular.module('Global.controllers', ['ngCordova'])
 
-.controller('GlobalCtrl1', function($ionicPlatform, $rootScope, $http, $cordovaSQLite,$cordovaToast,$state,$ionicPopup) {
+.controller('GlobalCtrl1', function($ionicPlatform, $rootScope, $http, $cordovaSQLite,$cordovaToast,$state,$ionicPopup,getMessagesfactory,checkgetmessagefactory,datafactory) {
     //window.localStorage.removeItem("subscriberInfo");
 
 
@@ -44,6 +44,11 @@ angular.module('Global.controllers', ['ngCordova'])
      //$rootScope.rootfeedNotificationBadge="false";
      //$rootScope.rootappNotificationBadge="false";
     
+    $rootScope.NewUpdateDoc = {};
+    $rootScope.OldUpdateDoc = {};
+    $rootScope.TotalFiles = 0;
+    $rootScope.CurrentAppVersion = 1.1; //load from api;;
+
     $rootScope.AppUserInformation = {
         SelChannel: "0",
         SelProgram: "0",
@@ -132,6 +137,54 @@ $rootScope.ShowConfirmExit = function()
 
 
     }
+
+   //message pulling functions
+
+    $rootScope.CompareGetMessages = function(data)
+      {
+          
+
+          for(var i=0;i<data.length;i++)
+           {
+               //console.log("From GetMessage: ", data[i]);
+                Promise.all([checkgetmessagefactory.getdata(data[i])]).then(function(ret)
+                {
+                    console.log("got message: ", ret[0].docId);
+
+                }).catch(function(err) {
+
+                    console.log("failed to get message from message list");
+                });
+             
+
+           }
+
+      }
+
+   $rootScope.GetNewMessages = function()
+    {
+     //console.log("channels: ", $rootScope.AvailableChannels);
+     Promise.all([getMessagesfactory.getdata($rootScope.AppUserInformation.OrgId, $rootScope.AvailableChannels,50)]).then(function(data) {
+    
+     if(data[0]==undefined) return;
+    if(data[0].Data.length > 0)
+      {
+    console.log("MessageList: ", data[0]);
+    $rootScope.CompareGetMessages(data[0].Data);
+      }
+
+     })
+     .catch(function(err) {
+       // alert("Unable to Query Server");
+      console.log("Unable to get messagelist");
+
+         
+     });
+
+     }
+
+
+
 
     $rootScope.rootGoBack = function()
     {
@@ -336,8 +389,207 @@ console.log("Came to else part2");
  //$rootScope.goBack = function() {
    //     $ionicHistory.goBack();
     //}
+
+
+      var GetDocumentElementIndex = function (doc, name)
+    {
+        //if(doc==undefined)
+         //return(-1);
+
+    for(var i=0;i<doc.length;i++)
+          {
+            if(doc[i].Name == name)
+              return(i);
+          }
+
+        return(-1);
+    }
+
+    var UpdateDocVersion = function(doc,callback)
+    {
+        //$rootScope.NewOrgDoc = {};
+        //$rootScope.OldOrgDoc = {};
+        var DocName = doc.DocumentHeader.DocumentType;
+        var OldDocList = $rootScope.OldUpdateDoc.DocumentBody.ApplicationSpecificData.Documents;
+        var NewDocList = $rootScope.NewUpdateDoc.DocumentBody.ApplicationSpecificData.Documents
+
+        var OldIndex = GetDocumentElementIndex(OldDocList,DocName);
+        var NewIndex = GetDocumentElementIndex(NewDocList,DocName);
+        if(OldIndex >=0) //already exists
+         {
+           OldDocList[OldIndex].Release = NewDocList[NewIndex].Release;
+
+         }
+         else
+         {
+            OldDocList.push(NewDocList[NewIndex]);
+
+         }
+         
+         $rootScope.OldUpdateDoc.DocumentBody.ApplicationSpecificData.Documents = OldDocList;
+         $rootScope.StoreDocument("UpdateInfo",$rootScope.OldUpdateDoc);
+
+         console.log("Update Info success");
+         if($rootScope.TotalFiles <=0)
+         callback();
+        
+
+    }
+
+    var GetUpdateDocuments =function(userId,orgId,DocList,callback)
+    {
+
+        console.log("Trying to fetch Documents", DocList);
+
+     for(var i=0;i<DocList.length;i++)
+      {
+
+      Promise.all([datafactory.getdata(userId,orgId,DocList[i].Name,"true")]).then(function(ret)
+                {
+                    if(ret[0]!=undefined)
+                     {
+                    console.log("Got Document: ", ret[0].DocumentHeader.DocumentType);
+                    $rootScope.TotalFiles--;
+                    UpdateDocVersion(ret[0],callback);
+                     }
+                     console.log("Promise Success");
+
+                }).catch(function(err) {
+
+                    console.log("failed to get document: ");
+                    $rootScope.TotalFiles--;
+                    if($rootScope.TotalFiles<=0)
+                     callback();
+                });
+
+      }
+
+    }
+  
+
+    $rootScope.CheckUpdateDocuments = function(userId, orgId,callback)
+    {
+     /*if (window.cordova) {
+     cordova.getAppVersion(function (version) {
+     console.log("version: " , version);
+    });
+     }*/
+
+     
+     Promise.all([datafactory.getdata(userId,orgId, "UpdateInfo","false")]).then(function(data) {
+
+         if(data[0] == undefined)
+           return;
+
+         console.log("Found Doc UpdateInfo: ", orgId);
+         var OldUpdateDoc = $rootScope.GetDocument("UpdateInfo");
+         var NewUpdateDoc = data[0];
+         var OldList = [];
+         var NewList = [];
+         var DocList = [];
+
+         console.log("Step 1", data[0]);
+         if(NewUpdateDoc != undefined)
+            NewList = NewUpdateDoc.DocumentBody.ApplicationSpecificData.Documents;
+        
+
+         console.log("Step 2",OldUpdateDoc);
+
+         if(OldUpdateDoc != undefined)
+         {
+          if(OldUpdateDoc.DocumentBody !=undefined)
+         OldList = OldUpdateDoc.DocumentBody.ApplicationSpecificData.Documents;
+         else
+         {
+              OldUpdateDoc = jQuery.extend(true, {}, NewUpdateDoc);
+             OldUpdateDoc.DocumentBody.ApplicationSpecificData.Documents = [];
+         }
+        }
+         else
+         {
+             //OldUpdateDoc = NewUpdateDoc;
+             OldUpdateDoc = jQuery.extend(true, {}, NewUpdateDoc);
+             OldUpdateDoc.DocumentBody.ApplicationSpecificData.Documents = [];
+
+         }
+
+         console.log("CheckUpdateFunction");
+         
+         //for loop comparision;;
+
+         var AppVerFlag = 0;
+
+         for(var i=0;i<NewList.length;i++)
+          {
+            var newname = NewList[i].Name;
+            var newRelver = NewList[i].Release;
+            var newAppVer = 0;
+
+            if(ionic.Platform.isAndroid())
+            newAppVer = NewList[i].AndroidAppVersion;
+            else if(ionic.Platform.isIOS())
+            newAppVer = NewList[i].iosAppVersion;
+            else
+            newAppVer = $rootScope.CurrentAppVersion;
+
+            var OldIndex = GetDocumentElementIndex(OldList,newname);
+
+            if(OldIndex >=0)
+             {
+                 if(OldList[OldIndex].Release < newRelver)
+                  {
+                  DocList.push(NewList[i]);
+                  if($rootScope.CurrentAppVersion < newAppVer)
+                    AppVerFlag++;
+                  }
+
+             }
+             else
+              {
+             DocList.push(NewList[i]);
+              if($rootScope.CurrentAppVersion < newAppVer)
+                    AppVerFlag++;
+              }
+          
+
+   
+
+          }
+
+     //if newAppVer > oldAppVer ;; go to play store;;
+     if(AppVerFlag > 0)
+     {
+       alert("Please update Your App from Play Store");
+       return;   
+     }
+
+     if(DocList.length > 0)
+      {
+
+      $rootScope.NewUpdateDoc = NewUpdateDoc;
+      $rootScope.OldUpdateDoc = OldUpdateDoc;
+      $rootScope.TotalFiles = $rootScope.TotalFiles + DocList.length;
+      GetUpdateDocuments(userId, orgId, DocList,callback);
+
+      }
+      else
+       {
+      console.log("Nothing to update");
+      callback();
+       }
+
+               
+     })
+     .catch(function(err) {
+     
+        console.log("Error Occured while processing update Info: ", err);
+        callback();
+     });
+
+
+
+    }
     
- 
     $rootScope.GetProgramChannels = function(runson, subscribedchannels) {
         var userchannels = [];
         for (var i = 0; i < subscribedchannels.length; i++) {
@@ -704,7 +956,7 @@ console.log("registering push notification");*/
 
 .factory('datafactory', function($http, $q,$rootScope) {
     var factory = {};
-    factory.getdata = function(subid, orgid, docname) {
+    factory.getdata = function(subid, orgid, docname,saveDoc) {
         var defer = $q.defer();
         //if (!(docname == "SubscriberInfo" || docname == "ProgramInfo" || docname == "ChannelInfo"))
           //  return;
@@ -733,13 +985,18 @@ console.log("registering push notification");*/
             console.log(data);
             console.log("server success");
             //window.localStorage.setItem(docname, JSON.stringify(data.Data));
+            if(saveDoc == "true")
+             {
+            if(data.Data!=undefined)
             $rootScope.StoreDocument(docname,data.Data);
+             }
+
             defer.resolve(data.Data);
         }).error(function(data, status, headers, config) {
             console.log(data);
             //  defer.reject();
             console.log("Error getting from server");
-            defer.reject();
+            defer.reject(docname);
         });
         return defer.promise;
     }
