@@ -1,15 +1,31 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.kshipra.Vidhyaan" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Vidhyaan</name>
-    <description>
-
-        Vidyaan educational app
-
+<widget id="com.Vidyaan.School" version="0.1.2" android-versionCode="1013" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Vidyaan</name>
+    <description>
+
+
+
+
+
+        Vidyaan educational app
+
+
+
+
+
     </description>
-    <author email="you@example.com" href="http://example.com.com/">
-
-      Your Name Her
-
+    <author email="developer@vidyaan.com" href="http://www.vidyaan.com/">
+
+
+
+
+
+      Your Name Her
+
+
+
+
+
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -51,5 +67,5 @@
     <plugin name="cordova-plugin-file-opener2" spec="~2.0.2" />
     <plugin name="cordova-plugin-x-toast" spec="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git" />
     <plugin name="cordova-plugin-datepicker" spec="https://github.com/VitaliiBlagodir/cordova-plugin-datepicker.git" />
-    <plugin name="cordova-plugin-crosswalk-webview" spec="~2.1.0" />
+	<plugin name="cordova-plugin-crosswalk-webview" spec="~2.1.0" />
 </widget>

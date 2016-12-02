@@ -401,6 +401,8 @@ $scope.eventList=[
 
     $scope.slides = slideImages;
 
+    console.log("Slide Images: ", slideImages);
+
      
    $scope.onAvatarClick = function()
    {
@@ -570,7 +572,7 @@ console.log("OK came here");
     });
 
     $scope.Credentials.username = "";
-    $scope.Credentials.password = "1234";
+    $scope.Credentials.password = "";
 
     $scope.login = function Login() {
 
@@ -586,7 +588,8 @@ console.log("OK came here");
 
 
             if (data[0].Result == "true") {
-            $rootScope.InitStorage( $scope.Credentials.username);
+                console.log("OK");
+            $rootScope.InitStorage($scope.Credentials.username);
             console.log("Log in Success");
             window.localStorage.setItem("username", $scope.Credentials.username);
             window.localStorage.setItem("password", $scope.Credentials.password);
@@ -611,7 +614,7 @@ console.log("OK came here");
         .catch(function(err) {
 
             alert("Error Logging In..\nPlease check Internet Connection");
-            console.log("Error Logging In..\nPlease check Internet Connection");
+            console.log("Error Logging In..\nPlease check Internet Connection: " , err);
             $ionicLoading.hide();
             return;
         });

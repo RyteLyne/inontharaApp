@@ -3,6 +3,18 @@ angular.module('Global.controllers', ['ngCordova'])
 .controller('GlobalCtrl1', function($ionicPlatform, $rootScope, $http, $cordovaSQLite,$cordovaToast,$state,$ionicPopup,getMessagesfactory,checkgetmessagefactory,datafactory) {
     //window.localStorage.removeItem("subscriberInfo");
 
+console.log("In GlobalCtrl1");
+
+if (window.cordova) {
+    console.log("Yes window.cordova");
+    $rootScope.rootFeedImagePath = cordova.file.dataDirectory;
+    $rootScope.rootAvatarPath = cordova.file.dataDirectory;
+    $rootScope.rootDocPath = cordova.file.externalDataDirectory;
+    $rootScope.rootSlidePath = cordova.file.dataDirectory;
+    $rootScope.rootGalleryPath = cordova.file.dataDirectory;
+    }
+    console.log($rootScope.rootAvatarPath);
+    console.log("After window.cordova");
 
  //back button policy;;
   $ionicPlatform.registerBackButtonAction(function (event) {
@@ -29,17 +41,13 @@ angular.module('Global.controllers', ['ngCordova'])
 
     $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient('https://edum.azure-mobile.net','yVQPRKXxocEazjPjDXGSnmIpyCBTYc97');
     console.log($rootScope.mobileServiceClient);
+
     $rootScope.getBlob = function() {
         console.log("substitued pic", this.src);
         console.log("failed pic", this.srcErr);
     }
-    if (window.cordova) {
-    $rootScope.rootFeedImagePath = cordova.file.dataDirectory;
-    $rootScope.rootAvatarPath = cordova.file.dataDirectory;
-    $rootScope.rootDocPath = cordova.file.externalDataDirectory;
-    $rootScope.rootSlidePath = cordova.file.dataDirectory;
-    $rootScope.rootGalleryPath = cordova.file.dataDirectory;
-    }
+
+    
 
      //$rootScope.rootfeedNotificationBadge="false";
      //$rootScope.rootappNotificationBadge="false";
@@ -47,7 +55,7 @@ angular.module('Global.controllers', ['ngCordova'])
     $rootScope.NewUpdateDoc = {};
     $rootScope.OldUpdateDoc = {};
     $rootScope.TotalFiles = 0;
-    $rootScope.CurrentAppVersion = 1.1; //load from api;;
+    $rootScope.CurrentAppVersion = 1.2; //load from api;;
 
     $rootScope.AppUserInformation = {
         SelChannel: "0",
@@ -869,6 +877,7 @@ console.log("registering push notification");*/
                 $rootScope.mobileServiceClient.push.apns.registerNative(data.registrationId, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
             }
         });
+
         var registrationSuccess = function() {
             $rootScope.ShowToast("Registered with Server!",false);
         }
@@ -877,7 +886,6 @@ console.log("registering push notification");*/
             console.log('Failed registering with Server: ' + error);
         }
     }
-    ;
 
 
     $rootScope.InitStorage = function(userId) {
