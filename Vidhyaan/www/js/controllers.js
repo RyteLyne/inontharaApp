@@ -574,6 +574,13 @@ console.log("OK came here");
     $scope.Credentials.username = "";
     $scope.Credentials.password = "";
 
+    $scope.OnHelpClick = function()
+    {
+     console.log("help");
+     alert("Please use Login details provided by your school\n If You are trying out the App for Evaluation, please enter username as demostudent and password as 1234");
+
+    }
+
     $scope.login = function Login() {
 
         $ionicLoading.show({
